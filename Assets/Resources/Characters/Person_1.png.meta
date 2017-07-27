@@ -1,21 +1,21 @@
 fileFormatVersion: 2
 guid: 1d5e6f46f8650b04eba72f60a68b481f
-timeCreated: 1501149604
+timeCreated: 1501154000
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Person_1_head
-    21300002: Person_1_body
-    21300004: Person_1_l_shoulder
-    21300006: Person_1_r_shoulder
-    21300008: Person_1_r_arm
-    21300010: Person_1_l_arm
-    21300012: Person_1_r_leg
-    21300014: Person_1_l_leg
-    21300016: Person_1_l_thigh
-    21300018: Person_1_r_thigh
-    21300020: Person_1_pelvis
-    21300022: Person_1_head_b
+    21300000: Person_1_0
+    21300002: Person_1_1
+    21300004: Person_1_3
+    21300006: Person_1_2
+    21300008: Person_1_2_b
+    21300010: Person_1_3_b
+    21300012: Person_1_5_b
+    21300014: Person_1_6_b
+    21300016: Person_1_6
+    21300018: Person_1_5
+    21300020: Person_1_4
+    21300022: Person_1_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -106,7 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Person_1_head
+      name: Person_1_0
       rect:
         serializedVersion: 2
         x: 1
@@ -119,7 +119,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_body
+      name: Person_1_1
       rect:
         serializedVersion: 2
         x: 1
@@ -132,7 +132,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_l_shoulder
+      name: Person_1_3
       rect:
         serializedVersion: 2
         x: 4
@@ -145,7 +145,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_r_shoulder
+      name: Person_1_2
       rect:
         serializedVersion: 2
         x: 0
@@ -158,7 +158,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_r_arm
+      name: Person_1_2_b
       rect:
         serializedVersion: 2
         x: 0
@@ -171,7 +171,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_l_arm
+      name: Person_1_3_b
       rect:
         serializedVersion: 2
         x: 4
@@ -184,7 +184,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_r_leg
+      name: Person_1_5_b
       rect:
         serializedVersion: 2
         x: 1
@@ -197,7 +197,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_l_leg
+      name: Person_1_6_b
       rect:
         serializedVersion: 2
         x: 3
@@ -210,7 +210,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_l_thigh
+      name: Person_1_6
       rect:
         serializedVersion: 2
         x: 3
@@ -223,7 +223,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_r_thigh
+      name: Person_1_5
       rect:
         serializedVersion: 2
         x: 1
@@ -236,7 +236,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_pelvis
+      name: Person_1_4
       rect:
         serializedVersion: 2
         x: 1
@@ -249,7 +249,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Person_1_head_b
+      name: Person_1_7
       rect:
         serializedVersion: 2
         x: 5
