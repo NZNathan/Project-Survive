@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpriteGen : MonoBehaviour {
 
+    Character playerBase;
     Character npcBase;
     SpriteSet[] spriteSets;
 
@@ -12,7 +13,7 @@ public class SpriteGen : MonoBehaviour {
     {
         //Load in base Prefabs
         npcBase = Resources.Load<Character>("Prefabs/NPC");
-        Debug.Log(npcBase);
+
         //Load in Sprites
         Object[] sprites;
 
@@ -31,19 +32,25 @@ public class SpriteGen : MonoBehaviour {
             i++;
         }
 
-        createNewNPC();
-
     }
 
-    void createNewNPC()
+    public Sprite[] getNewSprites()
     {
-        Character npc = Instantiate(npcBase, new Vector3(-22,0,0), Quaternion.identity);
-        npc.setSprites(spriteSets[1].getSprites());
+        int spriteSet = Random.Range(0, spriteSets.Length); //Will never be 2
+
+        return spriteSets[spriteSet].getSprites();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    public void createNewNPC(Transform parent, Vector2 spawnPoint)
     {
-		
-	}
+        Character npc = Instantiate(npcBase, spawnPoint, Quaternion.identity);
+
+        //Set Parent and then reset position in relation to parent
+        npc.transform.SetParent(parent);
+        npc.transform.localPosition = spawnPoint;
+
+        //Change the new NPCs look
+        npc.setSprites(getNewSprites());
+    }
+
 }

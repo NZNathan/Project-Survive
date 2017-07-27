@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : Character {
 
     //Components
     private Animator animator;
@@ -56,10 +56,24 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         //Flip player sprite if not looking the right way
-        if (movement.x < 0 && transform.localScale.x != -1)
-            transform.localScale = new Vector3(-1,1,1);
-        else if (movement.x > 0 && transform.localScale.x != 1)
-            transform.localScale = new Vector3(1, 1, 1);
+        if (movement.x < 0 && transform.localScale.x != -1 * facingFront)
+            transform.localScale = new Vector3(-1 * facingFront, 1,1);
+        else if (movement.x > 0 && transform.localScale.x != 1 * facingFront)
+            transform.localScale = new Vector3(1 * facingFront, 1, 1);
+
+        //Flip player head if not looking the right way
+        if (movement.y < 0 && facingFront == -1)
+        {
+            faceFront();
+            facingFront = 1;
+            transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
+        }
+        else if (movement.y > 0 && facingFront == 1)
+        {
+            faceBack();
+            facingFront = -1;
+            transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
+        }
 
         animator.SetInteger("movementSpeed", (int) movement.magnitude);
         rb2D.MovePosition(transform.position + movement * Time.deltaTime);
