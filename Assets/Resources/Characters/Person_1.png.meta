@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1d5e6f46f8650b04eba72f60a68b481f
-timeCreated: 1501061080
+timeCreated: 1501149604
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -15,6 +15,7 @@ TextureImporter:
     21300016: Person_1_l_thigh
     21300018: Person_1_r_thigh
     21300020: Person_1_pelvis
+    21300022: Person_1_head_b
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -112,8 +113,8 @@ TextureImporter:
         y: 9
         width: 3
         height: 3
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -242,6 +243,19 @@ TextureImporter:
         y: 3
         width: 3
         height: 1
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Person_1_head_b
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 9
+        width: 3
+        height: 3
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

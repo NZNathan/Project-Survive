@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour {
             movement.x += movementSpeed;
         }
 
+        //Flip player sprite if not looking the right way
         if (movement.x < 0 && transform.localScale.x != -1)
             transform.localScale = new Vector3(-1,1,1);
         else if (movement.x > 0 && transform.localScale.x != 1)
