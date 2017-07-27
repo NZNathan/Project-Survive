@@ -55,6 +55,11 @@ public class PlayerMovement : Character {
             movement.x += movementSpeed;
         }
 
+        animator.SetInteger("movementSpeed", (int)movement.magnitude);
+
+        if (movement == Vector3.zero)
+            return;
+
         //Flip player sprite if not looking the right way
         if (movement.x < 0 && transform.localScale.x != -1 * facingFront)
             transform.localScale = new Vector3(-1 * facingFront, 1,1);
@@ -75,7 +80,6 @@ public class PlayerMovement : Character {
             transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
         }
 
-        animator.SetInteger("movementSpeed", (int) movement.magnitude);
         rb2D.MovePosition(transform.position + movement * Time.deltaTime);
     }
 
