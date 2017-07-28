@@ -32,11 +32,12 @@ public class PlayerCombat : MonoBehaviour {
 
     void attack()
     {
+        animator.SetTrigger("attack");
         //Get mouse position in relation to the world
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         //Get direction by subtracting player location
-        mousePos = (new Vector3(mousePos.x, mousePos.y, 0) - transform.position);
+        mousePos = (new Vector3(mousePos.x, mousePos.y, 0) - transform.position); //Minus y so taking point on middle of character?
 
         //Normalize the direction so mouse distance doesn't affect it
         var distance = mousePos.magnitude;
