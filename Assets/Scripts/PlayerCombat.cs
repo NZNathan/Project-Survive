@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCombat : PlayerMovement {
 
     //Extract out to Character Class and inherit from it? Character -> Player -> PlayerCombat?
+    [Header("Combat Variables")]
     public GameObject weapon;
 
     //Weapon Variables
@@ -25,6 +26,7 @@ public class PlayerCombat : PlayerMovement {
 	// Use this for initialization
 	new void Start ()
     {
+        Debug.Log(this);
         base.Start();
         attackMask = LayerMask.GetMask("Hitable");
     }
@@ -57,21 +59,13 @@ public class PlayerCombat : PlayerMovement {
         else
             faceRight();
 
-        /*
-        //Get direction by subtracting player location
-        mousePos = (new Vector3(mousePos.x, mousePos.y, 0) - (Vector3) playerPos); //Minus y so taking point on middle of character?
-
-        //Normalize the direction so mouse distance doesn't affect it
-        float distance = mousePos.magnitude;
-        Vector2 direction = mousePos / distance; // This is now the normalized direction.
-        */
-        StartCoroutine(rayCast(playerPos, direction, attackPause));
+        StartCoroutine(rayCastAttack(playerPos, direction, attackPause));
 
         rb2D.AddForce(direction * attackVelocity);
 
     }
 
-    IEnumerator rayCast(Vector2 playerPos, Vector2 direction, float pause)
+    IEnumerator rayCastAttack(Vector2 playerPos, Vector2 direction, float pause)
     {
         yield return new WaitForSeconds(pause);
 
@@ -92,6 +86,9 @@ public class PlayerCombat : PlayerMovement {
         }
 
         canMove = true;
+
+        yield return new WaitForSeconds(0.2f);
+
         attacking = false;
     }
 
@@ -109,7 +106,7 @@ public class PlayerCombat : PlayerMovement {
         base.Update();
         keyPresses();
 
-        if (Input.GetMouseButtonDown(0) && !attacking)
+        if (Input.GetMouseButtonDown(0) && !attacking && weapon.activeInHierarchy)
             attack();
 
     }

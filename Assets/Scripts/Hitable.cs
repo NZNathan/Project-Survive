@@ -6,10 +6,12 @@ public abstract class Hitable : MonoBehaviour {
 
     //Components
     protected Rigidbody2D rb2D;
+    protected HealthBar healthBar;
 
     protected float objectHeight;
 
     //Health Variables
+    [Header("Health Variables")]
     public int maxHealth = 100;
     protected int currentHealth;
 
@@ -19,6 +21,13 @@ public abstract class Hitable : MonoBehaviour {
     public void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        
+
+        currentHealth = maxHealth;
+
+        healthBar = HealthBarManager.instance.newHealthBar();
+        healthBar.setTarget(transform);
+        healthBar.setActive(false);
     }
 
     public void knockback(Vector2 target, float force)
@@ -41,16 +50,32 @@ public abstract class Hitable : MonoBehaviour {
         return direction;
     }
 
+    //Set AActive
     public void loseHealth(int damage)
     {
         StartCoroutine("flash");
         currentHealth -= damage;
 
-        if(currentHealth < 0)
+        //Stop showHealth so it doesn't remove the health bar off an earilier call
+        StopCoroutine("showHealth");
+        StartCoroutine("showHealth");
+
+        healthBar.healthBar.fillAmount = (float) currentHealth /  (float) maxHealth;
+
+        if(currentHealth <= 0)
         {
             currentHealth = 0;
             death();
         }
+    }
+
+    IEnumerator showHealth()
+    {
+        healthBar.setActive(true);
+
+        yield return new WaitForSeconds(1f);
+
+        healthBar.setActive(false);
     }
 
 	

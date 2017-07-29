@@ -32,8 +32,6 @@ public class Character : Hitable {
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         defaultMat = Resources.Load<Material>("Materials/Light_Shader");
         whiteMat = Resources.Load<Material>("Materials/SolidWhite");
-
-        currentHealth = maxHealth;
     }
 
     public void faceBack()
@@ -63,7 +61,8 @@ public class Character : Hitable {
 
     protected override void death()
     {
-        Debug.Log("Dead");
+        Destroy(healthBar.gameObject);
+        Destroy(this.gameObject);
     }
 
     protected override IEnumerator flash()

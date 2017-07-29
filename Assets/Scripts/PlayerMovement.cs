@@ -9,6 +9,7 @@ public class PlayerMovement : Character {
     protected BoxCollider2D col2d;
 
     //Movement Variables
+    [Header("Movement Variables")]
     public float walkSpeed = 1f;
     public float sprintSpeed = 2f;
     protected bool canMove = true;
