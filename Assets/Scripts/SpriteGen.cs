@@ -50,7 +50,7 @@ public class SpriteGen : MonoBehaviour {
         npc.transform.localPosition = spawnPoint;
 
         //Change the new NPCs look
-        npc.setSprites(getNewSprites());
+        npc.setSpriteSet(getNewSprites());
     }
 
 }

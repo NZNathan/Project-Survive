@@ -2,26 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombat : MonoBehaviour {
-
-    //Components
-    private Animator animator;
-    private Rigidbody2D rb2D;
+public class PlayerCombat : PlayerMovement {
 
     //Extract out to Character Class and inherit from it? Character -> Player -> PlayerCombat?
     public GameObject weapon;
 
     //Weapon Variables
-    bool weaponDrawn = false;
+    private bool weaponDrawn = false;
+
+    //Raycast Variables
+    private LayerMask attackMask; //Layer that all attackable objects are on
+    private float attackRange = 0.9f;
+
+    private bool attacking = false;
 
     //Basic Attack Variables
     public float attackVelocity = 10f;
+    private int attackDamage = 5;
+    private float attackPause = 0.25f;
+    private float attackForce = 500f;
 
 	// Use this for initialization
-	void Start ()
+	new void Start ()
     {
-        animator = GetComponent<Animator>();
-        rb2D = GetComponent<Rigidbody2D>();
+        base.Start();
+        attackMask = LayerMask.GetMask("Hitable");
     }
 
     void drawWeapon()
@@ -32,19 +37,62 @@ public class PlayerCombat : MonoBehaviour {
 
     void attack()
     {
+        //Stop movement and call attack animataion
+        canMove = false;
+        attacking = true;
+        animator.SetInteger("movementSpeed", 0);
         animator.SetTrigger("attack");
+
         //Get mouse position in relation to the world
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+        Vector2 direction = getDirection(mousePos);
+        
+        //Get position of player
+        Vector2 playerPos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
+
+        //Face attack direction
+        if (mousePos.x < playerPos.x)
+            faceLeft();
+        else
+            faceRight();
+
+        /*
         //Get direction by subtracting player location
-        mousePos = (new Vector3(mousePos.x, mousePos.y, 0) - transform.position); //Minus y so taking point on middle of character?
+        mousePos = (new Vector3(mousePos.x, mousePos.y, 0) - (Vector3) playerPos); //Minus y so taking point on middle of character?
 
         //Normalize the direction so mouse distance doesn't affect it
-        var distance = mousePos.magnitude;
-        var direction = mousePos / distance; // This is now the normalized direction.
+        float distance = mousePos.magnitude;
+        Vector2 direction = mousePos / distance; // This is now the normalized direction.
+        */
+        StartCoroutine(rayCast(playerPos, direction, attackPause));
 
         rb2D.AddForce(direction * attackVelocity);
 
+    }
+
+    IEnumerator rayCast(Vector2 playerPos, Vector2 direction, float pause)
+    {
+        yield return new WaitForSeconds(pause);
+
+        RaycastHit2D hitObject = Physics2D.Raycast(playerPos, direction, attackRange, attackMask,-10, 10);
+        Debug.DrawRay(playerPos, direction * attackRange, Color.blue, 3f);
+        
+        Debug.Log(hitObject);
+
+        //If the Raycast hits an object on the layer Enemy
+        if (hitObject)
+        {
+            //Hit attack
+            Hitable objectHit = hitObject.transform.gameObject.GetComponentInParent<Hitable>();
+
+            //Apply damage and knockback
+            objectHit.loseHealth(attackDamage);
+            objectHit.knockback(playerPos, attackForce);
+        }
+
+        canMove = true;
+        attacking = false;
     }
 
     void keyPresses()
@@ -56,11 +104,12 @@ public class PlayerCombat : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update ()
+	new void Update ()
     {
+        base.Update();
         keyPresses();
-        Debug.Log(rb2D.velocity);
-        if (Input.GetMouseButtonDown(0))
+
+        if (Input.GetMouseButtonDown(0) && !attacking)
             attack();
 
     }

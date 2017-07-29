@@ -13,7 +13,7 @@ public class SpriteSet {
     {
         spriteSet = sprites;
 
-        Debug.Log(sprites[(int)Part.L_LEG]);
+        //Debug.Log(sprites[(int)Part.L_LEG]);
     }
 
     public Sprite[] getSprites()

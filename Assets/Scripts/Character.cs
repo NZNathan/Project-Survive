@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class Character : MonoBehaviour {
+public class Character : Hitable {
 
     //Components
     private SpriteRenderer[] spriteRenderers;
@@ -11,14 +12,29 @@ public class Character : MonoBehaviour {
     //Sprite Variables
     protected int facingFront = 1;
 
+    //Flash Variables
+    private Material whiteMat;
+    private Material defaultMat;
+    private float flashDuration = 0.1f;
+
     //Sprites
     Sprite[] sprites;
+
+    public new void Start()
+    {
+        base.Start();
+        objectHeight = 0.48f;
+    }
 
     // Runs as soon as Instantiate
     void Awake ()
     {
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-	}
+        defaultMat = Resources.Load<Material>("Materials/Light_Shader");
+        whiteMat = Resources.Load<Material>("Materials/SolidWhite");
+
+        currentHealth = maxHealth;
+    }
 
     public void faceBack()
     {
@@ -30,18 +46,43 @@ public class Character : MonoBehaviour {
         spriteRenderers[(int)SpriteSet.Part.HEAD].sprite = sprites[(int)SpriteSet.Part.HEAD];
     }
 
-    public void setSprites(Sprite[] spriteSet)
+    public void setSpriteSet(Sprite[] spriteSet)
     {
         sprites = spriteSet;
 
+        setSprites();
+    }
+
+    void setSprites()
+    {
         for (int i = 0; i < spriteRenderers.Length; i++)
         {
-            spriteRenderers[i].sprite = spriteSet[i];
+            spriteRenderers[i].sprite = sprites[i];
+        }
+    }
+
+    protected override void death()
+    {
+        Debug.Log("Dead");
+    }
+
+    protected override IEnumerator flash()
+    {
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            spriteRenderers[i].material = whiteMat;
+        }
+
+        yield return new WaitForSeconds(flashDuration);
+
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            spriteRenderers[i].material = defaultMat;
         }
     }
 	
 	// Update is called once per frame
-	void Update ()
+	public void Update ()
     {
         //Optimise so only runs while moving?
 		foreach(var sr in spriteRenderers)
@@ -49,4 +90,5 @@ public class Character : MonoBehaviour {
             sr.sortingOrder = (int) (transform.position.y*10 *-1);
         }
 	}
+
 }

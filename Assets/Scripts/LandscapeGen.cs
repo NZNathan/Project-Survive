@@ -28,7 +28,7 @@ public class LandscapeGen : MonoBehaviour {
         generateNewAreas(1);
 
         //Generate random player sprite on start of game
-        player.GetComponent<Character>().setSprites(spriteGenerator.getNewSprites());
+        player.GetComponent<Character>().setSpriteSet(spriteGenerator.getNewSprites());
 
     }
 

@@ -5,20 +5,21 @@ using UnityEngine;
 public class PlayerMovement : Character {
 
     //Components
-    private Animator animator;
-    private Rigidbody2D rb2D;
-    private BoxCollider2D col2d;
+    protected Animator animator;
+    protected BoxCollider2D col2d;
 
     //Movement Variables
     public float walkSpeed = 1f;
     public float sprintSpeed = 2f;
+    protected bool canMove = true;
 
     // Use this for initialization
-    void Start ()
+    public new void Start ()
     {
+        base.Start();
+
         //Get Components
         animator = GetComponent<Animator>();
-        rb2D = GetComponent<Rigidbody2D>();
         col2d = GetComponent<BoxCollider2D>();
     }
 
@@ -61,12 +62,15 @@ public class PlayerMovement : Character {
             return;
 
         //Flip player sprite if not looking the right way
+        //Times by facing front so if player is facing backwards the X scale is inverted
         if (movement.x < 0 && transform.localScale.x != -1 * facingFront)
-            transform.localScale = new Vector3(-1 * facingFront, 1,1);
+            faceLeft();
         else if (movement.x > 0 && transform.localScale.x != 1 * facingFront)
-            transform.localScale = new Vector3(1 * facingFront, 1, 1);
+            faceRight();
 
         //Flip player head if not looking the right way
+        //NEEDTOFIX: need to flip player sword around and add backward animations 
+        /*
         if (movement.y < 0 && facingFront == -1)
         {
             faceFront();
@@ -79,14 +83,26 @@ public class PlayerMovement : Character {
             facingFront = -1;
             transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
         }
+        */
 
         rb2D.MovePosition(transform.position + movement * Time.deltaTime);
     }
 
-	// Fixed update so is consistant with frames
-	void FixedUpdate ()
+    public void faceLeft()
+    {
+        transform.localScale = new Vector3(-1 * facingFront, 1, 1);
+    }
+
+    public void faceRight()
+    {
+        transform.localScale = new Vector3(1 * facingFront, 1, 1);
+    }
+
+    // Fixed update so is consistant with frames
+    void FixedUpdate ()
     {
         //Call movement function to handle player movements
-        movement();
+        if(canMove)
+            movement();
 	}
 }
