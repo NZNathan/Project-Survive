@@ -34,7 +34,7 @@ public class Parallax : MonoBehaviour {
 
     void scrollLeft()
     {
-
+        //Takes the right most bg and moves it the left most position, and moves the indexs to match
         layers[rightIndex].position = new Vector2(layers[leftIndex].position.x - backgroundSize, yValue);
         leftIndex = rightIndex;
         rightIndex--;
@@ -44,7 +44,7 @@ public class Parallax : MonoBehaviour {
 
     void scrollRight()
     {
-
+        //Takes the left most bg and moves it the right most position, and moves the indexs to match
         layers[leftIndex].position = new Vector2(layers[rightIndex].position.x + backgroundSize, yValue);
         rightIndex = leftIndex;
         leftIndex++;

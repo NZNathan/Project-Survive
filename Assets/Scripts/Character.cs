@@ -54,6 +54,7 @@ public class Character : Hitable {
     {
         for (int i = 0; i < spriteRenderers.Length; i++)
         {
+            Debug.Log(sprites[i]);
             spriteRenderers[i].sprite = sprites[i];
         }
     }
