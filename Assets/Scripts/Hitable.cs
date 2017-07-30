@@ -51,7 +51,7 @@ public abstract class Hitable : MonoBehaviour {
     }
 
     //Set AActive
-    public void loseHealth(int damage)
+    public virtual void loseHealth(int damage)
     {
         StartCoroutine("flash");
         currentHealth -= damage;

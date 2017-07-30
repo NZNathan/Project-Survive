@@ -21,12 +21,11 @@ public class PlayerCombat : PlayerMovement {
     public float attackVelocity = 10f;
     private int attackDamage = 5;
     private float attackPause = 0.25f;
-    private float attackForce = 500f;
+    private float attackForce = 500f; //knockback
 
 	// Use this for initialization
 	new void Start ()
     {
-        Debug.Log(this);
         base.Start();
         attackMask = LayerMask.GetMask("Hitable");
     }
@@ -69,26 +68,28 @@ public class PlayerCombat : PlayerMovement {
     {
         yield return new WaitForSeconds(pause);
 
-        RaycastHit2D hitObject = Physics2D.Raycast(playerPos, direction, attackRange, attackMask,-10, 10);
+        RaycastHit2D[] hitObject = Physics2D.RaycastAll(playerPos, direction, attackRange, attackMask,-10, 10);
         Debug.DrawRay(playerPos, direction * attackRange, Color.blue, 3f);
         
         Debug.Log(hitObject);
 
         //If the Raycast hits an object on the layer Enemy
-        if (hitObject)
-        {
-            //Hit attack
-            Hitable objectHit = hitObject.transform.gameObject.GetComponentInParent<Hitable>();
+        foreach (RaycastHit2D r in hitObject) {
+            if (r && r.transform.gameObject != this.gameObject)
+            {
+                //Hit attack
+                Hitable objectHit = r.transform.gameObject.GetComponentInParent<Hitable>();
 
-            //Apply damage and knockback
-            objectHit.loseHealth(attackDamage);
-            objectHit.knockback(playerPos, attackForce);
+                //Apply damage and knockback
+                objectHit.loseHealth(attackDamage);
+                objectHit.knockback(playerPos, attackForce);
+                break;
+            } 
         }
-
-        canMove = true;
 
         yield return new WaitForSeconds(0.2f);
 
+        canMove = true;
         attacking = false;
     }
 
