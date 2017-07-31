@@ -8,7 +8,8 @@ public abstract class Hitable : MonoBehaviour {
     protected Rigidbody2D rb2D;
     protected HealthBar healthBar;
 
-    protected float objectHeight;
+    [HideInInspector]
+    public float objectHeight;
 
     //Health Variables
     [Header("Health Variables")]
@@ -30,18 +31,18 @@ public abstract class Hitable : MonoBehaviour {
         healthBar.setActive(false);
     }
 
-    public void knockback(Vector2 target, float force)
+    public void knockback(Vector2 target, float force, float targetHeight)
     {
-        rb2D.AddForce(getDirection(target) * force * -1);
+        rb2D.AddForce(getDirection(target, targetHeight) * force * -1); //Added object height?
     }
 
-    protected Vector2 getDirection(Vector2 target)
+    protected Vector2 getDirection(Vector2 target, float targetHeight)
     {
         //Get position of this
         Vector2 pos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
 
         //Get direction by subtracting player location
-        target = (new Vector3(target.x, target.y, 0) - (Vector3)pos); 
+        target = (new Vector3(target.x, target.y + targetHeight/2, 0) - (Vector3)pos); 
 
         //Normalize the direction so mouse distance doesn't affect it
         float distance = target.magnitude;

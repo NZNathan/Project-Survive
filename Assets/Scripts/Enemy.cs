@@ -15,10 +15,11 @@ public class Enemy : Character {
 
     //Raycast Variables
     private LayerMask attackMask; //Layer that all attackable objects are on
-    private float attackRayRange = 0.7f;
+    private float attackRayRange = 0.9f;
+    private IEnumerator attackAction;
 
     //Attack Variables
-    public float attackVelocity = 300f;
+    public float attackVelocity = 350f;
     private bool attacking = false;
     private int attackDamage = 3;
     private float attackPause = 0.25f;
@@ -26,7 +27,7 @@ public class Enemy : Character {
 
     //Stun Variables
     private bool stunned = false;
-    private float stunTime = 0.4f;
+    private float stunTime = 0.5f;
 
     //Audio Variables
     public AudioClip attackSound;
@@ -52,7 +53,7 @@ public class Enemy : Character {
 
     void moveTowardTarget()
     {
-        Vector3 dir = getDirection(target.position);
+        Vector3 dir = getDirection(target.position, target.gameObject.GetComponent<Hitable>().objectHeight);
 
         if (dir.x < 0 && transform.localScale.x != -1 * facingFront)
             faceLeft();
@@ -69,9 +70,10 @@ public class Enemy : Character {
         //Stop movement and call attack animataion
         attacking = true;
         animator.SetInteger("movementSpeed", 0);
+        animator.ResetTrigger("stopAttack");
         animator.SetTrigger("attack");
 
-        Vector2 direction = getDirection(target.position);
+        Vector2 direction = getDirection(target.position, target.gameObject.GetComponent<Hitable>().objectHeight);
 
         //Get position of player
         Vector2 pos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
@@ -82,7 +84,8 @@ public class Enemy : Character {
         else
             faceRight();
 
-        StartCoroutine(rayCastAttack(pos, direction, attackPause));
+        attackAction = rayCastAttack(pos, direction, attackPause);
+        StartCoroutine(attackAction);
 
         
 
@@ -109,7 +112,7 @@ public class Enemy : Character {
 
                 //Apply damage and knockback
                 objectHit.loseHealth(attackDamage);
-                objectHit.knockback(pos, attackForce);
+                objectHit.knockback(pos, attackForce, objectHit.objectHeight);
 
                 audioSource.clip = attackSound;
                 audioSource.Play();
@@ -134,9 +137,11 @@ public class Enemy : Character {
     {
         base.loseHealth(damage);
 
-        StopCoroutine("rayCastAttack");
+        //Stop enemy if they are currently attacking and stun them 
+        StopCoroutine(attackAction);
         StopCoroutine("stun");
         attacking = false;
+        animator.SetTrigger("stopAttack");
 
         StartCoroutine("stun");
     }
@@ -151,8 +156,8 @@ public class Enemy : Character {
         stunned = false;
     }
 
-        //Merge with player movement into character??
-        public void faceLeft()
+    //Merge with player movement into character??
+    public void faceLeft()
     {
         transform.localScale = new Vector3(-1, 1, 1);
     }

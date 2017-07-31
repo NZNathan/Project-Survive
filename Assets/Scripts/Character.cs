@@ -22,6 +22,7 @@ public class Character : Hitable {
     public new void Start()
     {
         base.Start();
+
         objectHeight = 0.48f;
     }
 

@@ -47,7 +47,7 @@ public class PlayerCombat : PlayerMovement {
         //Get mouse position in relation to the world
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        Vector2 direction = getDirection(mousePos);
+        Vector2 direction = getDirection(mousePos, 0);
         
         //Get position of player
         Vector2 playerPos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
@@ -70,8 +70,6 @@ public class PlayerCombat : PlayerMovement {
 
         RaycastHit2D[] hitObject = Physics2D.RaycastAll(playerPos, direction, attackRange, attackMask,-10, 10);
         Debug.DrawRay(playerPos, direction * attackRange, Color.blue, 3f);
-        
-        Debug.Log(hitObject);
 
         //If the Raycast hits an object on the layer Enemy
         foreach (RaycastHit2D r in hitObject) {
@@ -82,7 +80,7 @@ public class PlayerCombat : PlayerMovement {
 
                 //Apply damage and knockback
                 objectHit.loseHealth(attackDamage);
-                objectHit.knockback(playerPos, attackForce);
+                objectHit.knockback(playerPos, attackForce, objectHit.objectHeight);
                 break;
             } 
         }
