@@ -24,6 +24,55 @@ public class PlayerMovement : Character {
         col2d = GetComponent<BoxCollider2D>();
     }
 
+    //Will replace movement if it works
+    void movementForce()
+    {
+        // read key inputs
+        bool wKeyDown = Input.GetKey(KeyCode.W);
+        bool aKeyDown = Input.GetKey(KeyCode.A);
+        bool sKeyDown = Input.GetKey(KeyCode.S);
+        bool dKeyDown = Input.GetKey(KeyCode.D);
+        bool shiftKeyDown = Input.GetKey(KeyCode.LeftShift);
+
+        //Movement Vector
+        Vector3 movement = Vector3.zero;
+        float movementSpeed = walkSpeed;
+
+        if (shiftKeyDown)
+            movementSpeed = sprintSpeed;
+
+        if (wKeyDown && !sKeyDown)
+        {
+            movement.y += movementSpeed;
+        }
+        if (sKeyDown && !wKeyDown)
+        {
+            movement.y -= movementSpeed;
+        }
+        if (aKeyDown && !dKeyDown)
+        {
+            movement.x -= movementSpeed;
+        }
+        if (dKeyDown && !aKeyDown)
+        {
+            movement.x += movementSpeed;
+        }
+
+        animator.SetFloat("movementSpeed", movement.magnitude);
+        Debug.Log(movement.magnitude);
+
+        if (movement == Vector3.zero)
+            return;
+
+        //Flip player sprite if not looking the right way
+        if (movement.x < 0 && transform.localScale.x != -1)
+            faceLeft();
+        else if (movement.x > 0 && transform.localScale.x != 1)
+            faceRight();
+
+        rb2D.AddForce(movement * movementSpeed);
+    }
+
     void movement()
     {
         // read key inputs
@@ -104,6 +153,6 @@ public class PlayerMovement : Character {
     {
         //Call movement function to handle player movements
         if(canMove)
-            movement();
+            movementForce();
 	}
 }
