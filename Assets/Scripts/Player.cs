@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : CMoveable {
+public class Player : CMoveCombatable {
 
-    //Will replace movement if it works
     protected override void movement()
     {
         // read key inputs
@@ -77,4 +77,33 @@ public class PlayerMovement : CMoveable {
         rb2D.AddForce(movement * movementSpeed);
     }
 
+    void attack()
+    {
+        //Get mouse position in relation to the world
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        Vector2 direction = getDirection(mousePos, 0);
+
+        attack(mousePos, direction);
+
+    }
+
+    void keyPresses()
+    {
+        bool qKeyDown = Input.GetKeyDown(KeyCode.Q);
+
+        if (qKeyDown)
+            drawWeapon();
+    }
+	
+	// Update is called once per frame
+	new void Update ()
+    {
+        base.Update();
+        keyPresses();
+
+        if (Input.GetMouseButtonDown(0) && !attacking && weapon.activeInHierarchy)
+            attack();
+
+    }
 }

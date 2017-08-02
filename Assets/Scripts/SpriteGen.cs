@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class SpriteGen : MonoBehaviour {
 
-    Character playerBase;
-    Character npcBase;
+    C playerBase;
+    C npcBase;
     SpriteSet[] spriteSets;
 
 	// Use this for initialization
 	void Start ()
     {
         //Load in base Prefabs
-        npcBase = Resources.Load<Character>("Prefabs/NPC");
+        npcBase = Resources.Load<C>("Prefabs/NPC");
 
         //Load in Sprites
         Object[] sprites;
@@ -43,7 +43,7 @@ public class SpriteGen : MonoBehaviour {
 
     public void createNewNPC(Transform parent, Vector2 spawnPoint)
     {
-        Character npc = Instantiate(npcBase, spawnPoint, Quaternion.identity);
+        C npc = Instantiate(npcBase, spawnPoint, Quaternion.identity);
 
         //Set Parent and then reset position in relation to parent
         npc.transform.SetParent(parent);

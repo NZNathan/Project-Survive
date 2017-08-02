@@ -2,41 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Character {
+public class Enemy : CMoveCombatable {
 
-    //Components
-    protected Animator animator;
-    protected AudioSource audioSource;
 
-    //AI Variables
+    [Header("AI Variables")]
     public float aggroRange = 5f;
     public float attackRange = 0.9f;
-    private float pauseAfterAttack = 0.7f;
-
-    //Raycast Variables
-    private LayerMask attackMask; //Layer that all attackable objects are on
-    private float attackRayRange = 0.9f;
-    private IEnumerator attackAction;
-
-    //Attack Variables
-    public float attackVelocity = 350f;
-    private bool attacking = false;
-    private int attackDamage = 3;
-    private float attackPause = 0.25f;
-    private float attackForce = 500f; //knockback
+    AIState state;
 
     //Stun Variables
     private bool stunned = false;
     private float stunTime = 0.5f;
 
-    //Audio Variables
-    public AudioClip attackSound;
-    public AudioClip missSound;
-
     //Movement Variables
-    public float movementSpeed = 0.8f;
     private Transform target;
-
     private GameObject player;
 
     // Use this for initialization
@@ -44,93 +23,32 @@ public class Enemy : Character {
     {
         base.Start();
 
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-
-        attackMask = LayerMask.GetMask("Hitable");
         player = GameObject.Find("Player");
+        target = player.transform;
     }
 
-    void moveTowardTarget()
+    protected override void movement()
     {
-        Vector3 dir = getDirection(target.position, target.gameObject.GetComponent<Hitable>().objectHeight);
+        float movementSpeed = walkSpeed;
+
+        Vector3 dir = getDirection(target.position, target.gameObject.GetComponent<CHitable>().objectHeight);
 
         if (dir.x < 0 && transform.localScale.x != -1 * facingFront)
             faceLeft();
         else if (dir.x > 0 && transform.localScale.x != 1 * facingFront)
             faceRight();
 
-        animator.SetInteger("movementSpeed", 1);
-        rb2D.MovePosition(transform.position + dir * movementSpeed * Time.deltaTime);
+        animator.SetFloat("movementSpeed", 4f);
+        //rb2D.MovePosition(transform.position + dir * movementSpeed * Time.deltaTime);
+        rb2D.AddForce(dir * movementSpeed);
 
     }
 
     void attackTarget()
     {
-        //Stop movement and call attack animataion
-        attacking = true;
-        animator.SetInteger("movementSpeed", 0);
-        animator.ResetTrigger("stopAttack");
-        animator.SetTrigger("attack");
+        Vector2 direction = getDirection(target.position, target.gameObject.GetComponent<CHitable>().objectHeight);
 
-        Vector2 direction = getDirection(target.position, target.gameObject.GetComponent<Hitable>().objectHeight);
-
-        //Get position of player
-        Vector2 pos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
-
-        //Face attack direction
-        if (target.position.x < pos.x)
-            faceLeft();
-        else
-            faceRight();
-
-        attackAction = rayCastAttack(pos, direction, attackPause);
-        StartCoroutine(attackAction);
-
-        
-
-    }
-
-    IEnumerator rayCastAttack(Vector2 pos, Vector2 direction, float pause)
-    {
-        rb2D.AddForce(direction * attackVelocity);
-
-        yield return new WaitForSeconds(pause);
-
-        RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos, direction, attackRayRange, attackMask, -10, 10);
-        Debug.DrawRay(pos, direction * attackRayRange, Color.blue, 3f);
-
-        bool hitTarget = false;
-
-        //If the Raycast hits an object on the layer Enemy
-        foreach (RaycastHit2D r in hitObject)
-        {
-            if (r && r.transform.gameObject != this.gameObject && attacking)
-            {
-                //Hit attack
-                Hitable objectHit = r.transform.gameObject.GetComponentInParent<Hitable>();
-
-                //Apply damage and knockback
-                objectHit.loseHealth(attackDamage);
-                objectHit.knockback(pos, attackForce, objectHit.objectHeight);
-
-                audioSource.clip = attackSound;
-                audioSource.Play();
-
-                hitTarget = true;
-                break;
-            }
-        }
-
-        if (!hitTarget)
-        {
-            audioSource.clip = missSound;
-            audioSource.Play();
-        }
-
-        yield return new WaitForSeconds(pauseAfterAttack);
-
-        attacking = false;
+        attack(target.position, direction);
     }
 
     public override void loseHealth(int damage)
@@ -149,29 +67,16 @@ public class Enemy : Character {
     public IEnumerator stun()
     {
         stunned = true;
-        animator.SetInteger("movementSpeed", 0);
+        animator.SetFloat("movementSpeed", 0);
 
         yield return new WaitForSeconds(stunTime);
 
         stunned = false;
     }
 
-    //Merge with player movement into character??
-    public void faceLeft()
-    {
-        transform.localScale = new Vector3(-1, 1, 1);
-    }
-
-    public void faceRight()
-    {
-        transform.localScale = new Vector3(1, 1, 1);
-    }
-
     // Update is called once per frame
-    new void Update ()
+    new void FixedUpdate ()
     {
-        base.Update();
-
         if (stunned)
             return;
 
@@ -182,9 +87,9 @@ public class Enemy : Character {
             target = null;
 
         if (target != null && (player.transform.position - transform.position).magnitude > attackRange)
-            moveTowardTarget();
+            movement();
         else
-            animator.SetInteger("movementSpeed", 0);
+            animator.SetFloat("movementSpeed", 0);
 
         if (target != null && (player.transform.position - transform.position).magnitude < attackRange && !attacking)
             attackTarget();

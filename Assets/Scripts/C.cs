@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : Hitable {
+public class C : CHitable {
 
     //Components
     private SpriteRenderer[] spriteRenderers;
@@ -81,7 +81,7 @@ public class Character : Hitable {
     }
 	
 	// Update is called once per frame
-	public void Update ()
+	protected void Update ()
     {
         //Optimise so only runs while moving?
 		foreach(var sr in spriteRenderers)

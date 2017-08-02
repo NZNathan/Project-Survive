@@ -28,7 +28,7 @@ public class LandscapeGen : MonoBehaviour {
         generateNewAreas(1);
 
         //Generate random player sprite on start of game
-        player.GetComponent<Character>().setSpriteSet(spriteGenerator.getNewSprites());
+        player.GetComponent<C>().setSpriteSet(spriteGenerator.getNewSprites());
 
     }
 
@@ -55,7 +55,6 @@ public class LandscapeGen : MonoBehaviour {
 		if(player.transform.position.x > lastAreaPos - areaWidth)
         {
             generateNewAreas(1);
-            Debug.Log("New areas!");
         }
 	}
 }

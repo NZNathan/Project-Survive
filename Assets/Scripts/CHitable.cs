@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Hitable : MonoBehaviour {
+public abstract class CHitable : MonoBehaviour {
 
     //Components
     protected Rigidbody2D rb2D;
