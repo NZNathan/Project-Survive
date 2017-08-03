@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class CMoveable : C {
 
     //Components
-    protected Animator animator;
     protected BoxCollider2D col2d;
     protected AudioSource audioSource;
 
@@ -23,7 +22,6 @@ public abstract class CMoveable : C {
         base.Start();
 
         //Get Components
-        animator = GetComponent<Animator>();
         col2d = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -41,7 +39,7 @@ public abstract class CMoveable : C {
     protected void FixedUpdate()
     {
         //Call movement function to handle movements
-        if (canMove)
+        if (!dead && canMove)
             movement();
     }
 

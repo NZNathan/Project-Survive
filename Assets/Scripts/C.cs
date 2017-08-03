@@ -7,6 +7,7 @@ public class C : CHitable {
 
     //Components
     private SpriteRenderer[] spriteRenderers;
+    protected Animator animator;
 
     //Sprite Variables
     protected int facingFront = 1;
@@ -16,6 +17,9 @@ public class C : CHitable {
     private Material defaultMat;
     private float flashDuration = 0.1f;
 
+    //Movement Variables
+    protected bool dead = false;
+
     //Sprites
     Sprite[] sprites;
 
@@ -23,6 +27,7 @@ public class C : CHitable {
     {
         base.Start();
 
+        animator = GetComponent<Animator>();
         objectHeight = 0.48f;
     }
 
@@ -60,6 +65,21 @@ public class C : CHitable {
     }
 
     protected override void death()
+    {
+        //StopAllCoroutines();
+
+        foreach (Transform child in gameObject.GetComponentInChildren<Transform>())
+        {
+            child.gameObject.layer = 0;
+        }
+
+        gameObject.layer = 0;
+        animator.SetBool("dead", true);
+        Invoke("removeDeadBody", 4);
+        dead = true;
+    }
+
+    protected void removeDeadBody()
     {
         Destroy(healthBar.gameObject);
         Destroy(this.gameObject);

@@ -13,7 +13,8 @@ public abstract class CMoveCombatable : CMoveable {
 
     //Raycast Variables
     protected LayerMask attackMask; //Layer that all attackable objects are on
-    protected float attackRayRange = 0.9f;
+    public float attackRayRange = 0.9f;
+    private float raycastOffset = 0.5f;
     protected IEnumerator attackAction;
 
     protected bool attacking = false;
@@ -23,7 +24,7 @@ public abstract class CMoveCombatable : CMoveable {
     public float attackVelocity = 10f;
     public float pauseAfterAttack = 0.7f;
     public int attackDamage = 5;
-    protected float attackPause = 0.25f;
+    protected float attackPause = 0.25f; //"pause after starting attack before sends out ray
     [Tooltip("Knockback applied to target that is hit by attack")]
     public float attackForce = 500f; //knockback
 
@@ -66,6 +67,7 @@ public abstract class CMoveCombatable : CMoveable {
         attackAction = rayCastAttack(pos, dir, attackPause);
         StartCoroutine(attackAction);
 
+        rb2D.velocity = Vector2.zero; //Resets so running doesn't stack but reseting velocity so you can avoid knockback
         rb2D.AddForce(dir * attackVelocity);
 
     }
@@ -76,8 +78,8 @@ public abstract class CMoveCombatable : CMoveable {
 
         yield return new WaitForSeconds(pause);
 
-        RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos, direction, attackRayRange, attackMask, -10, 10);
-        Debug.DrawRay(pos, direction * attackRayRange, Color.blue, 3f);
+        RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos + (direction * raycastOffset), direction, attackRayRange, attackMask, -10, 10);
+        Debug.DrawRay(pos + (direction * raycastOffset), direction * attackRayRange, Color.blue, 3f);
 
         bool hitTarget = false;
 

@@ -100,6 +100,10 @@ public class Player : CMoveCombatable {
 	new void Update ()
     {
         base.Update();
+
+        if (dead)
+            return;
+
         keyPresses();
 
         if (Input.GetMouseButtonDown(0) && !attacking && weapon.activeInHierarchy)

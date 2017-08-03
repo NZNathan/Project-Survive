@@ -11,8 +11,8 @@ public class Enemy : CMoveCombatable {
     AIState state;
 
     //Stun Variables
-    private bool stunned = false;
     private float stunTime = 0.5f;
+    private bool stunned = false;
 
     //Movement Variables
     private Transform target;
@@ -77,7 +77,7 @@ public class Enemy : CMoveCombatable {
     // Update is called once per frame
     new void FixedUpdate ()
     {
-        if (stunned)
+        if (stunned || dead)
             return;
 
         //Abstract out a get target method for futre enemies?
