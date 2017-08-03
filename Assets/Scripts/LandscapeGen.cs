@@ -32,6 +32,34 @@ public class LandscapeGen : MonoBehaviour {
 
     }
 
+    public GameObject getFirstArea()
+    {
+        return areas[0];
+    }
+
+    public void resetLandscape(GameObject startPoint, Player player)
+    {
+        GameObject respawnArea = Instantiate(startPoint, new Vector3(0, 0, 0), Quaternion.identity);
+        respawnArea.name = "Respawned Area";
+
+        //Delete and reset all other areas
+        deleteLandscape();
+        areas = new GameObject[20];
+        areas[0] = respawnArea;
+        currentArea = 1;
+        lastAreaPos = areaWidth * currentArea;
+
+        this.player = player.gameObject;
+    }
+
+    void deleteLandscape()
+    {
+        for (int i = 0; i < currentArea; i++)
+        {
+            Destroy(areas[i]);
+        }
+    }
+
     void generateNewAreas(int count)
     {
         for (int i = 0; i < count; i++)
@@ -51,7 +79,10 @@ public class LandscapeGen : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (player == null)
+            return;
 
+        //Move into a invoke repeating method so it can be stopped and more efficient?
 		if(player.transform.position.x > lastAreaPos - areaWidth)
         {
             generateNewAreas(1);

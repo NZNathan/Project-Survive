@@ -56,7 +56,9 @@ public class Enemy : CMoveCombatable {
         base.loseHealth(damage);
 
         //Stop enemy if they are currently attacking and stun them 
-        StopCoroutine(attackAction);
+        if(attackAction != null)
+            StopCoroutine(attackAction);
+
         StopCoroutine("stun");
         attacking = false;
         animator.SetTrigger("stopAttack");
@@ -77,7 +79,7 @@ public class Enemy : CMoveCombatable {
     // Update is called once per frame
     new void FixedUpdate ()
     {
-        if (stunned || dead)
+        if (stunned || dead || player == null)
             return;
 
         //Abstract out a get target method for futre enemies?

@@ -34,11 +34,22 @@ public class SpriteGen : MonoBehaviour {
 
     }
 
+    //Returns a random sprite[] 
     public Sprite[] getNewSprites()
     {
         int spriteSet = Random.Range(0, spriteSets.Length); //Will never be 2
 
         return spriteSets[spriteSet].getSprites();
+    }
+
+    public string getFirstName()
+    {
+        return "Steve";
+    }
+
+    public string getLastName()
+    {
+        return "Stevenson";
     }
 
     public void createNewNPC(Transform parent, Vector2 spawnPoint)
@@ -51,6 +62,10 @@ public class SpriteGen : MonoBehaviour {
 
         //Change the new NPCs look
         npc.setSpriteSet(getNewSprites());
+
+        //Set NPC stats and details
+        npc.firstName = getFirstName();
+        npc.lastName = getLastName();
     }
 
 }

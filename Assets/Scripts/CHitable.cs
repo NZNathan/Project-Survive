@@ -42,8 +42,7 @@ public abstract class CHitable : MonoBehaviour {
         Vector2 pos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
 
         //Get direction by subtracting player location
-        target = (new Vector3(target.x, target.y + targetHeight/2, 0) - (Vector3)pos); 
-
+        target = (new Vector3(target.x, target.y + targetHeight/2, 0) - (Vector3)pos);
         //Normalize the direction so mouse distance doesn't affect it
         float distance = target.magnitude;
         Vector2 direction = target / distance; // This is now the normalized direction.

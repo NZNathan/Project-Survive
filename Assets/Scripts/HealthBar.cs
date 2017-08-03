@@ -27,6 +27,13 @@ public class HealthBar : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //If no target, target must be dead
+        if (target == null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         Vector2 healthBarPos = new Vector2(target.position.x, target.position.y + healthBarOffset);
 
         transform.position = Camera.main.WorldToScreenPoint(healthBarPos);

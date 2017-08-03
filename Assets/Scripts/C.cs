@@ -9,6 +9,10 @@ public class C : CHitable {
     private SpriteRenderer[] spriteRenderers;
     protected Animator animator;
 
+    [Header("Character Variables")]
+    public string firstName;
+    public string lastName;
+
     //Sprite Variables
     protected int facingFront = 1;
 
@@ -56,6 +60,11 @@ public class C : CHitable {
         setSprites();
     }
 
+    public Sprite[] getSprites()
+    {
+        return sprites;
+    }
+
     void setSprites()
     {
         for (int i = 0; i < spriteRenderers.Length; i++)
@@ -75,13 +84,12 @@ public class C : CHitable {
 
         gameObject.layer = 0;
         animator.SetBool("dead", true);
-        Invoke("removeDeadBody", 4);
+        Invoke("removeDeadBody", 1);
         dead = true;
     }
 
-    protected void removeDeadBody()
+    protected virtual void removeDeadBody()
     {
-        Destroy(healthBar.gameObject);
         Destroy(this.gameObject);
     }
 

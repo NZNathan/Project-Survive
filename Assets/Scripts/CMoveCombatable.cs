@@ -14,7 +14,6 @@ public abstract class CMoveCombatable : CMoveable {
     //Raycast Variables
     protected LayerMask attackMask; //Layer that all attackable objects are on
     public float attackRayRange = 0.9f;
-    private float raycastOffset = 0.5f;
     protected IEnumerator attackAction;
 
     protected bool attacking = false;
@@ -78,8 +77,10 @@ public abstract class CMoveCombatable : CMoveable {
 
         yield return new WaitForSeconds(pause);
 
-        RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos + (direction * raycastOffset), direction, attackRayRange, attackMask, -10, 10);
-        Debug.DrawRay(pos + (direction * raycastOffset), direction * attackRayRange, Color.blue, 3f);
+        Vector2 newPos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
+
+        RaycastHit2D[] hitObject = Physics2D.RaycastAll(newPos, direction, attackRayRange, attackMask, -10, 10);
+        Debug.DrawRay(newPos, direction * attackRayRange, Color.blue, 3f);
 
         bool hitTarget = false;
 
@@ -93,7 +94,7 @@ public abstract class CMoveCombatable : CMoveable {
 
                 //Apply damage and knockback
                 objectHit.loseHealth(attackDamage);
-                objectHit.knockback(pos, attackForce, objectHit.objectHeight);
+                objectHit.knockback(pos, attackForce, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
 
                 audioSource.clip = attackSound;
                 audioSource.Play();

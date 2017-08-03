@@ -88,6 +88,14 @@ public class Player : CMoveCombatable {
 
     }
 
+    protected override void removeDeadBody()
+    {
+        WorldManager.instance.playerDied(this);
+
+        Destroy(healthBar.gameObject);
+        Destroy(this.gameObject);
+    }
+
     void keyPresses()
     {
         bool qKeyDown = Input.GetKeyDown(KeyCode.Q);
