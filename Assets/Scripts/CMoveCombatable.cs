@@ -67,6 +67,7 @@ public abstract class CMoveCombatable : CMoveable {
         StartCoroutine(attackAction);
 
         rb2D.velocity = Vector2.zero; //Resets so running doesn't stack but reseting velocity so you can avoid knockback
+
         rb2D.AddForce(dir * attackVelocity);
 
     }
@@ -93,6 +94,7 @@ public abstract class CMoveCombatable : CMoveable {
                 CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 
                 //Apply damage and knockback
+                objectHit.setAttacker(this);
                 objectHit.loseHealth(attackDamage);
                 objectHit.knockback(pos, attackForce, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
 

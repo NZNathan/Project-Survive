@@ -88,12 +88,11 @@ public class Player : CMoveCombatable {
 
     }
 
-    protected override void removeDeadBody()
+    protected override void death()
     {
-        WorldManager.instance.playerDied(this);
+        base.death();
 
-        Destroy(healthBar.gameObject);
-        Destroy(this.gameObject);
+        WorldManager.instance.playerDied(this);
     }
 
     void keyPresses()

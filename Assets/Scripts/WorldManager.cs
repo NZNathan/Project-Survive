@@ -7,6 +7,9 @@ public class WorldManager : MonoBehaviour {
     //Singleton
     public static WorldManager instance;
 
+    //Camera
+    private CameraFollow cam;
+
     //Player
     private Player playerPrefab;
     private Player currentPlayer;
@@ -17,39 +20,45 @@ public class WorldManager : MonoBehaviour {
     private LandscapeGen landscapeGen;
     private SpriteGen spriteGenerator;
     private GameObject lastCheckpoint;
+    private float respawnTime = 3f;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         instance = this;
         landscapeGen = GameObject.Find("LandscapeManager").GetComponent<LandscapeGen>();
         spriteGenerator = GameObject.Find("CharacterManager").GetComponent<SpriteGen>();
         playerPrefab = Resources.Load<Player>("Prefabs/Player");
 
+        cam = Camera.main.GetComponentInParent<CameraFollow>();
         lastCheckpoint = GameObject.Find("Area(Clone)");
+
     }
 
     public void playerDied(Player player)
     {
+        //Zoom to revenge Target
+        Transform t = player.getAttacker().transform;
+        cam.setZoom(CameraFollow.revengeZoom, t);
+
+        //Craete a new Ancestor
         tailAncestor = new Ancestor(tailAncestor, player);
 
         if (headAncestor == null)
             headAncestor = tailAncestor;
 
-        resetPlayer();
+        Invoke("resetPlayer", respawnTime);
     }
 
     private void resetPlayer()
     {
-        currentPlayer = Instantiate(playerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        currentPlayer = spriteGenerator.createNewPlayer();
 
-        currentPlayer.GetComponent<C>().setSpriteSet(spriteGenerator.getNewSprites());
         currentPlayer.name = "Player";
-
         landscapeGen.resetLandscape(lastCheckpoint, currentPlayer);
         lastCheckpoint = landscapeGen.getFirstArea(); //FIXME: Instatiates it as it was in game world (npcs current positions not their starting ones)
 
-        Camera.main.GetComponentInParent<CameraFollow>().setTarget(currentPlayer.transform);
+        cam.resetCamera(currentPlayer.transform);
     }
 	
 	// Update is called once per frame

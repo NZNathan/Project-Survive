@@ -16,14 +16,14 @@ public class Enemy : CMoveCombatable {
 
     //Movement Variables
     private Transform target;
-    private GameObject player;
+    private Player player;
 
     // Use this for initialization
     new void Start()
     {
         base.Start();
 
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player").GetComponent<Player>();
         target = player.transform;
     }
 
@@ -79,7 +79,7 @@ public class Enemy : CMoveCombatable {
     // Update is called once per frame
     new void FixedUpdate ()
     {
-        if (stunned || dead || player == null)
+        if (stunned || dead || player == null || player.isDead())
             return;
 
         //Abstract out a get target method for futre enemies?

@@ -43,6 +43,11 @@ public class C : CHitable {
         whiteMat = Resources.Load<Material>("Materials/SolidWhite");
     }
 
+    public bool isDead()
+    {
+        return dead;
+    }
+
     public void faceBack()
     {
         spriteRenderers[(int) SpriteSet.Part.HEAD].sprite = sprites[(int)SpriteSet.Part.HEADBACKWARDS];
@@ -76,6 +81,7 @@ public class C : CHitable {
     protected override void death()
     {
         //StopAllCoroutines();
+        StopCoroutine("showHealth");
 
         foreach (Transform child in gameObject.GetComponentInChildren<Transform>())
         {

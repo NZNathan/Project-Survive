@@ -16,8 +16,12 @@ public abstract class CHitable : MonoBehaviour {
     public int maxHealth = 100;
     protected int currentHealth;
 
+    protected CMoveCombatable lastAttacker;
+
+    //Abstract Functions
     protected abstract IEnumerator flash();
     protected abstract void death();
+    
 
     public void Start()
     {
@@ -29,6 +33,16 @@ public abstract class CHitable : MonoBehaviour {
         healthBar = HealthBarManager.instance.newHealthBar();
         healthBar.setTarget(transform);
         healthBar.setActive(false);
+    }
+
+    public void setAttacker(CMoveCombatable attacker)
+    {
+        lastAttacker = attacker;
+    }
+
+    public CMoveCombatable getAttacker()
+    {
+        return lastAttacker;
     }
 
     public void knockback(Vector2 target, float force, float targetHeight)
@@ -45,7 +59,8 @@ public abstract class CHitable : MonoBehaviour {
         target = (new Vector3(target.x, target.y + targetHeight/2, 0) - (Vector3)pos);
         //Normalize the direction so mouse distance doesn't affect it
         float distance = target.magnitude;
-        Vector2 direction = target / distance; // This is now the normalized direction.
+
+        Vector2 direction = target / (distance + 0.0001f); // This is now the normalized direction. add 0.001f to avoid dividing by 0
 
         return direction;
     }
