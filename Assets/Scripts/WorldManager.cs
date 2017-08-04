@@ -11,7 +11,6 @@ public class WorldManager : MonoBehaviour {
     private CameraFollow cam;
 
     //Player
-    private Player playerPrefab;
     private Player currentPlayer;
     private Ancestor headAncestor;
     private Ancestor tailAncestor;
@@ -20,7 +19,9 @@ public class WorldManager : MonoBehaviour {
     private LandscapeGen landscapeGen;
     private SpriteGen spriteGenerator;
     private GameObject lastCheckpoint;
-    private float respawnTime = 3f;
+    private float respawnTime = 4f;
+
+    public float slowMotionScale = 0.2f;
 
     // Use this for initialization
     void Start ()
@@ -28,7 +29,6 @@ public class WorldManager : MonoBehaviour {
         instance = this;
         landscapeGen = GameObject.Find("LandscapeManager").GetComponent<LandscapeGen>();
         spriteGenerator = GameObject.Find("CharacterManager").GetComponent<SpriteGen>();
-        playerPrefab = Resources.Load<Player>("Prefabs/Player");
 
         cam = Camera.main.GetComponentInParent<CameraFollow>();
         lastCheckpoint = GameObject.Find("Area(Clone)");
@@ -37,6 +37,10 @@ public class WorldManager : MonoBehaviour {
 
     public void playerDied(Player player)
     {
+        //Start slow motion
+        Time.timeScale = slowMotionScale; //Scales time
+        Time.fixedDeltaTime = slowMotionScale * 0.02f; //Scale physics time 0.02f is default value so times it by that to remain to the same scale as time
+
         //Zoom to revenge Target
         Transform t = player.getAttacker().transform;
         cam.setZoom(CameraFollow.revengeZoom, t);
@@ -47,11 +51,15 @@ public class WorldManager : MonoBehaviour {
         if (headAncestor == null)
             headAncestor = tailAncestor;
 
-        Invoke("resetPlayer", respawnTime);
+        Invoke("resetPlayer", respawnTime * Time.timeScale);
     }
 
     private void resetPlayer()
     {
+        //Stop slow motion
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
         currentPlayer = spriteGenerator.createNewPlayer();
 
         currentPlayer.name = "Player";

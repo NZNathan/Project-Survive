@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Text;
 
 public class SpriteGen : MonoBehaviour {
 
@@ -8,6 +10,9 @@ public class SpriteGen : MonoBehaviour {
     Enemy enemyBase;
     C npcBase;
     SpriteSet[] spriteSets;
+
+    string[] firstNames;
+    string[] lastNames;
 
 	// Use this for initialization
 	void Start ()
@@ -25,6 +30,7 @@ public class SpriteGen : MonoBehaviour {
          //Set size of array to the amount of characters that are in the characters folder
         spriteSets = new SpriteSet[sprites.Length];
 
+        //Load in all sprites that will be used to generate all characters
         int i = 0;
         foreach (Object s in sprites)
         {
@@ -35,6 +41,8 @@ public class SpriteGen : MonoBehaviour {
             i++;
         }
 
+        //Read in the names from the name files
+        readInNames();
     }
 
     //Returns a random sprite[] 
@@ -47,12 +55,14 @@ public class SpriteGen : MonoBehaviour {
 
     public string getFirstName()
     {
-        return "Steve";
+        int random = Mathf.FloorToInt(Random.Range(0, firstNames.Length));
+        return firstNames[random];
     }
 
     public string getLastName()
     {
-        return "Stevenson";
+        int random = Mathf.FloorToInt(Random.Range(0, lastNames.Length));
+        return lastNames[random];
     }
 
     public Player createNewPlayer()
@@ -98,6 +108,15 @@ public class SpriteGen : MonoBehaviour {
         //Set NPC stats and details
         enemy.firstName = getFirstName();
         enemy.lastName = getLastName();
+    }
+
+    private void readInNames()
+    {
+        FileReader fileReader = new FileReader();
+
+        firstNames = fileReader.listToArray(fileReader.readFile("firstnames.txt"));
+
+        lastNames = fileReader.listToArray(fileReader.readFile("lastnames.txt"));
     }
 
 }

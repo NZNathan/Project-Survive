@@ -13,7 +13,7 @@ public class CameraFollow : MonoBehaviour {
     public static float defaultZoom = 5f;
     public static float revengeZoom = 1f;
 
-    //Revenge Variables
+    //Revenge Variables  - Extract out into different class?
     public GameObject cutsceneBars;
     public Text revengeTextName;
 
@@ -31,7 +31,7 @@ public class CameraFollow : MonoBehaviour {
 
     void smoothZoom()
     {
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, revengeZoom, 0.1f);
+        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, revengeZoom, (4f/Time.timeScale) * Time.deltaTime);
     }
 
     public void resetCamera(Transform target)
