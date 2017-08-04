@@ -5,13 +5,17 @@ using System;
 using System.IO;
 using System.Text;
 
-public class FileReader {
+public class FileReader
+{
 
     public string[] listToArray(List<string> list)
     {
+        if (list == null)
+            return new string[0];
+
         string[] array = new string[list.Count];
 
-        for(int i = 0; i < array.Length; i++)
+        for (int i = 0; i < array.Length; i++)
         {
             array[i] = list[i];
         }
@@ -24,46 +28,42 @@ public class FileReader {
     {
         List<string> content = new List<string>();
 
-        string filepath = Application.dataPath + "/Resources/Files/" + fileName;
+        string filepath = Application.dataPath + "/Resources/Files/" + fileName; //Application.dataPath is different on every platform
 
-        if (File.Exists(filepath))
+        try
         {
+            string line;
 
-            try
+            StreamReader reader = new StreamReader(filepath);
+
+            using (reader)
             {
-                string line;
 
-                StreamReader reader = new StreamReader(filepath);
-
-                using (reader)
+                do
                 {
+                    line = reader.ReadLine();
 
-                    do
+                    if (line != null)
                     {
-                        line = reader.ReadLine();
-
-                        if (line != null)
-                        {
-                            content.Add(line);
-                        }
+                        content.Add(line);
                     }
-                    while (line != null);
-
-                    // Done reading, close the reader and return true to broadcast success    
-                    reader.Close();
-                    return content;
                 }
+                while (line != null);
+
+                // Done reading, close the reader and return true to broadcast success    
+                reader.Close();
+                return content;
             }
-            // If anything broke in the try block, we throw an exception with information
-            // on what didn't work
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-                return null;
-            }
+        }
+        // If anything broke in the try block, we throw an exception with information
+        // on what didn't work
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return null;
 
         }
-        return null;
+
     }
 
 }

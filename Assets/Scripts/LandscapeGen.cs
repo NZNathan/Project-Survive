@@ -70,7 +70,7 @@ public class LandscapeGen : MonoBehaviour {
             spriteGenerator.createNewNPC(areas[currentArea].transform, new Vector2(-10,0));
             spriteGenerator.createNewNPC(areas[currentArea].transform, new Vector2(-10, 2));
 
-            spriteGenerator.createNewEnemy(areas[currentArea].transform, new Vector2(1, 2));
+            spriteGenerator.createNewEnemy(areas[currentArea].transform, new Vector2(-2, 0));
 
             //Increase the current area int and update the new area pos of the last area on the map
             currentArea++;

@@ -112,11 +112,9 @@ public class SpriteGen : MonoBehaviour {
 
     private void readInNames()
     {
-        FileReader fileReader = new FileReader();
+        firstNames = (Resources.Load<TextAsset>("Files/firstnames")).text.Split('\n');
 
-        firstNames = fileReader.listToArray(fileReader.readFile("firstnames.txt"));
-
-        lastNames = fileReader.listToArray(fileReader.readFile("lastnames.txt"));
+        lastNames = (Resources.Load<TextAsset>("Files/lastnames")).text.Split('\n');
     }
 
 }
