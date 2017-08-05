@@ -77,14 +77,14 @@ public class Player : CMoveCombatable {
         rb2D.AddForce(movement * movementSpeed);
     }
 
-    void attack()
+    void attack(Ability action)
     {
         //Get mouse position in relation to the world
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 direction = getDirection(mousePos, 0);
 
-        attack(mousePos, direction);
+        attack(mousePos, direction, action);
 
     }
 
@@ -95,12 +95,18 @@ public class Player : CMoveCombatable {
         WorldManager.instance.playerDied(this);
     }
 
-    void keyPresses()
+    void inputHandler()
     {
         bool qKeyDown = Input.GetKeyDown(KeyCode.Q);
 
         if (qKeyDown)
             drawWeapon();
+
+        if (Input.GetMouseButtonDown(0) && !attacking && weapon.activeInHierarchy)
+            attack(abilities[0]);
+
+        else if (Input.GetMouseButtonDown(1) && !attacking && weapon.activeInHierarchy)
+            attack(abilities[1]);
     }
 	
 	// Update is called once per frame
@@ -111,10 +117,6 @@ public class Player : CMoveCombatable {
         if (dead)
             return;
 
-        keyPresses();
-
-        if (Input.GetMouseButtonDown(0) && !attacking && weapon.activeInHierarchy)
-            attack();
-
+        inputHandler();
     }
 }

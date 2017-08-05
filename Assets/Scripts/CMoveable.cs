@@ -5,14 +5,18 @@ using UnityEngine;
 public abstract class CMoveable : C {
 
     //Components
-    protected BoxCollider2D col2d;
-    protected AudioSource audioSource;
+    [HideInInspector]
+    public CircleCollider2D col2D;
+    [HideInInspector]
+    public AudioSource audioSource;
 
     //Movement Variables
     [Header("Movement Variables")]
     public float walkSpeed = 1f;
     public float sprintSpeed = 2f;
-    protected bool canMove = true;
+
+    [HideInInspector]
+    public bool canMove = true;
 
     //Movement
     protected abstract void movement();
@@ -22,7 +26,7 @@ public abstract class CMoveable : C {
         base.Start();
 
         //Get Components
-        col2d = GetComponent<BoxCollider2D>();
+        col2D = GetComponent<CircleCollider2D>();
         audioSource = GetComponent<AudioSource>();
     }
 

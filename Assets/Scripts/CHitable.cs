@@ -5,7 +5,8 @@ using UnityEngine;
 public abstract class CHitable : MonoBehaviour {
 
     //Components
-    protected Rigidbody2D rb2D;
+    [HideInInspector]
+    public Rigidbody2D rb2D;
     protected HealthBar healthBar;
 
     [HideInInspector]
@@ -15,6 +16,10 @@ public abstract class CHitable : MonoBehaviour {
     [Header("Health Variables")]
     public int maxHealth = 100;
     protected int currentHealth;
+
+    //Invulnerable Variables
+    protected bool invulnerable = false;
+    protected float invulnTime = 0.3f;
 
     protected CMoveCombatable lastAttacker;
 
@@ -35,6 +40,11 @@ public abstract class CHitable : MonoBehaviour {
         healthBar.setActive(false);
     }
 
+    public bool isInvuln()
+    {
+        return invulnerable;
+    }
+
     public void setAttacker(CMoveCombatable attacker)
     {
         lastAttacker = attacker;
@@ -45,7 +55,7 @@ public abstract class CHitable : MonoBehaviour {
         return lastAttacker;
     }
 
-    public void knockback(Vector2 target, float force, float targetHeight)
+    public void knockback(Vector2 target, int force, float targetHeight)
     {
         rb2D.AddForce(getDirection(target, targetHeight) * force * -1); //Added object height?
     }
@@ -77,11 +87,21 @@ public abstract class CHitable : MonoBehaviour {
 
         healthBar.healthBar.fillAmount = (float) currentHealth /  (float) maxHealth;
 
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
             death();
         }
+        else
+        {
+            invulnerable = true;
+            Invoke("cancelInvuln", invulnTime);
+        }
+    }
+
+    void cancelInvuln()
+    {
+        invulnerable = false;
     }
 
     IEnumerator showHealth()

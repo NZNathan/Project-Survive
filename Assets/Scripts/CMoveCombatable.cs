@@ -11,21 +11,26 @@ public abstract class CMoveCombatable : CMoveable {
     //Weapon Variables
     protected bool weaponDrawn = false;
 
+    protected Ability[] abilities;
+
     //Raycast Variables
-    protected LayerMask attackMask; //Layer that all attackable objects are on
+    public static LayerMask attackMask; //Layer that all attackable objects are on
     public float attackRayRange = 0.9f;
     protected IEnumerator attackAction;
 
-    protected bool attacking = false;
+    [HideInInspector]
+    public bool attacking = false;
 
     //Basic Attack Variables
     [Tooltip("Distance traveled as attacking")]
     public float attackVelocity = 10f;
     public float pauseAfterAttack = 0.7f;
     public int attackDamage = 5;
+
     protected float attackPause = 0.25f; //"pause after starting attack before sends out ray
+
     [Tooltip("Knockback applied to target that is hit by attack")]
-    public float attackForce = 500f; //knockback
+    public int attackKnockback = 500; //knockback
 
     [Header("Audio Variables")]
     public AudioClip attackSound;
@@ -36,6 +41,11 @@ public abstract class CMoveCombatable : CMoveable {
     {
         base.Start();
         attackMask = LayerMask.GetMask("Hitable");
+
+        //TEMP
+        abilities = new Ability[2];
+        abilities[0] = new BasicAttack();
+        abilities[1] = new DashStrike();
     }
 
     protected void drawWeapon()
@@ -44,14 +54,14 @@ public abstract class CMoveCombatable : CMoveable {
         weapon.SetActive(weaponDrawn);
     }
 
-    protected void attack(Vector2 target, Vector2 dir)
+    protected void attack(Vector2 target, Vector2 dir, Ability ability)
     {
         //Stop movement and call attack animataion
         canMove = false;
         attacking = true;
         animator.SetFloat("movementSpeed", 0);
         animator.ResetTrigger("stopAttack");
-        animator.SetTrigger("attack");
+        animator.SetTrigger(ability.getAnimation());
 
         //Get position of player
         Vector2 pos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
@@ -62,13 +72,15 @@ public abstract class CMoveCombatable : CMoveable {
         else
             faceRight();
 
-        //Set as a variable so it can be referenced and stopped else where
-        attackAction = rayCastAttack(pos, dir, attackPause);
+        //Set as a variable so it can be referenced and stopped else where and to get a unique action that matches the ability
+        ability.setTarget(this, pos, dir);
+        attackAction = ability.getAction();
+
         StartCoroutine(attackAction);
 
         rb2D.velocity = Vector2.zero; //Resets so running doesn't stack but reseting velocity so you can avoid knockback
 
-        rb2D.AddForce(dir * attackVelocity);
+        rb2D.AddForce(dir * ability.getAbilityVelocity()); //DUPLICATE ADD FORCE IN RAYCAST??
 
     }
 
@@ -78,42 +90,46 @@ public abstract class CMoveCombatable : CMoveable {
 
         yield return new WaitForSeconds(pause);
 
-        Vector2 newPos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
-
-        RaycastHit2D[] hitObject = Physics2D.RaycastAll(newPos, direction, attackRayRange, attackMask, -10, 10);
-        Debug.DrawRay(newPos, direction * attackRayRange, Color.blue, 3f);
-
-        bool hitTarget = false;
-
-        //If the Raycast hits an object on the layer Enemy
-        foreach (RaycastHit2D r in hitObject)
+        //Check if attack can go through
+        if (!dead)
         {
-            if (r && r.transform.gameObject != this.gameObject && attacking)
+
+            Vector2 newPos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
+
+            RaycastHit2D[] hitObject = Physics2D.RaycastAll(newPos, direction, attackRayRange, attackMask, -10, 10);
+            Debug.DrawRay(newPos, direction * attackRayRange, Color.blue, 3f);
+
+            bool hitTarget = false;
+
+            //If the Raycast hits an object on the layer Enemy
+            foreach (RaycastHit2D r in hitObject)
             {
-                //Hit attack
-                CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
+                if (r && r.transform.gameObject != this.gameObject && attacking)
+                {
+                    //Hit attack
+                    CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 
-                //Apply damage and knockback
-                objectHit.setAttacker(this);
-                objectHit.loseHealth(attackDamage);
-                objectHit.knockback(pos, attackForce, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
+                    //Apply damage and knockback
+                    objectHit.setAttacker(this);
+                    objectHit.loseHealth(attackDamage);
+                    objectHit.knockback(pos, attackKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
 
-                audioSource.clip = attackSound;
-                audioSource.Play();
+                    audioSource.clip = attackSound;
+                    audioSource.Play();
 
-                hitTarget = true;
-                break;
+                    hitTarget = true;
+                    break;
+                }
             }
+
+            if (!hitTarget)
+            {
+                audioSource.clip = missSound;
+                audioSource.Play();
+            }
+
+            yield return new WaitForSeconds(pauseAfterAttack);
         }
-
-        if (!hitTarget)
-        {
-            audioSource.clip = missSound;
-            audioSource.Play();
-        }
-
-        yield return new WaitForSeconds(pauseAfterAttack);
-
         canMove = true;
         attacking = false;
     }

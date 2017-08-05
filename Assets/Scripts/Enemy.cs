@@ -11,7 +11,7 @@ public class Enemy : CMoveCombatable {
     AIState state;
 
     //Stun Variables
-    private float stunTime = 0.5f;
+    public float stunTime = 0.5f;
     private bool stunned = false;
 
     //Movement Variables
@@ -48,7 +48,7 @@ public class Enemy : CMoveCombatable {
     {
         Vector2 direction = getDirection(target.position, target.gameObject.GetComponent<CHitable>().objectHeight);
 
-        attack(target.position, direction);
+        attack(target.position, direction, abilities[0]);
     }
 
     public override void loseHealth(int damage)
