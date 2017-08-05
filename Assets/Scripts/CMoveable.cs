@@ -17,9 +17,9 @@ public abstract class CMoveable : C {
 
     [HideInInspector]
     public bool canMove = true;
-
+    protected bool moving = false;
     //Movement
-    protected abstract void movement();
+    protected abstract Vector2 movement();
 
     protected new void Start()
     {
@@ -40,15 +40,10 @@ public abstract class CMoveable : C {
         transform.localScale = new Vector3(1 * facingFront, 1, 1);
     }
 
-    protected void FixedUpdate()
+    void LateUpdate()
     {
-        //Call movement function to handle movements
-        if (!dead && canMove)
-            movement();
-    }
 
-    protected new void Update ()
-    {
-        base.Update();
-	}
+        //if (rb2D.velocity.magnitude < 1.5f && !moving)
+            //rb2D.velocity = Vector2.zero;
+    }
 }

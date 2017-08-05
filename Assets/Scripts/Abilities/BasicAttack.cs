@@ -106,13 +106,13 @@ public class BasicAttack : Ability
                     //Hit attack
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 
-                    if (objectHit.isInvuln() || objectHit.tag == caster.tag)
+                    if (objectHit.isInvuln() || objectHit.tag == caster.tag || objectHit.isKnockedback())
                         continue;
 
                     //Apply damage and knockback
                     objectHit.setAttacker(caster);
-                    objectHit.loseHealth(abilityDamage);
                     objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
+                    objectHit.loseHealth(abilityDamage);
 
                     caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();

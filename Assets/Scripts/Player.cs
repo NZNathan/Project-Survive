@@ -7,6 +7,8 @@ public class Player : CMoveCombatable {
 
     public static Player instance;
 
+    private Coroutine input;
+
     public new void Start()
     {
         base.Start();
@@ -25,7 +27,7 @@ public class Player : CMoveCombatable {
         UIManager.instance.setAbilities(abilities); //REmove when player is generated
     }
 
-    protected override void movement()
+    protected override Vector2 movement()
     {
         // read key inputs
         bool wKeyDown = Input.GetKey(KeyCode.W);
@@ -61,7 +63,12 @@ public class Player : CMoveCombatable {
         animator.SetFloat("movementSpeed", movement.magnitude);
 
         if (movement == Vector3.zero)
-            return;
+        {
+            moving = false;
+            return movement;
+        }
+        else
+            moving = true;
 
         //Flip player sprite if not looking the right way
         if (movement.x < 0 && transform.localScale.x != -1)
@@ -94,7 +101,7 @@ public class Player : CMoveCombatable {
     }
     */
 
-        rb2D.AddForce(movement * movementSpeed);
+        return movement * movementSpeed;// * Time.deltaTime;
     }
 
     bool attack(Ability action)
@@ -114,31 +121,50 @@ public class Player : CMoveCombatable {
         WorldManager.instance.playerDied(this);
     }
 
-    void inputHandler()
+    IEnumerator inputHandler()
     {
+        //Weapon Inputs
+        bool leftClick = Input.GetMouseButtonDown(0);
+        bool rightClick = Input.GetMouseButtonDown(1);
         bool qKeyDown = Input.GetKeyDown(KeyCode.Q);
 
         if (qKeyDown)
             drawWeapon();
 
-        if (Input.GetMouseButtonDown(0) && !attacking && weapon.activeInHierarchy)
+        //Call movement function to handle movements
+        Vector3 movementVector = Vector3.zero;
+
+        movementVector = movement();
+
+        yield return new WaitForFixedUpdate(); //For rigidbody interactions
+
+        if (leftClick && !attacking && weapon.activeInHierarchy)
             attack(abilities[0]);
 
-        else if (Input.GetMouseButtonDown(1) && !attacking && weapon.activeInHierarchy)
+        else if (rightClick && !attacking && weapon.activeInHierarchy)
         {
             if(attack(abilities[1]))
                 UIManager.instance.usedAbility(1);
         }
+
+        rb2D.AddForce(movementVector);
     }
-	
-	// Update is called once per frame
-	new void Update ()
+
+    // Update is called once per frame
+    new void Update ()
     {
         base.Update();
 
         if (dead)
             return;
 
-        inputHandler();
+        if (!dead && canMove && !attacking && !knockedback)
+            input = StartCoroutine("inputHandler"); //Alternte that coroutine??
+  
+    }
+
+    void LateUpdate()
+    {
+        
     }
 }

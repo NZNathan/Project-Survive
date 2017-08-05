@@ -31,7 +31,7 @@ public class Enemy : CMoveCombatable {
         target = player.transform;
     }
 
-    protected override void movement()
+    protected override Vector2 movement()
     {
         float movementSpeed = walkSpeed;
 
@@ -44,7 +44,7 @@ public class Enemy : CMoveCombatable {
 
         animator.SetFloat("movementSpeed", 4f);
         //rb2D.MovePosition(transform.position + dir * movementSpeed * Time.deltaTime);
-        rb2D.AddForce(dir * movementSpeed);
+        return(dir * movementSpeed);
 
     }
 
@@ -95,8 +95,9 @@ public class Enemy : CMoveCombatable {
     }
 
     // Update is called once per frame
-    new void FixedUpdate ()
+    void FixedUpdate ()
     {
+
         if (stunned || dead || player == null || player.isDead())
             return;
 
@@ -107,7 +108,7 @@ public class Enemy : CMoveCombatable {
             target = null;
 
         if (target != null && (player.transform.position - transform.position).magnitude > attackRange)
-            movement();
+            rb2D.AddForce(movement());
         else
             animator.SetFloat("movementSpeed", 0);
 

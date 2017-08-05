@@ -20,7 +20,7 @@ public abstract class CHitable : MonoBehaviour {
     //Invulnerable Variables
     protected bool invulnerable = false;
     public float invulnTime = 0.3f;
-
+    public bool knockedback = false;
     protected CMoveCombatable lastAttacker;
 
     //Collisions
@@ -49,6 +49,11 @@ public abstract class CHitable : MonoBehaviour {
         return invulnerable;
     }
 
+    public bool isKnockedback()
+    {
+        return knockedback;
+    }
+
     public void setAttacker(CMoveCombatable attacker)
     {
         lastAttacker = attacker;
@@ -61,7 +66,9 @@ public abstract class CHitable : MonoBehaviour {
 
     public virtual void knockback(Vector2 target, int force, float targetHeight)
     {
+        knockedback = true;
         rb2D.AddForce(getDirection(target, targetHeight) * force * -1); //Added object height?
+        StartCoroutine("beingKnockedBack");
     }
 
     protected Vector2 getDirection(Vector2 target, float targetHeight)
@@ -106,6 +113,21 @@ public abstract class CHitable : MonoBehaviour {
     void cancelInvuln()
     {
         invulnerable = false;
+        
+    }
+
+    IEnumerator beingKnockedBack()
+    {
+        knockedback = true;
+
+        yield return new WaitForSeconds(0.001f);
+
+        while (rb2D.velocity.magnitude > 0.6f) //Alter??
+        {
+            yield return new WaitForSeconds(0.001f);
+        }
+
+        knockedback = false;
     }
 
     IEnumerator showHealth()
