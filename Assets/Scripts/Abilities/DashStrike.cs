@@ -7,12 +7,15 @@ public class DashStrike : Ability {
 
     private CMoveCombatable caster;
 
+    string abilityName = "Dash Strike";
+
     //Ability Variables
     private int abilityDamage; //Scale to player damage?
     private float abilityVelocity = 800f;
-    private float cooldown = 5f;
     private string animation = "attack";
     private int abilityKnockback = 50;
+    private float cooldownTime = 5f;
+    private bool cooldown = false;
 
     //Sound Variables
     private AudioClip abilitySound;
@@ -35,9 +38,19 @@ public class DashStrike : Ability {
         abilityDamage = caster.attackDamage * 2;
     }
 
-    public float getCooldown()
+    public void setCooldown(bool cooldown)
+    {
+        this.cooldown = cooldown;
+    }
+
+    public bool onCooldown()
     {
         return cooldown;
+    }
+
+    public float getCooldown()
+    {
+        return cooldownTime;
     }
 
     public float getAbilityVelocity()
@@ -50,9 +63,9 @@ public class DashStrike : Ability {
         return animation;
     }
 
-    public void setIEnum(IEnumerator abilityAction)
+    public string getName()
     {
-        abilityAction = abilityActionSequence(pos, direction);
+        return abilityName;
     }
 
     public IEnumerator getAction()

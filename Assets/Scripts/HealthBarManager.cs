@@ -10,6 +10,9 @@ public class HealthBarManager : MonoBehaviour {
 
     private void Start()
     {
+        if (instance != null)
+            Destroy(instance.gameObject);
+
         instance = this;
     }
 

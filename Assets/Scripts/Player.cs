@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class Player : CMoveCombatable {
 
+    private PlayerGUI playerGUI;
+
+    public new void Start()
+    {
+        base.Start();
+
+        playerGUI = GameObject.Find("UIManager").GetComponent<PlayerGUI>();
+        playerGUI.setAbilities(abilities);
+    }
+
     protected override void movement()
     {
         // read key inputs
@@ -77,15 +87,14 @@ public class Player : CMoveCombatable {
         rb2D.AddForce(movement * movementSpeed);
     }
 
-    void attack(Ability action)
+    bool attack(Ability action)
     {
         //Get mouse position in relation to the world
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 direction = getDirection(mousePos, 0);
 
-        attack(mousePos, direction, action);
-
+        return attack(mousePos, direction, action);  
     }
 
     protected override void death()
@@ -106,7 +115,10 @@ public class Player : CMoveCombatable {
             attack(abilities[0]);
 
         else if (Input.GetMouseButtonDown(1) && !attacking && weapon.activeInHierarchy)
-            attack(abilities[1]);
+        {
+            if(attack(abilities[1]))
+                playerGUI.usedAbility(1);
+        }
     }
 	
 	// Update is called once per frame

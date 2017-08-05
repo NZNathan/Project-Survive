@@ -8,12 +8,14 @@ public class BasicAttack : Ability
 
     private CMoveCombatable caster;
 
+    string abilityName = "Attack";
+
     //Ability Variables
     private int abilityDamage; //Scale to player damage?
     private float abilityVelocity = 220;
-    private float cooldown = 0f;
     private string animation = "attack";
     private int abilityKnockback = 500;
+    private float cooldownTime = 0f;
 
     //Sound Variables
     private AudioClip abilityMissSound;
@@ -37,9 +39,19 @@ public class BasicAttack : Ability
         abilityDamage = caster.attackDamage;
     }
 
+    public void setCooldown(bool cooldown)
+    {
+        return;
+    }
+
+    public bool onCooldown()
+    {
+        return false;
+    }
+
     public float getCooldown()
     {
-        return cooldown;
+        return cooldownTime;
     }
 
     public float getAbilityVelocity()
@@ -52,10 +64,9 @@ public class BasicAttack : Ability
         return animation;
     }
 
-    public void setIEnum(IEnumerator abilityAction)
+    public string getName()
     {
-        abilityAction = abilityActionSequence(pos, direction);
-        Debug.Log(abilityAction);
+        return abilityName;
     }
 
     public IEnumerator getAction()

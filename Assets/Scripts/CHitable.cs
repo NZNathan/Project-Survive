@@ -19,7 +19,7 @@ public abstract class CHitable : MonoBehaviour {
 
     //Invulnerable Variables
     protected bool invulnerable = false;
-    protected float invulnTime = 0.3f;
+    public float invulnTime = 0.3f;
 
     protected CMoveCombatable lastAttacker;
 

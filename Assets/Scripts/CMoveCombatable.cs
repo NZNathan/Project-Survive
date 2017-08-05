@@ -54,84 +54,42 @@ public abstract class CMoveCombatable : CMoveable {
         weapon.SetActive(weaponDrawn);
     }
 
-    protected void attack(Vector2 target, Vector2 dir, Ability ability)
+    protected bool attack(Vector2 target, Vector2 dir, Ability ability)
     {
-        //Stop movement and call attack animataion
-        canMove = false;
-        attacking = true;
-        animator.SetFloat("movementSpeed", 0);
-        animator.ResetTrigger("stopAttack");
-        animator.SetTrigger(ability.getAnimation());
-
-        //Get position of player
-        Vector2 pos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
-
-        //Face attack direction
-        if (target.x < pos.x)
-            faceLeft();
-        else
-            faceRight();
-
-        //Set as a variable so it can be referenced and stopped else where and to get a unique action that matches the ability
-        ability.setTarget(this, pos, dir);
-        attackAction = ability.getAction();
-
-        StartCoroutine(attackAction);
-
-        rb2D.velocity = Vector2.zero; //Resets so running doesn't stack but reseting velocity so you can avoid knockback
-
-        rb2D.AddForce(dir * ability.getAbilityVelocity()); //DUPLICATE ADD FORCE IN RAYCAST??
-
-    }
-
-    protected IEnumerator rayCastAttack(Vector2 pos, Vector2 direction, float pause)
-    {
-        rb2D.AddForce(direction * attackVelocity);
-
-        yield return new WaitForSeconds(pause);
-
-        //Check if attack can go through
-        if (!dead)
+        //Check if ability is not on cooldown
+        if (!ability.onCooldown())
         {
+            //Stop movement and call attack animataion
+            canMove = false;
+            attacking = true;
+            animator.SetFloat("movementSpeed", 0);
+            animator.ResetTrigger("stopAttack");
+            animator.SetTrigger(ability.getAnimation());
 
-            Vector2 newPos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
+            //Get position of player
+            Vector2 pos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
 
-            RaycastHit2D[] hitObject = Physics2D.RaycastAll(newPos, direction, attackRayRange, attackMask, -10, 10);
-            Debug.DrawRay(newPos, direction * attackRayRange, Color.blue, 3f);
+            //Face attack direction
+            if (target.x < pos.x)
+                faceLeft();
+            else
+                faceRight();
 
-            bool hitTarget = false;
+            //Set as a variable so it can be referenced and stopped else where and to get a unique action that matches the ability
+            ability.setTarget(this, pos, dir);
+            attackAction = ability.getAction();
 
-            //If the Raycast hits an object on the layer Enemy
-            foreach (RaycastHit2D r in hitObject)
-            {
-                if (r && r.transform.gameObject != this.gameObject && attacking)
-                {
-                    //Hit attack
-                    CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
+            StartCoroutine(attackAction);
 
-                    //Apply damage and knockback
-                    objectHit.setAttacker(this);
-                    objectHit.loseHealth(attackDamage);
-                    objectHit.knockback(pos, attackKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
+            rb2D.velocity = Vector2.zero; //Resets so running doesn't stack but reseting velocity so you can avoid knockback
 
-                    audioSource.clip = attackSound;
-                    audioSource.Play();
+            rb2D.AddForce(dir * ability.getAbilityVelocity()); //DUPLICATE ADD FORCE IN RAYCAST??
 
-                    hitTarget = true;
-                    break;
-                }
-            }
-
-            if (!hitTarget)
-            {
-                audioSource.clip = missSound;
-                audioSource.Play();
-            }
-
-            yield return new WaitForSeconds(pauseAfterAttack);
+            return true; //Attack successful
         }
-        canMove = true;
-        attacking = false;
+
+        Debug.Log("FAIL");
+        return false; //Attack failed
     }
 
 }

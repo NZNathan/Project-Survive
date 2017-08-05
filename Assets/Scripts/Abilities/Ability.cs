@@ -6,13 +6,17 @@ public interface Ability {
 
     void setTarget(CMoveCombatable caster, Vector2 pos, Vector2 direction);
 
+    void setCooldown(bool cooldown);
+
+    bool onCooldown();
+
     float getCooldown();
 
     float getAbilityVelocity();
 
     string getAnimation();
 
-    void setIEnum(IEnumerator abilityAction);
+    string getName();
 
     IEnumerator getAction();
 }
