@@ -16,8 +16,8 @@ public class WorldManager : MonoBehaviour {
     private Ancestor tailAncestor;
 
     //Spawn
-    private LandscapeGen landscapeGen;
-    private SpriteGen spriteGenerator;
+    public LandscapeGen landscapeGen;
+    public SpriteGen spriteGenerator;
     private GameObject lastCheckpoint;
     private float respawnTime = 4f;
 
@@ -27,16 +27,17 @@ public class WorldManager : MonoBehaviour {
     void Start ()
     {
         instance = this;
-        landscapeGen = GameObject.Find("LandscapeManager").GetComponent<LandscapeGen>();
-        spriteGenerator = GameObject.Find("CharacterManager").GetComponent<SpriteGen>();
 
         cam = Camera.main.GetComponentInParent<CameraFollow>();
-        lastCheckpoint = GameObject.Find("Area(Clone)");
+        lastCheckpoint = GameObject.Find("StartArea");
 
     }
 
     public void playerDied(Player player)
     {
+        //Disable the UI
+        UIManager.instance.disableUI();
+
         //Start slow motion
         Time.timeScale = slowMotionScale; //Scales time
         Time.fixedDeltaTime = slowMotionScale * 0.02f; //Scale physics time 0.02f is default value so times it by that to remain to the same scale as time
@@ -67,11 +68,9 @@ public class WorldManager : MonoBehaviour {
         lastCheckpoint = landscapeGen.getFirstArea(); //FIXME: Instatiates it as it was in game world (npcs current positions not their starting ones)
 
         cam.resetCamera(currentPlayer.transform);
+
+        //Enable the UI
+        UIManager.instance.enableUI();
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
+
 }

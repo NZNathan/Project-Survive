@@ -15,22 +15,14 @@ public abstract class CMoveCombatable : CMoveable {
 
     //Raycast Variables
     public static LayerMask attackMask; //Layer that all attackable objects are on
-    public float attackRayRange = 0.9f;
     protected IEnumerator attackAction;
 
     [HideInInspector]
     public bool attacking = false;
 
     //Basic Attack Variables
-    [Tooltip("Distance traveled as attacking")]
-    public float attackVelocity = 10f;
     public float pauseAfterAttack = 0.7f;
     public int attackDamage = 5;
-
-    protected float attackPause = 0.25f; //"pause after starting attack before sends out ray
-
-    [Tooltip("Knockback applied to target that is hit by attack")]
-    public int attackKnockback = 500; //knockback
 
     [Header("Audio Variables")]
     public AudioClip attackSound;
@@ -88,7 +80,6 @@ public abstract class CMoveCombatable : CMoveable {
             return true; //Attack successful
         }
 
-        Debug.Log("FAIL");
         return false; //Attack failed
     }
 

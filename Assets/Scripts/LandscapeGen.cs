@@ -9,7 +9,7 @@ public class LandscapeGen : MonoBehaviour {
     public GameObject player;
 
     //Sprite Gen Variables
-    private SpriteGen spriteGenerator;
+    public SpriteGen spriteGenerator;
 
     //Area Gen Variables
     private GameObject[] areas;
@@ -22,13 +22,8 @@ public class LandscapeGen : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        spriteGenerator = GameObject.Find("CharacterManager").GetComponent<SpriteGen>();
-
         areas = new GameObject[20];
         generateNewAreas(1);
-
-        //Generate random player sprite on start of game
-        player.GetComponent<C>().setSpriteSet(spriteGenerator.getNewSprites());
 
     }
 

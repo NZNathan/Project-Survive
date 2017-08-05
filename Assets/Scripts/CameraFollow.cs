@@ -40,6 +40,8 @@ public class CameraFollow : MonoBehaviour {
         Camera.main.orthographicSize = defaultZoom;
         this.target = target;
 
+        transform.position = target.position + offest;
+
         cutsceneBars.SetActive(false);
     }
 

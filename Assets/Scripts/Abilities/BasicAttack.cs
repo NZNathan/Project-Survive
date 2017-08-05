@@ -10,20 +10,27 @@ public class BasicAttack : Ability
 
     string abilityName = "Attack";
 
-    //Ability Variables
     private int abilityDamage; //Scale to player damage?
+
+    //The force to be applied to the caster in the attack direction
     private float abilityVelocity = 220;
+
+    //Animation name in animator
     private string animation = "attack";
-    private int abilityKnockback = 500;
+
+    //Knockback applied to target that is hit by attack
+    private int abilityKnockback = 500; 
     private float cooldownTime = 0f;
 
     //Sound Variables
     private AudioClip abilityMissSound;
     private AudioClip abilityHitSound;
 
-    //Raycast Variables
+    //How far the ray will be cast
     private float abilityRange = 0.5f;
-    private float timeBeforeRay = 0.25f;
+
+    //Time animation takes to get to the frame where it deals damage
+    private float timeBeforeRay = 0.25f; 
 
     //Directional Variables
     private Vector2 pos;
@@ -99,7 +106,7 @@ public class BasicAttack : Ability
                     //Hit attack
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 
-                    if (objectHit.isInvuln())
+                    if (objectHit.isInvuln() || objectHit.tag == caster.tag)
                         continue;
 
                     //Apply damage and knockback
@@ -107,9 +114,9 @@ public class BasicAttack : Ability
                     objectHit.loseHealth(abilityDamage);
                     objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
 
-                    caster.audioSource.clip = abilityHitSound;
-                    //caster.audioSource.Play();
-
+                    caster.audioSource.clip = caster.attackSound;
+                    caster.audioSource.Play();
+                    
                     hitTarget = true;
                     break;
                 }
@@ -117,8 +124,8 @@ public class BasicAttack : Ability
 
             if (!hitTarget)
             {
-                caster.audioSource.clip = abilityMissSound;
-                //caster.audioSource.Play();
+                caster.audioSource.clip = caster.missSound;
+                caster.audioSource.Play();
             }
 
             yield return new WaitForSeconds(caster.pauseAfterAttack);

@@ -21,7 +21,7 @@ public class DashStrike : Ability {
     private AudioClip abilitySound;
 
     //Raycast Variables
-    private float abilityRange = 3.5f;
+    private float abilityRange = 3.1f;
     private float timeBeforeRay = 0.35f;
 
     //Directional Variables
@@ -75,7 +75,8 @@ public class DashStrike : Ability {
 
     IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
     {
-        caster.col2D.isTrigger = true;
+        string oldLayer = LayerMask.LayerToName(caster.gameObject.layer);
+        caster.gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
 
         caster.rb2D.AddForce(direction * abilityVelocity);
 
@@ -84,8 +85,6 @@ public class DashStrike : Ability {
         //Check if attack can go through
         if (!caster.isDead())
         {
-
-            Vector2 newPos = new Vector2(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2);
 
             RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
             Debug.DrawRay(pos, direction * abilityRange, Color.blue, 3f);
@@ -122,7 +121,7 @@ public class DashStrike : Ability {
             }
 
 
-            caster.col2D.isTrigger = false;
+            caster.gameObject.layer = LayerMask.NameToLayer(oldLayer);
             yield return new WaitForSeconds(caster.pauseAfterAttack);
         }
         caster.canMove = true;

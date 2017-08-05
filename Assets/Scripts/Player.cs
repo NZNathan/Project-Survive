@@ -5,14 +5,24 @@ using UnityEngine;
 
 public class Player : CMoveCombatable {
 
-    private PlayerGUI playerGUI;
+    public static Player instance;
 
     public new void Start()
     {
         base.Start();
 
-        playerGUI = GameObject.Find("UIManager").GetComponent<PlayerGUI>();
-        playerGUI.setAbilities(abilities);
+        //Singleton
+        if (instance == null)
+            instance = this;
+        else if(instance != this)
+        {
+            Destroy(instance.gameObject);
+            instance = this;
+        }
+
+        animator = GetComponentInChildren<Animator>();
+
+        UIManager.instance.setAbilities(abilities); //REmove when player is generated
     }
 
     protected override void movement()
@@ -117,7 +127,7 @@ public class Player : CMoveCombatable {
         else if (Input.GetMouseButtonDown(1) && !attacking && weapon.activeInHierarchy)
         {
             if(attack(abilities[1]))
-                playerGUI.usedAbility(1);
+                UIManager.instance.usedAbility(1);
         }
     }
 	

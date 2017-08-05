@@ -14,6 +14,9 @@ public class Enemy : CMoveCombatable {
     public float stunTime = 0.5f;
     private bool stunned = false;
 
+    //Knockback collisions off time
+    private float collisionOffTime = 0.3f;
+
     //Movement Variables
     private Transform target;
     private Player player;
@@ -22,8 +25,9 @@ public class Enemy : CMoveCombatable {
     new void Start()
     {
         base.Start();
-
-        player = GameObject.Find("Player").GetComponent<Player>();
+        
+        animator = GetComponentInChildren<Animator>();
+        player = Player.instance;
         target = player.transform;
     }
 
@@ -64,6 +68,20 @@ public class Enemy : CMoveCombatable {
         animator.SetTrigger("stopAttack");
 
         StartCoroutine("stun");
+    }
+
+    public override void knockback(Vector2 target, int force, float targetHeight)
+    {
+        base.knockback(target, force, targetHeight);
+
+        StartCoroutine("collisionsOff");
+    }
+
+    IEnumerator collisionsOff()
+    {
+        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        yield return new WaitForSeconds(collisionOffTime);
+        gameObject.layer = LayerMask.NameToLayer("Hitable");
     }
 
     public IEnumerator stun()

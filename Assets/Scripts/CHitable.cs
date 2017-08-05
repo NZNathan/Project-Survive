@@ -23,6 +23,10 @@ public abstract class CHitable : MonoBehaviour {
 
     protected CMoveCombatable lastAttacker;
 
+    //Collisions
+    public static int hitabelLayer = 5;
+    public static int noCollisionsLayer = 6;
+
     //Abstract Functions
     protected abstract IEnumerator flash();
     protected abstract void death();
@@ -35,7 +39,7 @@ public abstract class CHitable : MonoBehaviour {
 
         currentHealth = maxHealth;
 
-        healthBar = HealthBarManager.instance.newHealthBar();
+        healthBar = UIManager.instance.newHealthBar();
         healthBar.setTarget(transform);
         healthBar.setActive(false);
     }
@@ -55,7 +59,7 @@ public abstract class CHitable : MonoBehaviour {
         return lastAttacker;
     }
 
-    public void knockback(Vector2 target, int force, float targetHeight)
+    public virtual void knockback(Vector2 target, int force, float targetHeight)
     {
         rb2D.AddForce(getDirection(target, targetHeight) * force * -1); //Added object height?
     }

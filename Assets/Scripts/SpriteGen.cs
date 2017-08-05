@@ -6,13 +6,20 @@ using System.Text;
 
 public class SpriteGen : MonoBehaviour {
 
+    //Base Prefabs
     Player playerBase;
     Enemy enemyBase;
     C npcBase;
+
+    //Sprites
     SpriteSet[] spriteSets;
 
+    //Details
     string[] firstNames;
     string[] lastNames;
+
+    //Stats
+
 
 	// Use this for initialization
 	void Start ()
