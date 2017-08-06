@@ -43,7 +43,7 @@ public class Enemy : CMoveCombatable {
         else if (dir.x > 0 && transform.localScale.x != 1 * facingFront)
             faceRight();
 
-        animator.SetFloat("movementSpeed", 4f);
+        animator.SetFloat("movementSpeed", 2.5f);
         //rb2D.MovePosition(transform.position + dir * movementSpeed * Time.deltaTime);
         return(dir * movementSpeed);
 
@@ -98,6 +98,8 @@ public class Enemy : CMoveCombatable {
     // Update is called once per frame
     void FixedUpdate ()
     {
+        if(player == null)
+            player = Player.instance;
 
         if (stunned || dead || player == null || player.isDead())
             return;

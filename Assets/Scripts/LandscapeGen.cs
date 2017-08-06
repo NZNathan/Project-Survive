@@ -25,6 +25,8 @@ public class LandscapeGen : MonoBehaviour {
         areas = new GameObject[20];
         generateNewAreas(1);
 
+        Area.width = areaWidth;
+
     }
 
     public GameObject getFirstArea()

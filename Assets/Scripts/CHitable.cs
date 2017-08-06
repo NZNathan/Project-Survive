@@ -18,7 +18,7 @@ public abstract class CHitable : MonoBehaviour {
     protected int currentHealth;
 
     //Invulnerable Variables
-    protected bool invulnerable = false;
+    public bool invulnerable = true;
     public float invulnTime = 0.3f;
     public bool knockedback = false;
     protected CMoveCombatable lastAttacker;
@@ -105,15 +105,21 @@ public abstract class CHitable : MonoBehaviour {
         }
         else
         {
-            invulnerable = true;
-            Invoke("cancelInvuln", invulnTime);
+            StartCoroutine("invulnerableState");
         }
     }
 
-    void cancelInvuln()
+    IEnumerator invulnerableState()
     {
+        if (invulnerable)
+            yield break;
+
+        invulnerable = true;
+
+        yield return new WaitForSeconds(invulnTime);
+
         invulnerable = false;
-        
+
     }
 
     IEnumerator beingKnockedBack()

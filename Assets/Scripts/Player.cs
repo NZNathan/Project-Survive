@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Player : CMoveCombatable
 {
-
     public static Player instance;
 
     private Coroutine input;
