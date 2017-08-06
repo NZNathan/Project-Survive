@@ -23,6 +23,7 @@ public abstract class CMoveCombatable : CMoveable {
     //Basic Attack Variables
     public float pauseAfterAttack = 0.7f;
     public int attackDamage = 5;
+    protected bool lastAttackHit = false;
 
     [Header("Audio Variables")]
     public AudioClip attackSound;
@@ -39,6 +40,8 @@ public abstract class CMoveCombatable : CMoveable {
         abilities[0] = new BasicAttack();
         abilities[1] = new DashStrike();
     }
+
+    public abstract void attackHit();
 
     protected void drawWeapon()
     {

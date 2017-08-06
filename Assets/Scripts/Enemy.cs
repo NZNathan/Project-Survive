@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -114,5 +115,10 @@ public class Enemy : CMoveCombatable {
 
         if (target != null && (player.transform.position - transform.position).magnitude < attackRange && !attacking)
             attackTarget();
+    }
+
+    public override void attackHit()
+    {
+        //AI Reaaction here
     }
 }

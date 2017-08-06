@@ -28,6 +28,11 @@ public class Player : CMoveCombatable
         UIManager.instance.setAbilities(abilities); //REmove when player is generated
     }
 
+    public override void attackHit()
+    {
+        Camera.main.GetComponentInParent<CameraShake>().shake = .5f;
+    }
+
     protected override Vector2 movement()
     {
         // read key inputs
@@ -61,15 +66,18 @@ public class Player : CMoveCombatable
             movement.x += movementSpeed;
         }
 
-        animator.SetFloat("movementSpeed", movement.magnitude);
+        
 
         if (movement == Vector3.zero)
         {
             moving = false;
+            animator.SetFloat("movementSpeed", 0);
             return movement;
         }
         else
             moving = true;
+
+        animator.SetFloat("movementSpeed", movementSpeed);
 
         //Flip player sprite if not looking the right way
         if (movement.x < 0 && transform.localScale.x != -1)
@@ -149,6 +157,15 @@ public class Player : CMoveCombatable
         }
 
         rb2D.AddForce(movementVector);
+    }
+
+    //Set AActive
+    public override void loseHealth(int damage)
+    {
+        base.loseHealth(damage);
+
+        if(!dead)
+            Camera.main.GetComponentInParent<CameraShake>().shake = .5f;
     }
 
     // Update is called once per frame

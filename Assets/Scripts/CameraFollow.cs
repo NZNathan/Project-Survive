@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraFollow : MonoBehaviour {
-
+public class CameraFollow : MonoBehaviour
+{
     //Components
     public Transform target;
 
@@ -14,13 +14,14 @@ public class CameraFollow : MonoBehaviour {
     public static float revengeZoom = 1f;
 
     //Revenge Variables  - Extract out into different class?
+    [Header("Revenge Variables")]
     public GameObject cutsceneBars;
     public Text revengeTextName;
 
     //Smooth Variables
     public float smoothSpeed = 0.125f;
-    public Vector3 offest; 
-	
+    public Vector3 offest;
+
     private Vector3 velocity = Vector3.zero;
 
     private void Start()
@@ -31,7 +32,7 @@ public class CameraFollow : MonoBehaviour {
 
     void smoothZoom()
     {
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, revengeZoom, (4f/Time.timeScale) * Time.deltaTime);
+        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, revengeZoom, (4f / Time.timeScale) * Time.deltaTime);
     }
 
     public void resetCamera(Transform target)
@@ -55,7 +56,7 @@ public class CameraFollow : MonoBehaviour {
     }
 
     //Always match the update of the camera to the update of the player (possibly lateupdate to update)
-    void FixedUpdate ()
+    void FixedUpdate()
     {
         if (currentZoom != Camera.main.orthographicSize)
             smoothZoom();

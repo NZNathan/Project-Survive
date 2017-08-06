@@ -116,7 +116,8 @@ public class BasicAttack : Ability
 
                     caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();
-                    
+                    caster.attackHit();
+
                     hitTarget = true;
                     break;
                 }
