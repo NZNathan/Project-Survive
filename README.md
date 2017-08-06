@@ -1,10 +1,10 @@
-<h1>
+﻿<h1>
     <b>Project Survive</b>
 </h1>
 
 A small game made with Unity that I am doing for a University project, and probably after the project is over too (hopefully). 
 
-###Overview
+##Overview
 
 My game is a roguelite action game with RPG elements set in a dangerous post apocalyptic world hundreds of years after the ‘doomsday event’. The goal of the game is to make it through a randomly generated world to the ‘safe zone’ where the player will be able to live out their life in peace. Players will have to talk, fight or sneak their way through various situations with NPC characters that will react to previous player choices. 
 
