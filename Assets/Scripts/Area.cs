@@ -17,18 +17,22 @@ public class Area : MonoBehaviour {
     public void setUpArea()
     {
         //Set Up Trees
-        int amountOfTrees = Mathf.FloorToInt(Random.Range(0, maxNoTrees));
+        int amountOfTrees = Random.Range(1, maxNoTrees);
         trees = new GameObject[amountOfTrees];
-        //Fill array with trees from pool
         placeTrees();
     }
 	
 	void placeTrees()
     {
-        foreach (GameObject tree in trees)
+        for (int i = 0; i < trees.Length; i++)
         {
-            tree.transform.position = new Vector2(0,0);
-            tree.SetActive(true);
+            float xPos = Random.Range(-9f, 9f);
+            float yPos = Random.Range(-2f, 2f);
+            trees[i] = Instantiate(LandscapeGen.prefabs.forestTrees[0], Vector2.zero, Quaternion.identity);
+
+            //Set Parent and then reset position in relation to parent
+            trees[i].transform.SetParent(transform);
+            trees[i].transform.localPosition = new Vector2(xPos,yPos);
         }
     }
 }

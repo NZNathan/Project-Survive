@@ -18,7 +18,6 @@ public class WorldManager : MonoBehaviour {
     //Spawn
     public LandscapeGen landscapeGen;
     public SpriteGen spriteGenerator;
-    private GameObject lastCheckpoint;
     private float respawnTime = 4f;
 
     public float slowMotionScale = 0.2f;
@@ -29,8 +28,6 @@ public class WorldManager : MonoBehaviour {
         instance = this;
 
         cam = Camera.main.GetComponentInParent<CameraFollow>();
-        lastCheckpoint = GameObject.Find("StartArea");
-
     }
 
     public void playerDied(Player player)
@@ -64,8 +61,7 @@ public class WorldManager : MonoBehaviour {
         currentPlayer = spriteGenerator.createNewPlayer();
 
         currentPlayer.name = "Player";
-        landscapeGen.resetLandscape(lastCheckpoint, currentPlayer);
-        lastCheckpoint = landscapeGen.getFirstArea(); //FIXME: Instatiates it as it was in game world (npcs current positions not their starting ones)
+        landscapeGen.resetLandscape(currentPlayer);
 
         cam.resetCamera(currentPlayer.transform);
 

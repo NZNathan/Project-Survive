@@ -14,6 +14,14 @@ public class AbilityIcon : MonoBehaviour {
 
 	public void setAbility(Ability ability)
     {
+        //Reset the cooldown if the ability haad been used and then the player died
+        if (ability != null)
+        {
+            StopAllCoroutines();
+            ability.setCooldown(false);
+            cooldown.gameObject.SetActive(false);
+        }
+
         abilityName.text = ability.getName();
 
         this.ability = ability;

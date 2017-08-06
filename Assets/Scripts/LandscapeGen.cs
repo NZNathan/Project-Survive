@@ -5,74 +5,91 @@ using UnityEngine;
 public class LandscapeGen : MonoBehaviour {
 
     //Prefabs
-    public GameObject baseArea;
+    public static LandscapePrefabs prefabs;
+    public Area baseArea;
     public GameObject player;
 
     //Sprite Gen Variables
     public SpriteGen spriteGenerator;
 
     //Area Gen Variables
-    private GameObject[] areas;
-    private int currentArea = 0;
-
+    public static int levelSize = 21;
+    private Area[] areas;
+    
     //Area Spawn Location Variables
+    private int currentArea = 0;
     private float lastAreaPos;
+    private float firstAreaPos;
     public float areaWidth = 21.4f;
 
     // Use this for initialization
     void Start()
     {
-        areas = new GameObject[20];
-        generateNewAreas(1);
+        prefabs = GetComponent<LandscapePrefabs>();
+
+        areas = new Area[levelSize];
+        generateNewAreas();
 
         Area.width = areaWidth;
 
     }
 
-    public GameObject getFirstArea()
+    public Area getFirstArea()
     {
         return areas[0];
     }
 
-    public void resetLandscape(GameObject startPoint, Player player)
+    public void resetLandscape(Player player)
     {
-        GameObject respawnArea = Instantiate(startPoint, new Vector3(0, 0, 0), Quaternion.identity);
+        Area respawnArea = Instantiate(areas[0], new Vector3(0, 0, 0), Quaternion.identity);
         respawnArea.name = "Respawned Area";
 
         //Delete and reset all other areas
         deleteLandscape();
-        areas = new GameObject[20];
+        areas = new Area[levelSize];
+        generateNewAreas();
         areas[0] = respawnArea;
-        currentArea = 1;
-        lastAreaPos = areaWidth * currentArea;
-
+        
         this.player = player.gameObject;
     }
 
     void deleteLandscape()
     {
-        for (int i = 0; i < currentArea; i++)
+        for (int i = 0; i < levelSize; i++)
         {
-            Destroy(areas[i]);
+            Destroy(areas[i].gameObject);
         }
     }
 
-    void generateNewAreas(int count)
+    void generateNewAreas()
     {
-        for (int i = 0; i < count; i++)
+        float areaPos = 0f;
+        
+        for (int i = 0; i < levelSize; i++)
         {
-            areas[currentArea] = Instantiate(baseArea, new Vector3(lastAreaPos, 0, 0), Quaternion.identity);
+            areas[i] = Instantiate(baseArea, new Vector3(areaPos, 0, 0), Quaternion.identity);
+
+            
+            areas[i].setUpArea();
 
             //Generate Sprites
-            spriteGenerator.createNewNPC(areas[currentArea].transform, new Vector2(-10,0));
-            spriteGenerator.createNewNPC(areas[currentArea].transform, new Vector2(-10, 2));
+            spriteGenerator.createNewNPC(areas[i].transform, new Vector2(-10,0));
+            spriteGenerator.createNewNPC(areas[i].transform, new Vector2(-10, 2));
 
-            spriteGenerator.createNewEnemy(areas[currentArea].transform, new Vector2(-2, 0));
+            //First area is safe zone
+            if (i != 0)
+                spriteGenerator.createNewEnemy(areas[i].transform, new Vector2(-2, 0));
+
+            //Turn off area
+            areas[i].gameObject.SetActive(false);
 
             //Increase the current area int and update the new area pos of the last area on the map
-            currentArea++;
-            lastAreaPos = areaWidth * currentArea;
+            areaPos += areaWidth;
         }
+
+        currentArea = -1;
+        lastAreaPos = -areaWidth;
+        firstAreaPos = -areaWidth * 2;
     }
 	
 	// Update is called once per frame
@@ -82,9 +99,31 @@ public class LandscapeGen : MonoBehaviour {
             return;
 
         //Move into a invoke repeating method so it can be stopped and more efficient?
-		if(player.transform.position.x > lastAreaPos - areaWidth)
+		if(player.transform.position.x > lastAreaPos && currentArea <= levelSize-2)
         {
-            generateNewAreas(1);
+            //Set active the next area in front of the player and disable the one two areas behind
+            areas[currentArea+1].gameObject.SetActive(true);
+
+            if (currentArea >= 2)
+                areas[currentArea - 2].gameObject.SetActive(false);
+
+            if (currentArea + 2 != levelSize)
+            {
+                currentArea++;
+                lastAreaPos += areaWidth;
+                firstAreaPos += areaWidth;
+            }
         }
-	}
+        else if (player.transform.position.x < firstAreaPos && currentArea > 1)
+        {
+            //Set active the next area behind of the player and disable the one two areas ahead
+            areas[currentArea - 2].gameObject.SetActive(true);
+
+            areas[currentArea+1].gameObject.SetActive(false);
+
+            currentArea--;
+            lastAreaPos -= areaWidth;
+            firstAreaPos -= areaWidth;
+        }
+    }
 }

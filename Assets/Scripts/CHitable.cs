@@ -18,9 +18,9 @@ public abstract class CHitable : MonoBehaviour {
     protected int currentHealth;
 
     //Invulnerable Variables
-    public bool invulnerable = true;
+    protected bool invulnerable = false;
     public float invulnTime = 0.3f;
-    public bool knockedback = false;
+    protected bool knockedback = false;
     protected CMoveCombatable lastAttacker;
 
     //Collisions
