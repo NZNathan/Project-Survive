@@ -60,15 +60,18 @@ public class Player : CMoveCombatable {
             movement.x += movementSpeed;
         }
 
-        animator.SetFloat("movementSpeed", movement.magnitude);
+        
 
         if (movement == Vector3.zero)
         {
             moving = false;
+            animator.SetFloat("movementSpeed", 0);
             return movement;
         }
         else
             moving = true;
+
+        animator.SetFloat("movementSpeed", movementSpeed);
 
         //Flip player sprite if not looking the right way
         if (movement.x < 0 && transform.localScale.x != -1)
@@ -101,7 +104,7 @@ public class Player : CMoveCombatable {
     }
     */
 
-        return movement * movementSpeed;// * Time.deltaTime;
+        return movement * movementSpeed * Time.deltaTime;
     }
 
     bool attack(Ability action)
@@ -134,10 +137,12 @@ public class Player : CMoveCombatable {
         //Call movement function to handle movements
         Vector3 movementVector = Vector3.zero;
 
-        movementVector = movement();
+        if (!dead && canMove && !attacking && !knockedback && rb2D.velocity.magnitude < 1f)
+            movementVector = movement();
 
         yield return new WaitForFixedUpdate(); //For rigidbody interactions
-
+        
+        
         if (leftClick && !attacking && weapon.activeInHierarchy)
             attack(abilities[0]);
 
@@ -147,7 +152,41 @@ public class Player : CMoveCombatable {
                 UIManager.instance.usedAbility(1);
         }
 
-        rb2D.AddForce(movementVector);
+        if (!dead && canMove && !attacking && !knockedback && rb2D.velocity.magnitude < 1f)
+        {
+            //rb2D.AddForce(movementVector);
+            rb2D.MovePosition(transform.position + movementVector);
+        }
+    }
+
+    public override void knockback(Vector2 target, int force, float targetHeight)
+    {
+        knockedback = true;
+
+        IEnumerator knock = beingKnockedBack( target, force, targetHeight);
+
+        
+        StartCoroutine(knock);
+    }
+
+    IEnumerator beingKnockedBack(Vector2 target, int force, float targetHeight)
+    {
+        knockedback = true;
+
+        while (rb2D.velocity.magnitude < 0.9) //Alter??
+        {
+            yield return new WaitForEndOfFrame();
+            
+            StopCoroutine(input);
+            rb2D.AddForce(getDirection(target, targetHeight) * force * -1); //Added object height?
+        }
+
+        while (rb2D.velocity.magnitude > 1f) //Alter??
+        {
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        knockedback = false;
     }
 
     // Update is called once per frame
@@ -158,8 +197,7 @@ public class Player : CMoveCombatable {
         if (dead)
             return;
 
-        if (!dead && canMove && !attacking && !knockedback)
-            input = StartCoroutine("inputHandler"); //Alternte that coroutine??
+        input = StartCoroutine("inputHandler"); //Alternte that coroutine??
   
     }
 
