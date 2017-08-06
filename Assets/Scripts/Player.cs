@@ -154,8 +154,8 @@ public class Player : CMoveCombatable {
 
         if (!dead && canMove && !attacking && !knockedback && rb2D.velocity.magnitude < 1f)
         {
-            //rb2D.AddForce(movementVector);
-            rb2D.MovePosition(transform.position + movementVector);
+                rb2D.MovePosition(transform.position + movementVector);
+            
         }
     }
 
@@ -165,7 +165,7 @@ public class Player : CMoveCombatable {
 
         IEnumerator knock = beingKnockedBack( target, force, targetHeight);
 
-        
+        animator.SetFloat("movementSpeed", 0);
         StartCoroutine(knock);
     }
 
@@ -180,6 +180,8 @@ public class Player : CMoveCombatable {
             StopCoroutine(input);
             rb2D.AddForce(getDirection(target, targetHeight) * force * -1); //Added object height?
         }
+
+        yield return new WaitForSeconds(0.1f);
 
         while (rb2D.velocity.magnitude > 1f) //Alter??
         {
