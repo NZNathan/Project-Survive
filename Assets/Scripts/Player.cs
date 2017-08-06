@@ -199,7 +199,8 @@ public class Player : CMoveCombatable {
         if (dead)
             return;
 
-        input = StartCoroutine("inputHandler"); //Alternte that coroutine??
+        if (!dead && canMove && !attacking)
+            input = StartCoroutine("inputHandler"); //Alternte that coroutine??
   
     }
 
