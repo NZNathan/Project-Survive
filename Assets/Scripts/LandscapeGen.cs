@@ -8,6 +8,7 @@ public class LandscapeGen : MonoBehaviour {
     public static LandscapePrefabs prefabs;
     public Area baseArea;
     public GameObject player;
+    public DT scenarioTree;
 
     //Sprite Gen Variables
     public SpriteGen spriteGenerator;
@@ -26,6 +27,8 @@ public class LandscapeGen : MonoBehaviour {
     void Start()
     {
         prefabs = GetComponent<LandscapePrefabs>();
+        scenarioTree = GetComponent<DT>();
+        scenarioTree.createTree();
 
         areas = new Area[levelSize];
         generateNewAreas();
@@ -69,16 +72,17 @@ public class LandscapeGen : MonoBehaviour {
         {
             areas[i] = Instantiate(baseArea, new Vector3(areaPos, 0, 0), Quaternion.identity);
 
-            
             areas[i].setUpArea();
+            if (i > 0)
+            {
+                GameObject scenario = Instantiate(scenarioTree.getScenario(), new Vector3(areaPos, 0, 0), Quaternion.identity);
+                scenario.transform.SetParent(areas[i].transform);
+                Debug.Log(scenario.name);
+            }
 
             //Generate Sprites
-            spriteGenerator.createNewNPC(areas[i].transform, new Vector2(-10,0));
-            spriteGenerator.createNewNPC(areas[i].transform, new Vector2(-10, 2));
-
-            //First area is safe zone
-            if (i != 0)
-                spriteGenerator.createNewEnemy(areas[i].transform, new Vector2(-2, 0));
+            //spriteGenerator.createNewNPC(areas[i].transform, new Vector2(-10,0));
+            //spriteGenerator.createNewNPC(areas[i].transform, new Vector2(-10, 2));
 
             //Turn off area
             areas[i].gameObject.SetActive(false);

@@ -10,8 +10,19 @@ public class LandscapePrefabs : MonoBehaviour {
     //Forest Trees
     public GameObject[] forestTrees;
 
-	// Use this for initialization
-	void Start ()
+    //Camp Variables
+    public GameObject[] friendlyCamps;
+    public GameObject[] hostileCamps;
+
+    //Travellers Variables
+    public GameObject[] friendlyTravellers;
+    public GameObject[] hostileTravellers;
+
+    //Enemy Variables
+    public GameObject[] feralCrowds;
+
+    // Use this for initialization
+    void Start ()
     {
         prefabs = this;
     }
