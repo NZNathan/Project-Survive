@@ -50,9 +50,9 @@ public class LandscapeGen : MonoBehaviour {
         //Delete and reset all other areas
         deleteLandscape();
         areas = new Area[levelSize];
-        generateNewAreas();
         areas[0] = respawnArea;
-        
+        generateNewAreas();
+
         this.player = player.gameObject;
     }
 
@@ -70,14 +70,25 @@ public class LandscapeGen : MonoBehaviour {
         
         for (int i = 0; i < levelSize; i++)
         {
+            if(areas[i] != null)
+            {
+                areaPos += areaWidth;
+                continue;
+            }
+
             areas[i] = Instantiate(baseArea, new Vector3(areaPos, 0, 0), Quaternion.identity);
 
             areas[i].setUpArea();
             if (i > 0)
             {
+                //Get random scenario and instantiate it
                 GameObject scenario = Instantiate(scenarioTree.getScenario(), new Vector3(areaPos, 0, 0), Quaternion.identity);
                 scenario.transform.SetParent(areas[i].transform);
                 Debug.Log(scenario.name);
+
+                //Generation all Characters in scenario
+                C[] characters = scenario.GetComponentsInChildren<C>();
+                spriteGenerator.generateCharacters(characters);
             }
 
             //Generate Sprites

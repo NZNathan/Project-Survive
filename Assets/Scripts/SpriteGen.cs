@@ -72,6 +72,20 @@ public class SpriteGen : MonoBehaviour {
         return lastNames[random];
     }
 
+    public void generateCharacters(C[] characters)
+    {
+        //TODO: Extend to treat characters differently depending on their faction and details
+        foreach (C character in characters)
+        {
+            //Change the new NPCs look
+            character.setSpriteSet(getNewSprites());
+
+            //Set NPC stats and details
+            character.firstName = getFirstName();
+            character.lastName = getLastName();
+        }
+    }
+
     public Player createNewPlayer()
     {
         Player p = Instantiate(playerBase, new Vector3(0, 0, 0), Quaternion.identity);
@@ -93,6 +107,11 @@ public class SpriteGen : MonoBehaviour {
         npc.transform.SetParent(parent);
         npc.transform.localPosition = spawnPoint;
 
+        generateNPC(npc);
+    }
+
+    void generateNPC(C npc)
+    {
         //Change the new NPCs look
         npc.setSpriteSet(getNewSprites());
 
@@ -109,6 +128,11 @@ public class SpriteGen : MonoBehaviour {
         enemy.transform.SetParent(parent);
         enemy.transform.localPosition = spawnPoint;
 
+        generateEnemy(enemy);
+    }
+
+    void generateEnemy(Enemy enemy)
+    {
         //Change the new NPCs look
         enemy.setSpriteSet(getNewSprites());
 
