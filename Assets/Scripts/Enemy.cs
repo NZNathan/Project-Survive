@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Enemy : CMoveCombatable {
 
+    //Revenge Target Variables
+    private bool revengeTarget = false;
 
     [Header("AI Variables")]
     public float aggroRange = 5f;
@@ -93,6 +95,24 @@ public class Enemy : CMoveCombatable {
         yield return new WaitForSeconds(stunTime);
 
         stunned = false;
+    }
+
+    public void setRevengeTarget()
+    {
+        revengeTarget = true;
+        StartCoroutine("onBecameVisible");
+    }
+
+    private IEnumerator onBecameVisible()
+    {
+        SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
+        while (!renderer.isVisible)
+        {
+            Debug.Log("Revenegs");
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        WorldManager.instance.revengeTargetEnterScreen(transform);
     }
 
     // Update is called once per frame

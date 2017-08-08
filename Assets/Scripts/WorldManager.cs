@@ -10,6 +10,9 @@ public class WorldManager : MonoBehaviour {
     //Camera
     private CameraFollow cam;
 
+    //Revenge 
+    private float zoomInTime = 2f;
+
     //Player
     private Player currentPlayer;
     private Ancestor headAncestor;
@@ -30,8 +33,9 @@ public class WorldManager : MonoBehaviour {
         cam = Camera.main.GetComponentInParent<CameraFollow>();
     }
 
-    public void playerDied(Player player)
+    public void revengeTargetEnterScreen(Transform t)
     {
+        Debug.Log("REVENGE");
         //Disable the UI
         UIManager.instance.disableUI();
 
@@ -40,8 +44,27 @@ public class WorldManager : MonoBehaviour {
         Time.fixedDeltaTime = slowMotionScale * 0.02f; //Scale physics time 0.02f is default value so times it by that to remain to the same scale as time
 
         //Zoom to revenge Target
-        Transform t = player.getAttacker().transform;
         cam.setZoom(CameraFollow.revengeZoom, t);
+
+        Invoke("zoomOut", respawnTime * Time.timeScale);
+    }
+
+    private void zoomOut()
+    {
+        //Stop slow motion
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+
+        if(Player.instance != null)
+            cam.resetCamera(Player.instance.transform);
+
+        //Enable the UI
+        UIManager.instance.enableUI();
+    }
+
+    public void playerDied(Player player)
+    {
+        revengeTargetEnterScreen(player.getAttacker().transform);
 
         //Craete a new Ancestor
         tailAncestor = new Ancestor(tailAncestor, player);
