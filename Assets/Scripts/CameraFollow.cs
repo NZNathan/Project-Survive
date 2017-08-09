@@ -14,6 +14,7 @@ public class CameraFollow : MonoBehaviour
     private GameObject fadedObject;
 
     //Zoom Variables
+    private bool zooming = false;
     private float currentZoom;
     public static float defaultZoom = 5f;
     public static float revengeZoom = 1f;
@@ -40,7 +41,6 @@ public class CameraFollow : MonoBehaviour
 
     void checkPlayerObscured()
     {
-        Vector3 dir = Camera.main.transform.position - Player.instance.transform.position;
         RaycastHit2D hit = Physics2D.Raycast(Player.instance.transform.position, Camera.main.transform.forward, 500, blockMask);
         if (hit.collider != null)
         {
@@ -72,6 +72,7 @@ public class CameraFollow : MonoBehaviour
 
     public void resetCamera(Transform target)
     {
+        zooming = false;
         currentZoom = defaultZoom;
         Camera.main.orthographicSize = defaultZoom;
         this.target = target;
@@ -83,6 +84,7 @@ public class CameraFollow : MonoBehaviour
 
     public void setZoom(float zoom, Transform newTarget)
     {
+        zooming = true;
         currentZoom = zoom;
         target = newTarget;
 
@@ -93,7 +95,7 @@ public class CameraFollow : MonoBehaviour
     //Always match the update of the camera to the update of the player (possibly lateupdate to update)
     void FixedUpdate()
     {
-        if (currentZoom != Camera.main.orthographicSize)
+        if (currentZoom != Camera.main.orthographicSize && zooming)
             smoothZoom();
 
         if (target != null)

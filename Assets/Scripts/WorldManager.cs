@@ -10,9 +10,6 @@ public class WorldManager : MonoBehaviour {
     //Camera
     private CameraFollow cam;
 
-    //Revenge 
-    private float zoomInTime = 2f;
-
     //Player
     private Player currentPlayer;
     private Ancestor headAncestor;

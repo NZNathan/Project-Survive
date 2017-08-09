@@ -7,8 +7,6 @@ public class Player : CMoveCombatable
 {
     public static Player instance;
 
-    private Coroutine input;
-
     public new void Start()
     {
         base.Start();
@@ -172,11 +170,8 @@ public class Player : CMoveCombatable
     {
         base.Update();
 
-        if (dead)
-            return;
-
         if (!dead && canMove && !attacking)
-            input = StartCoroutine("inputHandler"); //Alternte that coroutine??
+             StartCoroutine("inputHandler"); //Alternte that coroutine??
 
     }
 
