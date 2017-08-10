@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour {
     //UI Objects
     public GameObject playerGUIObject;
     public GameObject healthBarManagerObject;
+    public GameObject bagGUIObject;
 
     // Use this for initialization
     void Start ()
@@ -49,12 +50,24 @@ public class UIManager : MonoBehaviour {
     {
         disablehealthBarManager();
         disablePlayerGUI();
+        disableBagGUI();
     }
 
     public void enableUI()
     {
         enablehealthBarManager();
         enablePlayerGUI();
+        enableBagGUI();
+    }
+
+        public void disableBagGUI()
+    {
+        bagGUIObject.SetActive(false);
+    }
+
+        public void enableBagGUI()
+    {
+        bagGUIObject.SetActive(true);
     }
 
     public void disablehealthBarManager()

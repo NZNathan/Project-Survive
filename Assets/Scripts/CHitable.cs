@@ -35,7 +35,6 @@ public abstract class CHitable : MonoBehaviour {
     public void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
-        
 
         currentHealth = maxHealth;
 

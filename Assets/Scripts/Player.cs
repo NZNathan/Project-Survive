@@ -6,10 +6,13 @@ using UnityEngine;
 public class Player : CMoveCombatable
 {
     public static Player instance;
+    [HideInInspector]
+    public Bag bag;
 
     public new void Start()
     {
         base.Start();
+        bag = new Bag(UIManager.instance.bagGUIObject.GetComponent<BagGUI>());
 
         //Singleton
         if (instance == null)
@@ -129,10 +132,20 @@ public class Player : CMoveCombatable
 
     IEnumerator inputHandler()
     {
+        //Bag Input
+        bool bKeyDown = Input.GetKeyDown(KeyCode.B);
+
+        if (bKeyDown)
+            bag.input();
+
+        if(bag.isOpen())
+            yield break;
+
         //Weapon Inputs
         bool leftClick = Input.GetMouseButtonDown(0);
         bool rightClick = Input.GetMouseButtonDown(1);
         bool qKeyDown = Input.GetKeyDown(KeyCode.Q);
+        
 
         if (qKeyDown)
             drawWeapon();

@@ -30,20 +30,34 @@ public class WorldManager : MonoBehaviour {
         cam = Camera.main.GetComponentInParent<CameraFollow>();
     }
 
-    public void revengeTargetEnterScreen(Transform t)
+    public void zoomIn(Transform t)
     {
         Debug.Log("REVENGE");
         //Disable the UI
         UIManager.instance.disableUI();
 
         //Start slow motion
-        Time.timeScale = slowMotionScale; //Scales time
-        Time.fixedDeltaTime = slowMotionScale * 0.02f; //Scale physics time 0.02f is default value so times it by that to remain to the same scale as time
+        slowTime();
 
         //Zoom to revenge Target
         cam.setZoom(CameraFollow.revengeZoom, t);
 
         Invoke("zoomOut", respawnTime * Time.timeScale);
+    }
+
+    public void slowTime()
+    {
+        //Start slow motion
+        Time.timeScale = slowMotionScale; //Scales time
+        Time.fixedDeltaTime = slowMotionScale * 0.02f; //Scale physics time 0.02f is default value so times it by that to remain to the same scale as time
+
+    }
+
+    public void normalTime()
+    {
+        //Stop slow motion
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
     }
 
     private void zoomOut()
@@ -61,7 +75,9 @@ public class WorldManager : MonoBehaviour {
 
     public void playerDied(Player player)
     {
-        revengeTargetEnterScreen(player.getAttacker().transform);
+        player.bag.closeBag();
+
+        zoomIn(player.getAttacker().transform);
 
         //Craete a new Ancestor
         tailAncestor = new Ancestor(tailAncestor, player);
@@ -74,9 +90,7 @@ public class WorldManager : MonoBehaviour {
 
     private void resetPlayer()
     {
-        //Stop slow motion
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.02f;
+        normalTime();        
 
         currentPlayer = spriteGenerator.createNewPlayer();
 

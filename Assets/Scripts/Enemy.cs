@@ -112,7 +112,7 @@ public class Enemy : CMoveCombatable {
             yield return new WaitForSeconds(0.3f);
         }
 
-        WorldManager.instance.revengeTargetEnterScreen(transform);
+        WorldManager.instance.zoomIn(transform);
     }
 
     // Update is called once per frame
