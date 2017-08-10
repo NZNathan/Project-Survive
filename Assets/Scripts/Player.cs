@@ -47,9 +47,9 @@ public class Player : CMoveCombatable
         {
             if (bag.addItem(itemInRange))
             {
-                Destroy(itemInRange.gameObject);
+                itemInRange.gameObject.SetActive(false);
                 Debug.Log("Item in range: " + itemInRange);
-                //itemInRange = null;
+                itemInRange = null;
             }
         }
     }
