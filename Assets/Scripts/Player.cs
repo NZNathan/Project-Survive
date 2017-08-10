@@ -6,8 +6,11 @@ using UnityEngine;
 public class Player : CMoveCombatable
 {
     public static Player instance;
+
+    //Inventory Variables
     [HideInInspector]
     public Bag bag;
+    private Item itemInRange;
 
     public new void Start()
     {
@@ -26,6 +29,29 @@ public class Player : CMoveCombatable
         animator = GetComponentInChildren<Animator>();
 
         UIManager.instance.setAbilities(abilities); //REmove when player is generated
+    }
+
+    public void itemEnterProximity(Item item)
+    {
+        itemInRange = item;
+    }
+
+    public void itemLeaveProximity(Item item)
+    {
+        itemInRange = null;
+    }
+
+    void pickupItem()
+    {
+        if(itemInRange != null)
+        {
+            if (bag.addItem(itemInRange))
+            {
+                Destroy(itemInRange.gameObject);
+                Debug.Log("Item in range: " + itemInRange);
+                //itemInRange = null;
+            }
+        }
     }
 
     public override void attackHit()
@@ -145,10 +171,13 @@ public class Player : CMoveCombatable
         bool leftClick = Input.GetMouseButtonDown(0);
         bool rightClick = Input.GetMouseButtonDown(1);
         bool qKeyDown = Input.GetKeyDown(KeyCode.Q);
-        
+        bool eKeyDown = Input.GetKeyDown(KeyCode.E);
 
         if (qKeyDown)
             drawWeapon();
+
+        if (eKeyDown)
+            pickupItem();
 
         //Call movement function to handle movements
         Vector3 movementVector = Vector3.zero;
@@ -169,7 +198,7 @@ public class Player : CMoveCombatable
         rb2D.AddForce(movementVector);
     }
 
-    //Set AActive
+    //Set Active
     public override void loseHealth(int damage)
     {
         base.loseHealth(damage);
@@ -188,8 +217,4 @@ public class Player : CMoveCombatable
 
     }
 
-    void LateUpdate()
-    {
-
-    }
 }

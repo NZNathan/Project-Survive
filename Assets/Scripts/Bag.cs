@@ -15,6 +15,21 @@ public class Bag {
 		this.bagGUI = bagGUI;
 	}
 
+    public bool addItem(Item item)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == null)
+            {
+                items[i] = item;
+                bagGUI.addItem(i, item);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 	public void input()
 	{
 		if(bagOpen)

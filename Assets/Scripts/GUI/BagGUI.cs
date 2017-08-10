@@ -15,16 +15,10 @@ public class BagGUI : MonoBehaviour {
 		
 	}
 
-	public void addItem(Item item)
+	public void addItem(int i, Item item)
 	{
-		for(int i = 0; i < slots.Length; i++)
-		{
-			if(slots[i].sprite == null)
-			{
-				slots[i].sprite = item.GetComponent<SpriteRenderer>().sprite;
-				return;
-			}
-		}
+        slots[i].sprite = item.GetComponent<SpriteRenderer>().sprite;
+        slots[i].enabled = true;
 	}
 
 	public void removeItem(int index)
@@ -34,7 +28,8 @@ public class BagGUI : MonoBehaviour {
 			if(i == index)
 			{
 				slots[i].sprite = null;
-				return;
+                slots[i].enabled = false;
+                return;
 			}
 		}
 	}
