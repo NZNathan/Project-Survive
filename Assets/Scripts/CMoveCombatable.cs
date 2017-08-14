@@ -11,7 +11,11 @@ public abstract class CMoveCombatable : CMoveable {
     //Weapon Variables
     protected bool weaponDrawn = false;
 
+    //Ability Variables
     protected Ability[] abilities;
+
+    //Collision Variables
+    private int originalLayer;
 
     //Raycast Variables
     public static LayerMask attackMask; //Layer that all attackable objects are on
@@ -34,11 +38,13 @@ public abstract class CMoveCombatable : CMoveable {
     {
         base.Start();
         attackMask = LayerMask.GetMask("Hitable");
+        originalLayer = gameObject.layer;
 
         //TEMP
-        abilities = new Ability[2];
+        abilities = new Ability[3];
         abilities[0] = new BasicAttack();
         abilities[1] = new DashStrike();
+        abilities[2] = new DodgeRoll();
     }
 
     public abstract void attackHit();
@@ -47,6 +53,18 @@ public abstract class CMoveCombatable : CMoveable {
     {
         weaponDrawn = !weaponDrawn;
         weapon.SetActive(weaponDrawn);
+    }
+
+    public void startCollisionsOff(float collisionlessTime)
+    {
+        StartCoroutine("collisionsOff", collisionlessTime);
+    }
+
+    IEnumerator collisionsOff(float collisionlessTime)
+    {
+        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        yield return new WaitForSeconds(collisionlessTime);
+        gameObject.layer = originalLayer;
     }
 
     protected bool attack(Vector2 target, Vector2 dir, Ability ability)

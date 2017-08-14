@@ -77,7 +77,7 @@ public class Player : CMoveCombatable
         Vector3 movement = Vector3.zero;
         float movementSpeed = walkSpeed;
 
-        if (shiftKeyDown)
+        if (shiftKeyDown && !weaponDrawn)
             movementSpeed = sprintSpeed;
 
         if (wKeyDown && !sKeyDown)
@@ -173,9 +173,15 @@ public class Player : CMoveCombatable
             yield break;
 
         //Weapon Inputs
+        //Attack
         bool leftClick = Input.GetMouseButtonDown(0);
+        //Ability #1
         bool rightClick = Input.GetMouseButtonDown(1);
+        //Ability #2
+        bool spaceKeyDown = Input.GetKeyDown(KeyCode.Space);
+        //Draw Weapon
         bool qKeyDown = Input.GetKeyDown(KeyCode.Q);
+        //Pickup Item
         bool eKeyDown = Input.GetKeyDown(KeyCode.E);
 
         if (qKeyDown)
@@ -191,13 +197,18 @@ public class Player : CMoveCombatable
 
         yield return new WaitForFixedUpdate(); //For rigidbody interactions
 
-        if (leftClick && !attacking && weapon.activeInHierarchy)
+        if (leftClick && !attacking && weaponDrawn)
             attack(abilities[0]);
 
-        else if (rightClick && !attacking && weapon.activeInHierarchy)
+        else if (rightClick && !attacking && weaponDrawn)
         {
             if (attack(abilities[1]))
                 UIManager.instance.usedAbility(1);
+        }
+        else if (spaceKeyDown && !attacking && weaponDrawn)
+        {
+            if (attack(abilities[2]))
+                UIManager.instance.usedAbility(2);
         }
 
         rb2D.AddForce(movementVector);

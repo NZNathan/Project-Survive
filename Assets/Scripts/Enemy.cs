@@ -77,15 +77,9 @@ public class Enemy : CMoveCombatable {
     {
         base.knockback(target, force, targetHeight);
 
-        StartCoroutine("collisionsOff");
+        startCollisionsOff(collisionOffTime);
     }
 
-    IEnumerator collisionsOff()
-    {
-        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
-        yield return new WaitForSeconds(collisionOffTime);
-        gameObject.layer = LayerMask.NameToLayer("Hitable");
-    }
 
     public IEnumerator stun()
     {
@@ -103,6 +97,7 @@ public class Enemy : CMoveCombatable {
         StartCoroutine("onBecameVisible");
     }
 
+    //If the enemy is a revenge target, when they first appear on camera, zoom into them
     private IEnumerator onBecameVisible()
     {
         SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
@@ -130,11 +125,13 @@ public class Enemy : CMoveCombatable {
         else
             target = null;
 
+        //If the enemy has a target, and its out of attack range move closer to it, else make sure the move animation is not playing
         if (target != null && (player.transform.position - transform.position).magnitude > attackRange)
             rb2D.AddForce(movement());
         else
             animator.SetFloat("movementSpeed", 0);
 
+        //If the enemy has a target and is within attacking range, and not already attacking, attack the target
         if (target != null && (player.transform.position - transform.position).magnitude < attackRange && !attacking)
             attackTarget();
     }

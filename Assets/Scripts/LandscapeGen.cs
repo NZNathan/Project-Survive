@@ -84,7 +84,6 @@ public class LandscapeGen : MonoBehaviour {
                 //Get random scenario and instantiate it
                 GameObject scenario = Instantiate(scenarioTree.getScenario(), new Vector3(areaPos, 0, 0), Quaternion.identity);
                 scenario.transform.SetParent(areas[i].transform);
-                Debug.Log(scenario.name);
 
                 //Generation all Characters in scenario
                 C[] characters = scenario.GetComponentsInChildren<C>();

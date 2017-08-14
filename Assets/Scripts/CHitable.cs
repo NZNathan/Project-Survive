@@ -104,21 +104,22 @@ public abstract class CHitable : MonoBehaviour {
         }
         else
         {
-            StartCoroutine("invulnerableState");
+            setInvulnerable(invulnTime);
         }
     }
 
-    IEnumerator invulnerableState()
+    public void setInvulnerable(float invulnTime)
     {
-        if (invulnerable)
-            yield break;
+        StartCoroutine("invulnerableState", invulnTime);
+    }
 
+    IEnumerator invulnerableState(float time)
+    {
         invulnerable = true;
 
-        yield return new WaitForSeconds(invulnTime);
+        yield return new WaitForSeconds(time);
 
         invulnerable = false;
-
     }
 
     IEnumerator beingKnockedBack()
