@@ -41,6 +41,11 @@ public class Player : CMoveCombatable
         itemInRange = null;
     }
 
+    public void useItem(int i)
+    {
+        bag.useItem(i);
+    }
+
     void pickupItem()
     {
         if(itemInRange != null)

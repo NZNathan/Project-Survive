@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Item : MonoBehaviour {
 
-    //Item ability interface
+    public ItemAbility itemAbility;
 
 	// Use this for initialization
 	void Start ()
     {
-		
+        itemAbility = GetComponent<ItemAbility>();
 	}
+
+    public void useItem()
+    {
+        itemAbility.useItem();
+    }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {

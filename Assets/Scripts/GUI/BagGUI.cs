@@ -7,18 +7,12 @@ public class BagGUI : MonoBehaviour {
 
 	public GameObject bagWindow;
 
-	public Image[] slots;
+	public ItemSlot[] slots;
 
-	// Use this for initialization
-	void Start () 
-	{
-		
-	}
 
 	public void addItem(int i, Item item)
 	{
-        slots[i].sprite = item.GetComponent<SpriteRenderer>().sprite;
-        slots[i].enabled = true;
+        slots[i].setIcon(item.GetComponent<SpriteRenderer>().sprite);    
 	}
 
 	public void removeItem(int index)
@@ -27,14 +21,22 @@ public class BagGUI : MonoBehaviour {
 		{
 			if(i == index)
 			{
-				slots[i].sprite = null;
-                slots[i].enabled = false;
+                slots[i].setIcon(null);
                 return;
 			}
 		}
 	}
 
-	public void openBag()
+    public void clearBag()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].setIcon(null);
+        }
+    }
+
+
+    public void openBag()
 	{
 		bagWindow.SetActive(true);
 		WorldManager.instance.slowTime();
@@ -45,10 +47,10 @@ public class BagGUI : MonoBehaviour {
 		bagWindow.SetActive(false);
 		WorldManager.instance.normalTime();
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-	}
+
+    public void closeBagBtn()
+    {
+        Player.instance.bag.closeBag();
+    }
+
 }

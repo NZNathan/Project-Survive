@@ -40,6 +40,20 @@ public abstract class CMoveable : C {
         transform.localScale = new Vector3(1 * facingFront, 1, 1);
     }
 
+    public void recoverHealth(int healAmount)
+    {
+        currentHealth += healAmount;
+
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        //Stop showHealth so it doesn't remove the health bar off an earilier call
+        StopCoroutine("showHealth");
+        StartCoroutine("showHealth");
+
+        healthBar.healthBar.fillAmount = (float)currentHealth / (float)maxHealth;
+    }
+
     void LateUpdate()
     {
 

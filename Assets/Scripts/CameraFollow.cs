@@ -41,27 +41,31 @@ public class CameraFollow : MonoBehaviour
 
     void checkPlayerObscured()
     {
-        RaycastHit2D hit = Physics2D.Raycast(Player.instance.transform.position, Camera.main.transform.forward, 500, blockMask);
-        if (hit.collider != null)
+        if (Player.instance != null)
         {
-            GameObject objectHit = hit.transform.gameObject;
-            if (objectHit != fadedObject) {
+            RaycastHit2D hit = Physics2D.Raycast(Player.instance.transform.position, Camera.main.transform.forward, 500, blockMask);
+            if (hit.collider != null)
+            {
+                GameObject objectHit = hit.transform.gameObject;
+                if (objectHit != fadedObject)
+                {
 
-                if (objectHit.GetComponent<SpriteRenderer>().sortingOrder > Player.instance.GetComponentInChildren<SpriteRenderer>().sortingOrder)
-                    objectHit.GetComponent<SpriteObject>().setTransparency(ObjectFade);
+                    if (objectHit.GetComponent<SpriteRenderer>().sortingOrder > Player.instance.GetComponentInChildren<SpriteRenderer>().sortingOrder)
+                        objectHit.GetComponent<SpriteObject>().setTransparency(ObjectFade);
 
-                if (fadedObject != null)
-                    fadedObject.GetComponent<SpriteObject>().setTransparency(1);
+                    if (fadedObject != null)
+                        fadedObject.GetComponent<SpriteObject>().setTransparency(1);
 
-                fadedObject = objectHit;
+                    fadedObject = objectHit;
+                }
+                return;
             }
-            return;
-        }
 
-        if (fadedObject != null)
-        {
-            fadedObject.GetComponent<SpriteObject>().setTransparency(1);
-            fadedObject = null;
+            if (fadedObject != null)
+            {
+                fadedObject.GetComponent<SpriteObject>().setTransparency(1);
+                fadedObject = null;
+            }
         }
     }
 
