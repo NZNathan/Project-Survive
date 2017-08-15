@@ -228,7 +228,7 @@ public class Player : CMoveCombatable
     {
         base.Update();
 
-        if (!dead && canMove && !attacking)
+        if (!dead && canMove && !attacking && !stunned)
              StartCoroutine("inputHandler"); //Alternte that coroutine??
 
     }

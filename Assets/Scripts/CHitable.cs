@@ -30,6 +30,7 @@ public abstract class CHitable : MonoBehaviour {
     //Abstract Functions
     protected abstract IEnumerator flash();
     protected abstract void death();
+    public abstract void knockUp(Vector2 target, int force, float targetHeight);
     
 
     public void Start()

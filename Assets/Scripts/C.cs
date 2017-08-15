@@ -13,6 +13,9 @@ public class C : CHitable {
     public string firstName;
     public string lastName;
 
+    //Collision Variables
+    protected int originalLayer;
+
     //Sprite Variables
     protected int facingFront = 1;
 
@@ -23,6 +26,8 @@ public class C : CHitable {
 
     //Movement Variables
     protected bool dead = false;
+    protected Coroutine fallingCo;
+    protected bool falling = false;
 
     //Sprites
     Sprite[] sprites;
@@ -31,7 +36,7 @@ public class C : CHitable {
     {
         base.Start();
 
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         objectHeight = 0.48f;
     }
 
@@ -76,6 +81,52 @@ public class C : CHitable {
         {
             spriteRenderers[i].sprite = sprites[i];
         }
+    }
+
+    public override void knockUp(Vector2 target, int force, float targetHeight)
+    {
+
+        float knockUpForce = 300f;
+        falling = true;
+
+        rb2D.AddForce(Vector2.up * knockUpForce);
+
+        animator.SetTrigger("inAir");
+
+        Vector3 dir = getDirection(target, targetHeight) * -1;
+        float startPos = (transform.position + dir * force / 1000).y; //What if hit vertically
+
+        if (fallingCo != null)
+            StopCoroutine(fallingCo);
+
+        fallingCo = StartCoroutine("fallDown", startPos);
+    }
+
+    IEnumerator fallDown(float floorY)
+    {
+        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+
+        yield return new WaitForSeconds(.1f);
+
+        float fallVelocity = 35;
+
+        while (transform.position.y > floorY + 0.03f && transform.position.y > WorldManager.lowerBoundary)
+        {
+            rb2D.AddForce(Vector2.down * fallVelocity);
+            yield return new WaitForFixedUpdate();
+        }
+
+        rb2D.velocity = new Vector2(0, 0);
+        animator.SetTrigger("hitFloor");
+
+        yield return new WaitForSeconds(.6f);
+
+        animator.SetTrigger("getUp");
+        gameObject.layer = originalLayer;
+
+        //yield return new WaitForSeconds(.2f); //Wait till up
+
+        falling = false;
     }
 
     protected override void death()

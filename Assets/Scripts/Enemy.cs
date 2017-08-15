@@ -15,7 +15,6 @@ public class Enemy : CMoveCombatable {
 
     //Stun Variables
     public float stunTime = 0.5f;
-    private bool stunned = false;
 
     //Knockback collisions off time
     private float collisionOffTime = 0.3f;
@@ -70,7 +69,8 @@ public class Enemy : CMoveCombatable {
         attacking = false;
         animator.SetTrigger("stopAttack");
 
-        StartCoroutine("stun");
+        if(!falling)
+            StartCoroutine("stun");
     }
 
     public override void knockback(Vector2 target, int force, float targetHeight)
@@ -116,7 +116,7 @@ public class Enemy : CMoveCombatable {
         if(player == null)
             player = Player.instance;
 
-        if (stunned || dead || player == null || player.isDead())
+        if (stunned || dead || player == null || player.isDead() || falling)
             return;
 
         //Abstract out a get target method for futre enemies?

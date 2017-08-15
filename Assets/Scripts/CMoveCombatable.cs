@@ -14,9 +14,6 @@ public abstract class CMoveCombatable : CMoveable {
     //Ability Variables
     protected Ability[] abilities;
 
-    //Collision Variables
-    private int originalLayer;
-
     //Raycast Variables
     public static LayerMask attackMask; //Layer that all attackable objects are on
     protected IEnumerator attackAction;
@@ -28,6 +25,10 @@ public abstract class CMoveCombatable : CMoveable {
     public float pauseAfterAttack = 0.7f;
     public int attackDamage = 5;
     protected bool lastAttackHit = false;
+
+    //Stun Variables
+    
+    public bool stunned = false;
 
     [Header("Audio Variables")]
     public AudioClip attackSound;
@@ -67,10 +68,64 @@ public abstract class CMoveCombatable : CMoveable {
         gameObject.layer = originalLayer;
     }
 
+    public override void knockUp(Vector2 target, int force, float targetHeight)
+    {
+        if (attackAction != null)
+        {
+            StopCoroutine(attackAction);
+            attacking = false;
+            canMove = true;
+        }
+
+        float knockUpForce = 300f;
+        falling = true;
+
+        rb2D.AddForce(Vector2.up * knockUpForce);
+
+        animator.SetTrigger("inAir");
+
+        Vector3 dir = getDirection(target, targetHeight) * -1;
+        float startPos = (transform.position + dir * force/1000).y; //What if hit vertically
+
+        if(fallingCo != null)
+            StopCoroutine(fallingCo);
+
+        fallingCo = StartCoroutine("fallDown", startPos);
+    }
+
+    IEnumerator fallDown(float floorY)
+    {
+        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        stunned = true;
+
+        yield return new WaitForSeconds(.1f);
+
+        float fallVelocity = 35;
+        
+        while (transform.position.y > floorY + 0.03f && transform.position.y > WorldManager.lowerBoundary)
+        {
+            rb2D.AddForce(Vector2.down * fallVelocity);
+            yield return new WaitForFixedUpdate();
+        }
+
+        rb2D.velocity = new Vector2(0, 0);
+        animator.SetTrigger("hitFloor");
+
+        yield return new WaitForSeconds(.6f);
+
+        animator.SetTrigger("getUp");
+        gameObject.layer = originalLayer;
+
+        //yield return new WaitForSeconds(.2f); //Wait till up
+
+        falling = false;
+        stunned = false; //Add in option to roll up off ground
+    }
+
     protected bool attack(Vector2 target, Vector2 dir, Ability ability)
     {
         //Check if ability is not on cooldown
-        if (!ability.onCooldown())
+        if (!ability.onCooldown() && !falling & !stunned)
         {
             //Stop movement and call attack animataion
             canMove = false;
@@ -95,8 +150,6 @@ public abstract class CMoveCombatable : CMoveable {
             StartCoroutine(attackAction);
 
             rb2D.velocity = Vector2.zero; //Resets so running doesn't stack but reseting velocity so you can avoid knockback
-
-            rb2D.AddForce(dir * ability.getAbilityVelocity()); //DUPLICATE ADD FORCE IN RAYCAST??
 
             return true; //Attack successful
         }

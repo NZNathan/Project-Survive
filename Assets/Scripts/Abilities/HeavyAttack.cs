@@ -3,26 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashStrike : Ability {
+public class HeavyAttack : Ability {
 
     private CMoveCombatable caster;
 
-    string abilityName = "Dash Strike";
+    string abilityName = "Heavy Attack";
 
     //Ability Variables
     private int abilityDamage; //Scale to player damage?
-    private float abilityVelocity = 1600;
+    private float abilityVelocity = 640;
     private string animation = "attack";
-    private int abilityKnockback = 50;
-    private float cooldownTime = 5f;
-    private bool cooldown = false;
-
-    //Sound Variables
-    private AudioClip abilitySound;
+    private int abilityKnockback = 1000;
+    private int abilityKnockUp = 1000;
+    private float cooldownTime = 0f;
 
     //Raycast Variables
-    private float abilityRange = 3.1f;
-    private float timeBeforeRay = 0.35f;
+    private float abilityRange = 0.7f;
+    private float timeBeforeRay = 0.25f;
 
     //Directional Variables
     private Vector2 pos;
@@ -40,12 +37,12 @@ public class DashStrike : Ability {
 
     public void setCooldown(bool cooldown)
     {
-        this.cooldown = cooldown;
+        return; //No cooldown
     }
 
     public bool onCooldown()
     {
-        return cooldown;
+        return false;
     }
 
     public float getCooldown()
@@ -73,12 +70,9 @@ public class DashStrike : Ability {
         return abilityActionSequence(pos, direction);
     }
 
-    IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
+    public IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
     {
-        string oldLayer = LayerMask.LayerToName(caster.gameObject.layer);
-        caster.gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
-
-        caster.rb2D.AddForce(direction * abilityVelocity);
+        caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 
         yield return new WaitForSeconds(timeBeforeRay);
 
@@ -86,42 +80,46 @@ public class DashStrike : Ability {
         if (!caster.isDead())
         {
 
-            RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
-            Debug.DrawRay(pos, direction * abilityRange, Color.blue, 3f);
+            Vector2 newPos = new Vector2(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2);
+
+            RaycastHit2D[] hitObject = Physics2D.RaycastAll(newPos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
+            Debug.DrawRay(newPos, direction * abilityRange, Color.black, 3f);
 
             bool hitTarget = false;
 
             //If the Raycast hits an object on the layer Enemy
             foreach (RaycastHit2D r in hitObject)
             {
+                Debug.Log(r.transform.gameObject.name);
                 if (r && r.transform.gameObject != caster.gameObject && caster.attacking)
                 {
                     //Hit attack
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 
-                    if (objectHit.isInvuln())
+                    if (objectHit.isInvuln() || objectHit.tag == caster.tag || objectHit.isKnockedback())
                         continue;
 
                     //Apply damage and knockback
                     objectHit.setAttacker(caster);
-                    objectHit.loseHealth(abilityDamage);
                     objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
+                    objectHit.knockUp(pos, abilityKnockUp, objectHit.objectHeight);
+                    objectHit.loseHealth(abilityDamage);
 
-                    caster.audioSource.clip = abilitySound;
+                    caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();
+                    caster.attackHit();
 
                     hitTarget = true;
+                    break;
                 }
             }
 
             if (!hitTarget)
             {
-                caster.audioSource.clip = abilitySound;
+                caster.audioSource.clip = caster.missSound;
                 caster.audioSource.Play();
             }
 
-
-            caster.gameObject.layer = LayerMask.NameToLayer(oldLayer);
             yield return new WaitForSeconds(caster.pauseAfterAttack);
         }
         caster.canMove = true;

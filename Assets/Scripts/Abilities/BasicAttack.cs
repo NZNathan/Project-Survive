@@ -13,7 +13,7 @@ public class BasicAttack : Ability
     private int abilityDamage; //Scale to player damage?
 
     //The force to be applied to the caster in the attack direction
-    private float abilityVelocity = 220;
+    private float abilityVelocity = 440;
 
     //Animation name in animator
     private string animation = "attack";
@@ -21,10 +21,6 @@ public class BasicAttack : Ability
     //Knockback applied to target that is hit by attack
     private int abilityKnockback = 500; 
     private float cooldownTime = 0f;
-
-    //Sound Variables
-    private AudioClip abilityMissSound;
-    private AudioClip abilityHitSound;
 
     //How far the ray will be cast
     private float abilityRange = 0.5f;
@@ -83,7 +79,7 @@ public class BasicAttack : Ability
 
     public IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
     {
-        caster.rb2D.AddForce(direction * abilityVelocity);
+        caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 
         yield return new WaitForSeconds(timeBeforeRay);
 

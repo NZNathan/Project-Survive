@@ -39,7 +39,7 @@ public class Area : MonoBehaviour {
         //Set Up Trees
         int amountOfTrees = Random.Range(1, maxNoTrees);
         trees = new GameObject[amountOfTrees];
-        placeTrees();
+        //placeTrees();
     }
 	
 	void placeTrees()

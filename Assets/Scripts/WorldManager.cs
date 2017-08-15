@@ -7,6 +7,10 @@ public class WorldManager : MonoBehaviour {
     //Singleton
     public static WorldManager instance;
 
+    //Boundaries
+    public static float lowerBoundary = -3.8f;
+    public static float upperBoundary = 3.8f;
+
     //Camera
     private CameraFollow cam;
 
