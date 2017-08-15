@@ -75,6 +75,7 @@ public class Enemy : CMoveCombatable {
 
     public override void knockback(Vector2 target, int force, float targetHeight)
     {
+        rb2D.velocity = Vector2.zero;
         base.knockback(target, force, targetHeight);
 
         startCollisionsOff(collisionOffTime);

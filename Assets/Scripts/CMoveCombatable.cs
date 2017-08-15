@@ -43,7 +43,7 @@ public abstract class CMoveCombatable : CMoveable {
 
         //TEMP
         abilities = new Ability[3];
-        abilities[0] = new BasicAttack();
+        abilities[0] = new HeavyAttack();
         abilities[1] = new DashStrike();
         abilities[2] = new DodgeRoll();
     }
@@ -101,7 +101,7 @@ public abstract class CMoveCombatable : CMoveable {
         yield return new WaitForSeconds(.1f);
 
         float fallVelocity = 35;
-        
+        //rb2D.velocity = Vector2.zero; //Reset velocity so it isn't taken into account for knockup
         while (transform.position.y > floorY + 0.03f && transform.position.y > WorldManager.lowerBoundary)
         {
             rb2D.AddForce(Vector2.down * fallVelocity);
@@ -149,7 +149,8 @@ public abstract class CMoveCombatable : CMoveable {
 
             StartCoroutine(attackAction);
 
-            rb2D.velocity = Vector2.zero; //Resets so running doesn't stack but reseting velocity so you can avoid knockback
+            if(!falling)
+                rb2D.velocity = Vector2.zero; //Resets so running doesn't stack but reseting velocity so you can avoid knockback
 
             return true; //Attack successful
         }

@@ -96,6 +96,10 @@ public class DashStrike : Ability {
             {
                 if (r && r.transform.gameObject != caster.gameObject && caster.attacking)
                 {
+                    //If an object has been hit first
+                    if (r.transform.gameObject.tag == "Object")
+                        continue;
+
                     //Hit attack
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 

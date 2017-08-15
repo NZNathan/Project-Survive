@@ -18,7 +18,7 @@ public class HeavyAttack : Ability {
     private float cooldownTime = 0f;
 
     //Raycast Variables
-    private float abilityRange = 0.7f;
+    private float abilityRange = 0.65f;
     private float timeBeforeRay = 0.25f;
 
     //Directional Variables
@@ -93,6 +93,15 @@ public class HeavyAttack : Ability {
                 Debug.Log(r.transform.gameObject.name);
                 if (r && r.transform.gameObject != caster.gameObject && caster.attacking)
                 {
+                    //If an object has been hit first
+                    if (r.transform.gameObject.tag == "Object")
+                    {
+                        if (r.collider.isTrigger)
+                            continue;
+                        else
+                            break;
+                    }
+
                     //Hit attack
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 
