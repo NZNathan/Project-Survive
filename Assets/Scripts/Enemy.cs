@@ -10,7 +10,7 @@ public class Enemy : CMoveCombatable {
 
     [Header("AI Variables")]
     public float aggroRange = 5f;
-    public float attackRange = 0.9f;
+    public float attackRange = 0.7f;
     AIState state;
 
     //Stun Variables
@@ -54,7 +54,7 @@ public class Enemy : CMoveCombatable {
     {
         Vector2 direction = getDirection(target.position, target.gameObject.GetComponent<CHitable>().objectHeight);
 
-        attack(target.position, direction, abilities[0]);
+        attack(target.position, direction, basicAttack);
     }
 
     public override void loseHealth(int damage)

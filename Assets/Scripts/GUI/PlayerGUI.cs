@@ -9,15 +9,15 @@ public class PlayerGUI : MonoBehaviour {
     
     public void setAbilities(Ability[] abilities)
     {
-        for(int i = 1; i < abilities.Length; i++)
+        for(int i = 0; i < abilities.Length; i++)
         {
-            abilityIcons[i-1].setAbility(abilities[i]);
+            abilityIcons[i].setAbility(abilities[i]);
         }
     }
 
     public void usedAbility(int ability)
     {
-        abilityIcons[ability - 1].startCooldown();
+        abilityIcons[ability].startCooldown();
     }
 
 }

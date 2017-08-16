@@ -119,7 +119,6 @@ public class HeavyAttack : Ability {
                     caster.attackHit();
 
                     hitTarget = true;
-                    break;
                 }
             }
 

@@ -12,6 +12,8 @@ public abstract class CMoveCombatable : CMoveable {
     protected bool weaponDrawn = false;
 
     //Ability Variables
+    protected Ability basicAttack;
+    protected Ability heavyAttack;
     protected Ability[] abilities;
 
     //Raycast Variables
@@ -26,8 +28,11 @@ public abstract class CMoveCombatable : CMoveable {
     public int attackDamage = 5;
     protected bool lastAttackHit = false;
 
+    //Heavy Attack Variables
+    protected float chargeTime = 0.5f;
+    protected float startedHolding = float.MaxValue;
+
     //Stun Variables
-    
     public bool stunned = false;
 
     [Header("Audio Variables")]
@@ -41,11 +46,14 @@ public abstract class CMoveCombatable : CMoveable {
         attackMask = LayerMask.GetMask("Hitable");
         originalLayer = gameObject.layer;
 
+        //Ability Setup
+        basicAttack = new BasicAttack();
+        heavyAttack = new HeavyAttack();
+
         //TEMP
-        abilities = new Ability[3];
-        abilities[0] = new HeavyAttack();
-        abilities[1] = new DashStrike();
-        abilities[2] = new DodgeRoll();
+        abilities = new Ability[2];
+        abilities[0] = new DashStrike();
+        abilities[1] = new DodgeRoll();
     }
 
     public abstract void attackHit();

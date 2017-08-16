@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : CMoveCombatable
 {
     public static Player instance;
+    private bool charged = false;
 
     //Inventory Variables
     [HideInInspector]
@@ -146,6 +147,10 @@ public class Player : CMoveCombatable
 
     bool attack(Ability action)
     {
+        //Reset charge attack time, so players can't hold it while using an ability and come straight out for a follow up heavy attack
+        startedHolding = float.MaxValue;
+        animator.SetBool("charged", false);
+
         //Get mouse position in relation to the world
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -174,7 +179,8 @@ public class Player : CMoveCombatable
 
         //Weapon Inputs
         //Attack
-        bool leftClick = Input.GetMouseButtonDown(0);
+        bool leftClickDown = Input.GetMouseButtonDown(0);
+        bool leftClickUp = Input.GetMouseButtonUp(0);
         //Ability #1
         bool rightClick = Input.GetMouseButtonDown(1);
         //Ability #2
@@ -197,18 +203,30 @@ public class Player : CMoveCombatable
 
         yield return new WaitForFixedUpdate(); //For rigidbody interactions
 
-        if (leftClick && !attacking && weaponDrawn)
-            attack(abilities[0]);
+        if (leftClickDown && !attacking && weaponDrawn)
+        {
+            Debug.Log("START CHARGE");
+            startedHolding = Time.time;
+        }
+
+        if (leftClickUp && !attacking && weaponDrawn)
+        {
+            Debug.Log("left click");
+            if (startedHolding + chargeTime < Time.time)
+                attack(heavyAttack); 
+            else
+                attack(basicAttack);
+        }
 
         else if (rightClick && !attacking && weaponDrawn)
         {
-            if (attack(abilities[1]))
-                UIManager.instance.usedAbility(1);
+            if (attack(abilities[0]))
+                UIManager.instance.usedAbility(0);
         }
         else if (spaceKeyDown && !attacking && weaponDrawn)
         {
-            if (attack(abilities[2]))
-                UIManager.instance.usedAbility(2);
+            if (attack(abilities[1]))
+                UIManager.instance.usedAbility(1);
         }
 
         rb2D.AddForce(movementVector);
@@ -231,6 +249,8 @@ public class Player : CMoveCombatable
         if (!dead && canMove && !attacking && !stunned)
              StartCoroutine("inputHandler"); //Alternte that coroutine??
 
+        if (startedHolding + chargeTime < Time.time)
+            animator.SetBool("charged", true);
     }
 
 }
