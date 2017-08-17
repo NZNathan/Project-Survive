@@ -10,7 +10,7 @@ public class HealthBar : MonoBehaviour {
     public Image bgBar;
 
     private Transform target;
-    private float healthBarOffset = 0.65f;
+    private float healthBarOffset = 0.7f;
 
     public void setTarget(Transform target)
     {

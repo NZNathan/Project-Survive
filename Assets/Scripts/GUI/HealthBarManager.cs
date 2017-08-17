@@ -8,11 +8,6 @@ public class HealthBarManager : MonoBehaviour {
 
     public HealthBar baseHealthBar;
 
-    private void Start()
-    {
-
-    }
-
     public HealthBar newHealthBar()
     {
         HealthBar hpBar = Instantiate(baseHealthBar, healthBarParent);

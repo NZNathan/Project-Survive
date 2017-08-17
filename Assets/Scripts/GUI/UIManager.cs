@@ -8,10 +8,12 @@ public class UIManager : MonoBehaviour {
     public static UIManager instance;
 
     //UI Components
+    private FloatingTextManager floatingTextManager;
     private HealthBarManager healthBarManager;
     private PlayerGUI playerGUI;
 
     //UI Objects
+    public GameObject floatingTextManagerObject;
     public GameObject playerGUIObject;
     public GameObject healthBarManagerObject;
     public GameObject bagGUIObject;
@@ -24,6 +26,7 @@ public class UIManager : MonoBehaviour {
 
         instance = this;
 
+        floatingTextManager = GetComponent<FloatingTextManager>();
         healthBarManager = GetComponent<HealthBarManager>();
         playerGUI = GetComponent<PlayerGUI>();
     }
@@ -45,10 +48,17 @@ public class UIManager : MonoBehaviour {
         return healthBarManager.newHealthBar();
     }
 
+    //--- Floating Text Manager METHODS ---
+    public void newTextMessage(GameObject talker, string sentence)
+    {
+        floatingTextManager.createText(talker, sentence);
+    }
+
     //--- UI CONTROL METHODS ---
     public void disableUI()
     {
         disablehealthBarManager();
+        disablefloatingTextManager();
         disablePlayerGUI();
         disableBagGUI();
     }
@@ -56,6 +66,7 @@ public class UIManager : MonoBehaviour {
     public void enableUI()
     {
         enablehealthBarManager();
+        enablefloatingTextManager();
         enablePlayerGUI();
         enableBagGUI();
     }
@@ -78,6 +89,17 @@ public class UIManager : MonoBehaviour {
     public void enablehealthBarManager()
     {
         healthBarManagerObject.SetActive(true);
+    }
+
+    public void disablefloatingTextManager()
+    {
+        floatingTextManager.disable();
+        floatingTextManagerObject.SetActive(false);
+    }
+
+    public void enablefloatingTextManager()
+    {
+        floatingTextManagerObject.SetActive(true);
     }
 
     public void disablePlayerGUI()
