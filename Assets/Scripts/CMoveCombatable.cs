@@ -155,7 +155,7 @@ public abstract class CMoveCombatable : CMoveable {
             ability.setTarget(this, pos, dir);
             attackAction = ability.getAction();
 
-            UIManager.instance.newTextMessage(this.gameObject, "Take this!");
+            UIManager.instance.newTextMessage(this.gameObject, WorldManager.instance.banterGen.getAttackYell());
 
             StartCoroutine(attackAction);
 

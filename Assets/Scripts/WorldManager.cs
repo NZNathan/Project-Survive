@@ -24,13 +24,17 @@ public class WorldManager : MonoBehaviour {
     public SpriteGen spriteGenerator;
     private float respawnTime = 4f;
 
+    //Dialogue
+    [HideInInspector]
+    public BanterGenerator banterGen;
+
     public float slowMotionScale = 0.2f;
 
     // Use this for initialization
     void Start ()
     {
         instance = this;
-
+        banterGen = new BanterGenerator();
         cam = Camera.main.GetComponentInParent<CameraFollow>();
     }
 

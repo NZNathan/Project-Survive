@@ -53,5 +53,10 @@ public class FloatingText : MonoBehaviour {
 
             transform.position = Camera.main.WorldToScreenPoint(textPos);
         }
+        else
+        {
+            CancelInvoke();
+            turnoff();
+        }
     }
 }

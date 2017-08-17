@@ -52,7 +52,7 @@ public class FloatingTextManager : MonoBehaviour {
         {
             if (pool[i].gameObject.activeInHierarchy && pool[i].getTarget() == target)
             {
-                pool[i].StopAllCoroutines();
+                pool[i].CancelInvoke();
                 pool[i].turnoff();
                 return;
             }
@@ -65,7 +65,7 @@ public class FloatingTextManager : MonoBehaviour {
         {
             if (pool[i].gameObject.activeInHierarchy)
             {
-                pool[i].StopAllCoroutines();
+                pool[i].CancelInvoke();
                 pool[i].turnoff();
             }
         }

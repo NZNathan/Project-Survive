@@ -89,7 +89,7 @@ public abstract class CHitable : MonoBehaviour {
     //Set AActive
     public virtual void loseHealth(int damage)
     {
-        UIManager.instance.newTextMessage(this.gameObject, "Oh my!");
+        UIManager.instance.newTextMessage(this.gameObject, WorldManager.instance.banterGen.getPainYell());
         StartCoroutine("flash");
         currentHealth -= damage;
 
