@@ -19,7 +19,7 @@ public class BanterGenerator {
         float ran = Random.Range(0f, 1f);
 
         if (ran < 0.5f)
-            return "Take this!";
+            return "Consecutive normal slashes!";
         else
             return "Why won't you die?!";
     }

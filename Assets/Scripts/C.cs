@@ -6,7 +6,7 @@ using UnityEngine;
 public class C : CHitable {
 
     //Components
-    private SpriteRenderer[] spriteRenderers;
+    protected SpriteRenderer[] spriteRenderers;
     protected Animator animator;
 
     [Header("Character Variables")]
@@ -83,6 +83,7 @@ public class C : CHitable {
         }
     }
 
+    //force is knockback force of the attack
     public override void knockUp(Vector2 target, int force, float targetHeight)
     {
 

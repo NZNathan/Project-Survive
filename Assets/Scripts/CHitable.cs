@@ -110,6 +110,20 @@ public abstract class CHitable : MonoBehaviour {
         }
     }
 
+    public void recoverHealth(int healAmount)
+    {
+        currentHealth += healAmount;
+
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        //Stop showHealth so it doesn't remove the health bar off an earilier call
+        StopCoroutine("showHealth");
+        StartCoroutine("showHealth");
+
+        healthBar.healthBar.fillAmount = (float)currentHealth / (float)maxHealth;
+    }
+
     public void setInvulnerable(float invulnTime)
     {
         StartCoroutine("invulnerableState", invulnTime);

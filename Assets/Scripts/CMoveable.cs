@@ -14,6 +14,11 @@ public abstract class CMoveable : C {
     [Header("Movement Variables")]
     public float walkSpeed = 1f;
     public float sprintSpeed = 2f;
+    public float jumpForce = 600;
+    protected bool jumping = false;
+
+    //Jump Variables
+    private float jumpStartY = 0;
 
     [HideInInspector]
     public bool canMove = true;
@@ -40,24 +45,51 @@ public abstract class CMoveable : C {
         transform.localScale = new Vector3(1 * facingFront, 1, 1);
     }
 
-    public void recoverHealth(int healAmount)
+    public void jump()
     {
-        currentHealth += healAmount;
+        jumping = true;
+        rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
 
-        if (currentHealth > maxHealth)
-            currentHealth = maxHealth;
+        rb2D.AddForce(Vector2.up * jumpForce);
 
-        //Stop showHealth so it doesn't remove the health bar off an earilier call
-        StopCoroutine("showHealth");
-        StartCoroutine("showHealth");
+        jumpStartY = transform.position.y; //What if hit vertically
 
-        healthBar.healthBar.fillAmount = (float)currentHealth / (float)maxHealth;
+        StartCoroutine("jumpDown");
     }
 
-    void LateUpdate()
+    IEnumerator jumpDown()
     {
+        //gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        col2D.isTrigger = true;
 
-        //if (rb2D.velocity.magnitude < 1.5f && !moving)
-            //rb2D.velocity = Vector2.zero;
+        yield return new WaitForSeconds(.1f);
+
+        float fallVelocity = 35;
+
+        while (transform.position.y > jumpStartY + 0.03f && transform.position.y > WorldManager.lowerBoundary)
+        {
+            rb2D.AddForce(Vector2.down * fallVelocity);
+            yield return new WaitForFixedUpdate();
+        }
+
+        rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
+
+        col2D.isTrigger = false;
+
+        jumping = false;
     }
+
+    // Update is called once per frame
+    protected new void Update()
+    {
+        if (!jumping)
+        {
+            //Optimise so only runs while moving?
+            foreach (var sr in spriteRenderers)
+            {
+                sr.sortingOrder = (int)(transform.position.y * 10 * -1);
+            }
+        }
+    }
+
 }

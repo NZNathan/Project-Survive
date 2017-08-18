@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player : CMoveCombatable
 {
     public static Player instance;
-    private bool charged = false;
+    private bool chargingAttack = false;
 
     //Inventory Variables
     [HideInInspector]
@@ -81,11 +81,11 @@ public class Player : CMoveCombatable
         if (shiftKeyDown && !weaponDrawn)
             movementSpeed = sprintSpeed;
 
-        if (wKeyDown && !sKeyDown)
+        if (wKeyDown && !sKeyDown && !jumping)
         {
             movement.y += movementSpeed;
         }
-        if (sKeyDown && !wKeyDown)
+        if (sKeyDown && !wKeyDown && !jumping)
         {
             movement.y -= movementSpeed;
         }
@@ -190,11 +190,16 @@ public class Player : CMoveCombatable
         //Pickup Item
         bool eKeyDown = Input.GetKeyDown(KeyCode.E);
 
-        if (qKeyDown)
+        if (qKeyDown && !attacking && !chargingAttack)
             drawWeapon();
 
         if (eKeyDown)
             pickupItem();
+
+        if (spaceKeyDown && !attacking && !jumping)
+        {
+            jump();
+        }
 
         //Call movement function to handle movements
         Vector3 movementVector = Vector3.zero;
@@ -207,6 +212,7 @@ public class Player : CMoveCombatable
         {
             Debug.Log("START CHARGE");
             startedHolding = Time.time;
+            chargingAttack = true;
         }
 
         if (leftClickUp && !attacking && weaponDrawn)
@@ -216,6 +222,8 @@ public class Player : CMoveCombatable
                 attack(heavyAttack); 
             else
                 attack(basicAttack);
+
+            chargingAttack = false;
         }
 
         else if (rightClick && !attacking && weaponDrawn)
