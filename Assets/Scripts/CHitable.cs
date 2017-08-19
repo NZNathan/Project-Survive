@@ -30,7 +30,7 @@ public abstract class CHitable : MonoBehaviour {
     //Abstract Functions
     protected abstract IEnumerator flash();
     protected abstract void death();
-    public abstract void knockUp(Vector2 target, int force, float targetHeight);
+    public abstract void knockUp(Vector2 target, int knockbackForce, int knockupForce, float targetHeight);
     
 
     public void Start()
@@ -89,7 +89,7 @@ public abstract class CHitable : MonoBehaviour {
     //Set AActive
     public virtual void loseHealth(int damage)
     {
-        UIManager.instance.newTextMessage(this.gameObject, WorldManager.instance.banterGen.getPainYell());
+        //UIManager.instance.newTextMessage(this.gameObject, WorldManager.instance.banterGen.getPainYell());
         StartCoroutine("flash");
         currentHealth -= damage;
 

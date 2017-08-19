@@ -6,22 +6,22 @@ using UnityEngine;
 public class Enemy : CMoveCombatable {
 
     //Revenge Target Variables
-    private bool revengeTarget = false;
+    protected bool revengeTarget = false;
 
     [Header("AI Variables")]
     public float aggroRange = 5f;
-    public float attackRange = 0.7f;
+    public float attackRange = 0.65f;
     AIState state;
 
     //Stun Variables
     public float stunTime = 0.5f;
 
     //Knockback collisions off time
-    private float collisionOffTime = 0.3f;
+    protected float collisionOffTime = 0.3f;
 
     //Movement Variables
-    private Transform target;
-    private Player player;
+    protected Transform target;
+    protected Player player;
 
     // Use this for initialization
     new void Start()
@@ -120,7 +120,7 @@ public class Enemy : CMoveCombatable {
         if (stunned || dead || player == null || player.isDead() || falling)
             return;
 
-        //Abstract out a get target method for futre enemies?
+        //Abstract out a get target method for future enemies?
         if ((player.transform.position - transform.position).magnitude < aggroRange)
             target = player.transform;
         else
@@ -137,6 +137,7 @@ public class Enemy : CMoveCombatable {
             attackTarget();
     }
 
+    //Just landed a hit on an enemy
     public override void attackHit()
     {
         //AI Reaaction here

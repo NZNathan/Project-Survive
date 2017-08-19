@@ -8,6 +8,8 @@ public interface Ability {
 
     void setCooldown(bool cooldown);
 
+    Ability getComboAttack();
+
     bool onCooldown();
 
     float getCooldown();

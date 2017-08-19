@@ -3,22 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeavyAttack : Ability {
+public class BasicComboA : Ability
+{
 
     private CMoveCombatable caster;
 
-    string abilityName = "Heavy Attack";
+    string abilityName = "Basic Combo Finisher";
 
     //Ability Variables
     private int abilityDamage; //Scale to player damage?
-    private float abilityVelocity = 640;
+    private float abilityVelocity = 5;
     private string animation = "attack";
-    private int abilityKnockback = 1000;
-    private int abilityKnockUp = 300;
+    private int abilityKnockback = 500;
+    private int abilityKnockUp = 500;
     private float cooldownTime = 0f;
 
     //Raycast Variables
-    private float abilityRange = 0.65f;
+    private float abilityRange = 0.4f;
     private float timeBeforeRay = 0.25f;
 
     //Directional Variables
@@ -32,7 +33,7 @@ public class HeavyAttack : Ability {
         this.pos = pos;
         this.direction = direction;
 
-        abilityDamage = caster.attackDamage * 2;
+        abilityDamage = (int) (caster.attackDamage * 1.2f);
     }
 
     public Ability getComboAttack()
@@ -124,6 +125,7 @@ public class HeavyAttack : Ability {
                     caster.attackHit();
 
                     hitTarget = true;
+                    break;
                 }
             }
 
@@ -133,7 +135,10 @@ public class HeavyAttack : Ability {
                 caster.audioSource.Play();
             }
 
-            yield return new WaitForSeconds(caster.pauseAfterAttack);
+            if(caster.pauseAfterAttack < 0.5f)
+                yield return new WaitForSeconds(0.5f);
+            else
+                yield return new WaitForSeconds(caster.pauseAfterAttack);
         }
         caster.canMove = true;
         caster.attacking = false;

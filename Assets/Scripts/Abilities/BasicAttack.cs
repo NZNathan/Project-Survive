@@ -26,20 +26,36 @@ public class BasicAttack : Ability
     private float abilityRange = 0.4f;
 
     //Time animation takes to get to the frame where it deals damage
-    private float timeBeforeRay = 0.25f; 
+    private float timeBeforeRay = 0.25f;
+
+    //Combo Variables
+    private Ability comboAttack = new BasicComboA();
+    private float lastAttack = -1f;
+    private float comboChainTime = 1;
 
     //Directional Variables
     private Vector2 pos;
     private Vector2 direction;
 
-
+    //Initialise here
     public void setTarget(CMoveCombatable caster, Vector2 pos, Vector2 direction)
     {
         this.caster = caster;
         this.pos = pos;
         this.direction = direction;
 
+        caster.canCombo = false;
         abilityDamage = caster.attackDamage;
+    }
+
+    public Ability getComboAttack()
+    {
+        if (lastAttack + comboChainTime > Time.time)//Won't pass if child can combo, but this lastAttack isn't 
+        {
+            lastAttack = 0;
+            return comboAttack.getComboAttack();
+        }
+        return this;
     }
 
     public void setCooldown(bool cooldown)
@@ -122,6 +138,9 @@ public class BasicAttack : Ability
                     caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();
                     caster.attackHit();
+
+                    lastAttack = Time.time;
+                    caster.canCombo = true;
 
                     hitTarget = true;
                     break;

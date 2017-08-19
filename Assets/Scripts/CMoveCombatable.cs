@@ -22,6 +22,7 @@ public abstract class CMoveCombatable : CMoveable {
 
     [HideInInspector]
     public bool attacking = false;
+    public bool canCombo = false;
 
     //Basic Attack Variables
     public float pauseAfterAttack = 0.7f;
@@ -76,7 +77,7 @@ public abstract class CMoveCombatable : CMoveable {
         gameObject.layer = originalLayer;
     }
 
-    public override void knockUp(Vector2 target, int force, float targetHeight)
+    public override void knockUp(Vector2 target, int knockbackForce, int knockupForce, float targetHeight)
     {
         if (attackAction != null)
         {
@@ -85,15 +86,14 @@ public abstract class CMoveCombatable : CMoveable {
             canMove = true;
         }
 
-        float knockUpForce = 300f;
         falling = true;
 
-        rb2D.AddForce(Vector2.up * knockUpForce);
+        rb2D.AddForce(Vector2.up * knockupForce);
 
         animator.SetTrigger("inAir");
 
         Vector3 dir = getDirection(target, targetHeight) * -1;
-        float startPos = (transform.position + dir * force/1000).y; //What if hit vertically
+        float startPos = (transform.position + dir * knockbackForce / 1000).y; //What if hit vertically
 
         if(fallingCo != null)
             StopCoroutine(fallingCo);
@@ -140,6 +140,10 @@ public abstract class CMoveCombatable : CMoveable {
             attacking = true;
             animator.SetFloat("movementSpeed", 0);
             animator.ResetTrigger("stopAttack");
+
+            //Replace ability action with combo ability, if it can be a combo attack
+            ability = ability.getComboAttack();
+
             animator.SetTrigger(ability.getAnimation());
 
             //Get position of player
@@ -155,7 +159,7 @@ public abstract class CMoveCombatable : CMoveable {
             ability.setTarget(this, pos, dir);
             attackAction = ability.getAction();
 
-            UIManager.instance.newTextMessage(this.gameObject, WorldManager.instance.banterGen.getAttackYell());
+            //UIManager.instance.newTextMessage(this.gameObject, WorldManager.instance.banterGen.getAttackYell());
 
             StartCoroutine(attackAction);
 

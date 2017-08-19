@@ -84,18 +84,16 @@ public class C : CHitable {
     }
 
     //force is knockback force of the attack
-    public override void knockUp(Vector2 target, int force, float targetHeight)
+    public override void knockUp(Vector2 target, int knockbackForce, int knockupForce, float targetHeight)
     {
-
-        float knockUpForce = 300f;
         falling = true;
 
-        rb2D.AddForce(Vector2.up * knockUpForce);
+        rb2D.AddForce(Vector2.up * knockupForce);
 
         animator.SetTrigger("inAir");
 
         Vector3 dir = getDirection(target, targetHeight) * -1;
-        float startPos = (transform.position + dir * force / 1000).y; //What if hit vertically
+        float startPos = (transform.position + dir * knockbackForce / 1000).y; //What if hit vertically
 
         if (fallingCo != null)
             StopCoroutine(fallingCo);
@@ -133,6 +131,8 @@ public class C : CHitable {
     protected override void death()
     {
         //StopAllCoroutines();
+        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        GetComponentInChildren<BoxCollider2D>().gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions"); //Make sure object with collider on it can no longer be hit 
         StopCoroutine("showHealth");
 
         foreach (Transform child in gameObject.GetComponentInChildren<Transform>())

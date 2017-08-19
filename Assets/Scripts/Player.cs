@@ -117,31 +117,6 @@ public class Player : CMoveCombatable
         else if (movement.x > 0 && transform.localScale.x != 1)
             faceRight();
 
-        /*
-    //Flip player sprite if not looking the right way
-    //Times by facing front so if player is facing backwards the X scale is inverted
-    if (movement.x < 0 && transform.localScale.x != -1 * facingFront)
-        faceLeft();
-    else if (movement.x > 0 && transform.localScale.x != 1 * facingFront)
-        faceRight();
-
-    //Flip player head if not looking the right way
-    //NEEDTOFIX: need to flip player sword around and add backward animations 
-
-    if (movement.y < 0 && facingFront == -1)
-    {
-        faceFront();
-        facingFront = 1;
-        transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
-    }
-    else if (movement.y > 0 && facingFront == 1)
-    {
-        faceBack();
-        facingFront = -1;
-        transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
-    }
-    */
-
         return movement * movementSpeed;// * Time.deltaTime;
     }
 
@@ -171,7 +146,7 @@ public class Player : CMoveCombatable
         //Bag Input
         bool bKeyDown = Input.GetKeyDown(KeyCode.B);
 
-        if (bKeyDown)
+        if (bKeyDown && !attacking && !chargingAttack)
             bag.input();
 
         if(bag.isOpen())
@@ -193,10 +168,10 @@ public class Player : CMoveCombatable
         if (qKeyDown && !attacking && !chargingAttack)
             drawWeapon();
 
-        if (eKeyDown)
+        if (eKeyDown && !attacking)
             pickupItem();
 
-        if (spaceKeyDown && !attacking && !jumping)
+        if (spaceKeyDown && !attacking && !jumping && !chargingAttack)
         {
             jump();
         }
@@ -204,7 +179,8 @@ public class Player : CMoveCombatable
         //Call movement function to handle movements
         Vector3 movementVector = Vector3.zero;
 
-        movementVector = movement();
+        if (!attacking)
+            movementVector = movement();
 
         yield return new WaitForFixedUpdate(); //For rigidbody interactions
 
@@ -225,6 +201,13 @@ public class Player : CMoveCombatable
 
             chargingAttack = false;
         }
+        else if (leftClickUp && canCombo && weaponDrawn)
+        {
+            attack(basicAttack);
+            Debug.Log("Combo");
+            chargingAttack = false;
+        }
+
 
         else if (rightClick && !attacking && weaponDrawn)
         {
@@ -254,8 +237,8 @@ public class Player : CMoveCombatable
     {
         base.Update();
 
-        if (!dead && canMove && !attacking && !stunned)
-             StartCoroutine("inputHandler"); //Alternte that coroutine??
+        if (!dead && !stunned)
+             StartCoroutine("inputHandler"); //Alternte than coroutine??
 
         if (startedHolding + chargeTime < Time.time)
             animator.SetBool("charged", true);
