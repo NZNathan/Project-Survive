@@ -26,7 +26,7 @@ public class BasicAttack : Ability
     private float abilityRange = 0.4f;
 
     //Time animation takes to get to the frame where it deals damage
-    private float timeBeforeRay = 0.25f;
+    private float timeBeforeRay = 0.1f;
 
     //Combo Variables
     private Ability comboAttack = new BasicComboA();
@@ -132,7 +132,7 @@ public class BasicAttack : Ability
 
                     //Apply damage and knockback
                     objectHit.setAttacker(caster);
-                    objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
+                    //objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
                     objectHit.loseHealth(abilityDamage);
 
                     caster.audioSource.clip = caster.attackSound;
@@ -149,6 +149,7 @@ public class BasicAttack : Ability
 
             if (!hitTarget)
             {
+                Debug.Log("miss");
                 caster.audioSource.clip = caster.missSound;
                 caster.audioSource.Play();
             }

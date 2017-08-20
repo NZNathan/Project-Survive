@@ -89,7 +89,7 @@ public class BasicComboA : Ability
             Vector2 newPos = new Vector2(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2);
 
             RaycastHit2D[] hitObject = Physics2D.RaycastAll(newPos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
-            Debug.DrawRay(newPos, direction * abilityRange, Color.black, 3f);
+            Debug.DrawRay(newPos, direction * abilityRange, Color.red, 3f);
 
             bool hitTarget = false;
 
@@ -97,7 +97,7 @@ public class BasicComboA : Ability
             foreach (RaycastHit2D r in hitObject)
             {
 
-                if (r && r.transform.gameObject != caster.gameObject && caster.attacking)
+                if (r && r.transform.gameObject != caster.gameObject)
                 {
                     //If an object has been hit first
                     if (r.transform.gameObject.tag == "Object")
@@ -111,7 +111,7 @@ public class BasicComboA : Ability
                     //Hit attack
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 
-                    if (objectHit.isInvuln() || objectHit.tag == caster.tag || objectHit.isKnockedback())
+                    if (objectHit.tag == caster.tag)
                         continue;
 
                     //Apply damage and knockback

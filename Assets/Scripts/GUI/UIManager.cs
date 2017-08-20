@@ -11,11 +11,13 @@ public class UIManager : MonoBehaviour {
     private FloatingTextManager floatingTextManager;
     private HealthBarManager healthBarManager;
     private PlayerGUI playerGUI;
+    private ItemPopup itemPopup;
 
     //UI Objects
     public GameObject floatingTextManagerObject;
     public GameObject playerGUIObject;
     public GameObject healthBarManagerObject;
+    public GameObject itemPopupObject;
     public GameObject bagGUIObject;
 
     // Use this for initialization
@@ -29,6 +31,7 @@ public class UIManager : MonoBehaviour {
         floatingTextManager = GetComponent<FloatingTextManager>();
         healthBarManager = GetComponent<HealthBarManager>();
         playerGUI = GetComponent<PlayerGUI>();
+        itemPopup = itemPopupObject.GetComponent<ItemPopup>();
     }
 
     //--- PLAYER GUI METHODS ---
@@ -54,6 +57,19 @@ public class UIManager : MonoBehaviour {
         floatingTextManager.createText(talker, sentence);
     }
 
+    //--- Item Popup METHODS ---
+    public void newPopup(GameObject target)
+    {
+        itemPopupObject.SetActive(true);
+        itemPopup.newPopup(target);
+    }
+
+    public void closePopup()
+    {
+        itemPopupObject.SetActive(false);
+        //itemPopup.closePopup();
+    }
+
     //--- UI CONTROL METHODS ---
     public void disableUI()
     {
@@ -61,6 +77,7 @@ public class UIManager : MonoBehaviour {
         disablefloatingTextManager();
         disablePlayerGUI();
         disableBagGUI();
+        enableItemPopupGUI();
     }
 
     public void enableUI()
@@ -69,14 +86,25 @@ public class UIManager : MonoBehaviour {
         enablefloatingTextManager();
         enablePlayerGUI();
         enableBagGUI();
+        disableItemPopupGUI();
     }
 
-        public void disableBagGUI()
+    public void disableItemPopupGUI()
+    {
+        itemPopupObject.SetActive(false);
+    }
+
+    public void enableItemPopupGUI()
+    {
+        itemPopupObject.SetActive(true);
+    }
+
+    public void disableBagGUI()
     {
         bagGUIObject.SetActive(false);
     }
 
-        public void enableBagGUI()
+    public void enableBagGUI()
     {
         bagGUIObject.SetActive(true);
     }

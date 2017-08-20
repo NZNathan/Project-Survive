@@ -34,11 +34,13 @@ public class Player : CMoveCombatable
 
     public void itemEnterProximity(Item item)
     {
+        UIManager.instance.newPopup(item.gameObject);
         itemInRange = item;
     }
 
     public void itemLeaveProximity(Item item)
     {
+        UIManager.instance.closePopup();
         itemInRange = null;
     }
 
@@ -186,14 +188,12 @@ public class Player : CMoveCombatable
 
         if (leftClickDown && !attacking && weaponDrawn)
         {
-            Debug.Log("START CHARGE");
             startedHolding = Time.time;
             chargingAttack = true;
         }
 
         if (leftClickUp && !attacking && weaponDrawn)
         {
-            Debug.Log("left click");
             if (startedHolding + chargeTime < Time.time)
                 attack(heavyAttack); 
             else

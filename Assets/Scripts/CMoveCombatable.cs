@@ -20,9 +20,9 @@ public abstract class CMoveCombatable : CMoveable {
     public static LayerMask attackMask; //Layer that all attackable objects are on
     protected IEnumerator attackAction;
 
-    [HideInInspector]
+
     public bool attacking = false;
-    public bool canCombo = false;
+    public bool canCombo = false; //So player can get inputs for combos in while attacking
 
     //Basic Attack Variables
     public float pauseAfterAttack = 0.7f;
@@ -135,14 +135,18 @@ public abstract class CMoveCombatable : CMoveable {
         //Check if ability is not on cooldown
         if (!ability.onCooldown() && !falling & !stunned)
         {
+            if(attackAction != null)
+                StopCoroutine(attackAction);
             //Stop movement and call attack animataion
             canMove = false;
             attacking = true;
+            canCombo = false;
             animator.SetFloat("movementSpeed", 0);
             animator.ResetTrigger("stopAttack");
 
             //Replace ability action with combo ability, if it can be a combo attack
             ability = ability.getComboAttack();
+            Debug.Log("ATTACK" + ability.getName());
 
             animator.SetTrigger(ability.getAnimation());
 
