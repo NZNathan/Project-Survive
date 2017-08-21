@@ -29,6 +29,11 @@ public class Player : CMoveCombatable
 
         animator = GetComponentInChildren<Animator>();
 
+        //Set up sprites to include weapon
+        weapon.SetActive(true);
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        weapon.SetActive(false);
+
         UIManager.instance.setAbilities(abilities); //REmove when player is generated
     }
 
@@ -56,7 +61,6 @@ public class Player : CMoveCombatable
             if (bag.addItem(itemInRange))
             {
                 itemInRange.gameObject.SetActive(false);
-                Debug.Log("Item in range: " + itemInRange);
                 itemInRange = null;
             }
         }
@@ -64,7 +68,7 @@ public class Player : CMoveCombatable
 
     public override void attackHit()
     {
-        Camera.main.GetComponentInParent<CameraShake>().shake = .5f;
+        CameraFollow.cam.GetComponentInParent<CameraShake>().shake = .5f;
     }
 
     protected override Vector2 movement()
@@ -129,7 +133,7 @@ public class Player : CMoveCombatable
         animator.SetBool("charged", false);
 
         //Get mouse position in relation to the world
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos = CameraFollow.cam.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 direction = getDirection(mousePos, 0);
 
@@ -173,7 +177,7 @@ public class Player : CMoveCombatable
         if (eKeyDown && !attacking)
             pickupItem();
 
-        if (spaceKeyDown && !attacking && !jumping && !chargingAttack)
+        if (spaceKeyDown && !attacking && !jumping && !chargingAttack && !weaponDrawn)
         {
             jump();
         }
@@ -204,7 +208,6 @@ public class Player : CMoveCombatable
         else if (leftClickUp && canCombo && weaponDrawn)
         {
             attack(basicAttack);
-            Debug.Log("Combo");
             chargingAttack = false;
         }
 
@@ -229,7 +232,7 @@ public class Player : CMoveCombatable
         base.loseHealth(damage);
 
         if(!dead)
-            Camera.main.GetComponentInParent<CameraShake>().shake = .5f;
+            CameraFollow.cam.GetComponentInParent<CameraShake>().shake = .5f;
     }
 
     // Update is called once per frame

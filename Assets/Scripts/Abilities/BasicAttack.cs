@@ -29,9 +29,9 @@ public class BasicAttack : Ability
     private float timeBeforeRay = 0.1f;
 
     //Combo Variables
-    private Ability comboAttack = new BasicComboA();
+    private Ability comboAttack = new BasicAttackCombo();
     private float lastAttack = -1f;
-    private float comboChainTime = 1;
+    private float comboChainTime = 0.4f;
 
     //Directional Variables
     private Vector2 pos;
@@ -50,12 +50,17 @@ public class BasicAttack : Ability
 
     public Ability getComboAttack()
     {
-        if (lastAttack + comboChainTime > Time.time)//Won't pass if child can combo, but this lastAttack isn't 
+        if (canComboAttack())
         {
             lastAttack = 0;
             return comboAttack.getComboAttack();
         }
         return this;
+    }
+
+    public bool canComboAttack()
+    {
+        return lastAttack + comboChainTime > Time.time || comboAttack.canComboAttack();
     }
 
     public void setCooldown(bool cooldown)
@@ -97,7 +102,10 @@ public class BasicAttack : Ability
     {
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 
-        yield return new WaitForSeconds(timeBeforeRay);
+        while (!caster.getAttackTrigger().hasAttackTriggered())
+            yield return null;
+
+        caster.getAttackTrigger().resetTrigger();
 
         //Check if attack can go through
         if (!caster.isDead())
@@ -141,6 +149,7 @@ public class BasicAttack : Ability
 
                     lastAttack = Time.time;
                     caster.canCombo = true;
+                    caster.setComboAnimation(true);
 
                     hitTarget = true;
                     break;
@@ -156,6 +165,8 @@ public class BasicAttack : Ability
 
             yield return new WaitForSeconds(caster.pauseAfterAttack);
         }
+        caster.setComboAnimation(false);
+        caster.canCombo = false;
         caster.canMove = true;
         caster.attacking = false;
     }

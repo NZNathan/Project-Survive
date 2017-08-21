@@ -54,7 +54,7 @@ public class Enemy : CMoveCombatable {
     {
         Vector2 direction = getDirection(target.position, target.gameObject.GetComponent<CHitable>().objectHeight);
 
-        //attack(target.position, direction, basicAttack);
+        attack(target.position, direction, basicAttack);
     }
 
     public override void loseHealth(int damage)

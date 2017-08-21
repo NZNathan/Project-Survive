@@ -44,6 +44,11 @@ public class DodgeRoll : Ability
         return this;
     }
 
+    public bool canComboAttack()
+    {
+        return false;
+    }
+
     public void setCooldown(bool cooldown)
     {
         this.cooldown = cooldown;

@@ -10,6 +10,8 @@ public interface Ability {
 
     Ability getComboAttack();
 
+    bool canComboAttack();
+
     bool onCooldown();
 
     float getCooldown();

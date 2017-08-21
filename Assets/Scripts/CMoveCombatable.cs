@@ -20,9 +20,10 @@ public abstract class CMoveCombatable : CMoveable {
     public static LayerMask attackMask; //Layer that all attackable objects are on
     protected IEnumerator attackAction;
 
-
+    //Attack Variables
     public bool attacking = false;
     public bool canCombo = false; //So player can get inputs for combos in while attacking
+    protected AttackRayTrigger attackTrigger;
 
     //Basic Attack Variables
     public float pauseAfterAttack = 0.7f;
@@ -46,6 +47,8 @@ public abstract class CMoveCombatable : CMoveable {
         base.Start();
         attackMask = LayerMask.GetMask("Hitable");
         originalLayer = gameObject.layer;
+
+        attackTrigger = GetComponentInChildren<AttackRayTrigger>();
 
         //Ability Setup
         basicAttack = new BasicAttack();
@@ -146,7 +149,7 @@ public abstract class CMoveCombatable : CMoveable {
 
             //Replace ability action with combo ability, if it can be a combo attack
             ability = ability.getComboAttack();
-            Debug.Log("ATTACK" + ability.getName());
+            Debug.Log("ATTACK " + ability.getName());
 
             animator.SetTrigger(ability.getAnimation());
 
@@ -174,6 +177,16 @@ public abstract class CMoveCombatable : CMoveable {
         }
 
         return false; //Attack failed
+    }
+
+    public AttackRayTrigger getAttackTrigger()
+    {
+        return attackTrigger;
+    }
+
+    public void setComboAnimation(bool value)
+    {
+        animator.SetBool("combo", value);
     }
 
 }

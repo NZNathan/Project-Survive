@@ -7,6 +7,7 @@ public class CameraFollow : MonoBehaviour
 {
     //Components
     public Transform target;
+    public static Camera cam;
 
     //Raycast Variables
     private LayerMask blockMask; //Layer that all attackable objects are on
@@ -32,8 +33,9 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
+        cam = GetComponentInChildren<Camera>();
         blockMask = LayerMask.GetMask("Sprite");
-        defaultZoom = Camera.main.orthographicSize;
+        defaultZoom = cam.orthographicSize;
         currentZoom = defaultZoom;
 
         InvokeRepeating("checkPlayerObscured", 1, 0.1f);
@@ -43,7 +45,7 @@ public class CameraFollow : MonoBehaviour
     {
         if (Player.instance != null)
         {
-            RaycastHit2D hit = Physics2D.Raycast(Player.instance.transform.position, Camera.main.transform.forward, 500, blockMask);
+            RaycastHit2D hit = Physics2D.Raycast(Player.instance.transform.position, cam.transform.forward, 500, blockMask);
             if (hit.collider != null)
             {
                 GameObject objectHit = hit.transform.gameObject;
@@ -71,14 +73,14 @@ public class CameraFollow : MonoBehaviour
 
         void smoothZoom()
     {
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, revengeZoom, (4f / Time.timeScale) * Time.deltaTime);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, revengeZoom, (4f / Time.timeScale) * Time.deltaTime);
     }
 
     public void resetCamera(Transform target)
     {
         zooming = false;
         currentZoom = defaultZoom;
-        Camera.main.orthographicSize = defaultZoom;
+        cam.orthographicSize = defaultZoom;
         this.target = target;
 
         transform.position = target.position + offest;
@@ -99,7 +101,7 @@ public class CameraFollow : MonoBehaviour
     //Always match the update of the camera to the update of the player (possibly lateupdate to update)
     void FixedUpdate()
     {
-        if (currentZoom != Camera.main.orthographicSize && zooming)
+        if (currentZoom != cam.orthographicSize && zooming)
             smoothZoom();
 
         if (target != null)

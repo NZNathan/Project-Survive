@@ -3,23 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeavyAttack : Ability {
+public class BasicAttackFinisher : Ability
+{
 
     private CMoveCombatable caster;
 
-    string abilityName = "Heavy Attack";
+    string abilityName = "Basic Attack Finisher";
 
     //Ability Variables
     private int abilityDamage; //Scale to player damage?
-    private float abilityVelocity = 640;
+    private float abilityVelocity = 5;
     private string animation = "attack";
-    private int abilityKnockback = 1000;
-    private int abilityKnockUp = 300;
+    private int abilityKnockback = 500;
+    private int abilityKnockUp = 500;
     private float cooldownTime = 0f;
 
     //Raycast Variables
-    private float abilityRange = 0.65f;
-    private float timeBeforeRay = 0.25f;
+    private float abilityRange = 0.4f;
+    private float timeBeforeRay = 0.1f;
 
     //Directional Variables
     private Vector2 pos;
@@ -32,7 +33,7 @@ public class HeavyAttack : Ability {
         this.pos = pos;
         this.direction = direction;
 
-        abilityDamage = caster.attackDamage * 2;
+        abilityDamage = (int)(caster.attackDamage * 1.2f);
     }
 
     public Ability getComboAttack()
@@ -96,7 +97,7 @@ public class HeavyAttack : Ability {
             Vector2 newPos = new Vector2(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2);
 
             RaycastHit2D[] hitObject = Physics2D.RaycastAll(newPos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
-            Debug.DrawRay(newPos, direction * abilityRange, Color.black, 3f);
+            Debug.DrawRay(newPos, direction * abilityRange, Color.red, 3f);
 
             bool hitTarget = false;
 
@@ -104,7 +105,7 @@ public class HeavyAttack : Ability {
             foreach (RaycastHit2D r in hitObject)
             {
 
-                if (r && r.transform.gameObject != caster.gameObject && caster.attacking)
+                if (r && r.transform.gameObject != caster.gameObject)
                 {
                     //If an object has been hit first
                     if (r.transform.gameObject.tag == "Object")
@@ -118,7 +119,7 @@ public class HeavyAttack : Ability {
                     //Hit attack
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 
-                    if (objectHit.isInvuln() || objectHit.tag == caster.tag || objectHit.isKnockedback())
+                    if (objectHit.tag == caster.tag)
                         continue;
 
                     //Apply damage and knockback
@@ -132,6 +133,7 @@ public class HeavyAttack : Ability {
                     caster.attackHit();
 
                     hitTarget = true;
+                    break;
                 }
             }
 
@@ -141,7 +143,10 @@ public class HeavyAttack : Ability {
                 caster.audioSource.Play();
             }
 
-            yield return new WaitForSeconds(caster.pauseAfterAttack);
+            if (caster.pauseAfterAttack < 0.5f)
+                yield return new WaitForSeconds(0.5f);
+            else
+                yield return new WaitForSeconds(caster.pauseAfterAttack);
         }
         caster.canMove = true;
         caster.attacking = false;

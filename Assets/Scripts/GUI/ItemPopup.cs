@@ -40,6 +40,6 @@ public class ItemPopup : MonoBehaviour {
 
         Vector2 popupPos = new Vector2(target.position.x, target.position.y + popupOffset);
 
-        transform.position = Camera.main.WorldToScreenPoint(popupPos);
+        transform.position = CameraFollow.cam.WorldToScreenPoint(popupPos);
     }
 }

@@ -3,24 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicComboA : Ability
+public class BasicAttackCombo : Ability
 {
 
     private CMoveCombatable caster;
 
-    string abilityName = "Basic Combo Finisher";
+    string abilityName = "Basic Attack Combo";
 
     //Ability Variables
     private int abilityDamage; //Scale to player damage?
     private float abilityVelocity = 5;
     private string animation = "attack";
-    private int abilityKnockback = 500;
-    private int abilityKnockUp = 500;
+    private int abilityKnockback = 0;
+    private int abilityKnockUp = 0;
     private float cooldownTime = 0f;
 
     //Raycast Variables
     private float abilityRange = 0.4f;
-    private float timeBeforeRay = 0.25f;
+    private float timeBeforeRay = 0.1f;
+
+    //Combo Variables
+    private Ability comboAttack = new BasicAttackFinisher();
+    private float lastAttack = -1f;
+    private float comboChainTime = 0.4f;
 
     //Directional Variables
     private Vector2 pos;
@@ -38,7 +43,17 @@ public class BasicComboA : Ability
 
     public Ability getComboAttack()
     {
+        if (canComboAttack())
+        {
+            lastAttack = 0;
+            return comboAttack.getComboAttack();
+        }
         return this;
+    }
+
+    public bool canComboAttack()
+    {
+        return lastAttack + comboChainTime > Time.time || comboAttack.canComboAttack();
     }
 
     public void setCooldown(bool cooldown)
@@ -80,12 +95,15 @@ public class BasicComboA : Ability
     {
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 
-        yield return new WaitForSeconds(timeBeforeRay);
+        while (!caster.getAttackTrigger().hasAttackTriggered())
+            yield return null;
+
+        caster.getAttackTrigger().resetTrigger();
 
         //Check if attack can go through
         if (!caster.isDead())
         {
-
+            
             Vector2 newPos = new Vector2(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2);
 
             RaycastHit2D[] hitObject = Physics2D.RaycastAll(newPos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
@@ -116,13 +134,15 @@ public class BasicComboA : Ability
 
                     //Apply damage and knockback
                     objectHit.setAttacker(caster);
-                    objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
-                    objectHit.knockUp(pos, abilityKnockback, abilityKnockUp, objectHit.objectHeight);
                     objectHit.loseHealth(abilityDamage);
 
                     caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();
                     caster.attackHit();
+
+                    lastAttack = Time.time;
+                    caster.canCombo = true;
+                    caster.setComboAnimation(true);
 
                     hitTarget = true;
                     break;
@@ -140,6 +160,8 @@ public class BasicComboA : Ability
             else
                 yield return new WaitForSeconds(caster.pauseAfterAttack);
         }
+        caster.setComboAnimation(false);
+        caster.canCombo = false;
         caster.canMove = true;
         caster.attacking = false;
     }

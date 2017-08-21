@@ -48,6 +48,11 @@ public class DashStrike : Ability {
         return this;
     }
 
+    public bool canComboAttack()
+    {
+        return false;
+    }
+
     public bool onCooldown()
     {
         return cooldown;

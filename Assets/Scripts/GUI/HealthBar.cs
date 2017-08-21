@@ -36,6 +36,6 @@ public class HealthBar : MonoBehaviour {
 
         Vector2 healthBarPos = new Vector2(target.position.x, target.position.y + healthBarOffset);
 
-        transform.position = Camera.main.WorldToScreenPoint(healthBarPos);
+        transform.position = CameraFollow.cam.WorldToScreenPoint(healthBarPos);
     }
 }

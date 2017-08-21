@@ -51,7 +51,7 @@ public class FloatingText : MonoBehaviour {
         {
             Vector2 textPos = new Vector2(target.position.x, target.position.y + textOffset);
 
-            transform.position = Camera.main.WorldToScreenPoint(textPos);
+            transform.position = CameraFollow.cam.WorldToScreenPoint(textPos);
         }
         else
         {
