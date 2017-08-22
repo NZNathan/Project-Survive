@@ -22,6 +22,7 @@ public class LandscapeGen : MonoBehaviour {
     private float lastAreaPos;
     private float firstAreaPos;
     public float areaWidth = 21.4f;
+    private int activeRange = 2;
 
     // Use this for initialization
     void Start()
@@ -101,39 +102,42 @@ public class LandscapeGen : MonoBehaviour {
             areaPos += areaWidth;
         }
 
-        currentArea = -1;
-        lastAreaPos = -areaWidth;
-        firstAreaPos = -areaWidth * 2;
+        currentArea = 0;
+        lastAreaPos = 0;
+        firstAreaPos = -areaWidth;
+
+        areas[0].gameObject.SetActive(true);
+        areas[1].gameObject.SetActive(true);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         if (player == null)
             return;
 
         //Move into a invoke repeating method so it can be stopped and more efficient?
-		if(player.transform.position.x > lastAreaPos && currentArea <= levelSize-2)
+        if (player.transform.position.x > lastAreaPos && currentArea <= levelSize - 2)
         {
             //Set active the next area in front of the player and disable the one two areas behind
-            areas[currentArea+1].gameObject.SetActive(true);
+            areas[currentArea + activeRange].gameObject.SetActive(true);
 
-            if (currentArea >= 2)
-                areas[currentArea - 2].gameObject.SetActive(false);
+            if (currentArea >= 1 + activeRange)
+                areas[currentArea - activeRange - 1].gameObject.SetActive(false);
 
-            if (currentArea + 2 != levelSize)
+            if (currentArea + activeRange + 1 != levelSize)
             {
                 currentArea++;
                 lastAreaPos += areaWidth;
                 firstAreaPos += areaWidth;
             }
         }
-        else if (player.transform.position.x < firstAreaPos && currentArea > 1)
+        else if (player.transform.position.x < firstAreaPos && currentArea > activeRange)
         {
             //Set active the next area behind of the player and disable the one two areas ahead
-            areas[currentArea - 2].gameObject.SetActive(true);
+            areas[currentArea - activeRange - 1].gameObject.SetActive(true);
 
-            areas[currentArea+1].gameObject.SetActive(false);
+            areas[currentArea + activeRange].gameObject.SetActive(false);
 
             currentArea--;
             lastAreaPos -= areaWidth;

@@ -12,7 +12,7 @@ public class DashStrike : Ability {
     //Ability Variables
     private int abilityDamage; //Scale to player damage?
     private float abilityVelocity = 1600;
-    private string animation = "attack";
+    private string animation = "dash";
     private int abilityKnockback = 50;
     private float cooldownTime = 5f;
     private bool cooldown = false;
@@ -138,6 +138,7 @@ public class DashStrike : Ability {
             caster.gameObject.layer = LayerMask.NameToLayer(oldLayer);
             yield return new WaitForSeconds(caster.pauseAfterAttack);
         }
+        caster.getAttackTrigger().resetTrigger();
         caster.canMove = true;
         caster.attacking = false;
     }
