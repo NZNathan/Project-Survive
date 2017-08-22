@@ -35,6 +35,7 @@ public class C : CHitable {
     public new void Start()
     {
         base.Start();
+        originalLayer = gameObject.layer;
 
         animator = GetComponentInChildren<Animator>();
         objectHeight = 0.48f;
@@ -86,6 +87,7 @@ public class C : CHitable {
     //force is knockback force of the attack
     public override void knockUp(Vector2 target, int knockbackForce, int knockupForce, float targetHeight)
     {
+        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
         falling = true;
 
         rb2D.AddForce(Vector2.up * knockupForce);
