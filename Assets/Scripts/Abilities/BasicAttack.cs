@@ -158,7 +158,6 @@ public class BasicAttack : Ability
 
             if (!hitTarget)
             {
-                Debug.Log("miss");
                 caster.audioSource.clip = caster.missSound;
                 caster.audioSource.Play();
             }

@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour {
     private HealthBarManager healthBarManager;
     private PlayerGUI playerGUI;
     private ItemPopup itemPopup;
+    public LevelUpGUI levelUpWindow;
 
     //UI Objects
     public GameObject floatingTextManagerObject;
@@ -68,6 +69,12 @@ public class UIManager : MonoBehaviour {
     {
         itemPopupObject.SetActive(false);
         //itemPopup.closePopup();
+    }
+
+    //--- Level Up Window ---
+    public void newLevelUpWindow()
+    {
+        levelUpWindow.setPoints(Player.pointsOnLevelUp);
     }
 
     //--- UI CONTROL METHODS ---

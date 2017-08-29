@@ -16,6 +16,10 @@ public class Enemy : CMoveCombatable {
     //Stun Variables
     public float stunTime = 0.5f;
 
+    [Header("Drop On Death Variables")]
+    public Item[] dropableItems;
+    public int xpWorth;
+
     //Knockback collisions off time
     protected float collisionOffTime = 0.3f;
 
@@ -71,6 +75,15 @@ public class Enemy : CMoveCombatable {
 
         if(!falling)
             StartCoroutine("stun");
+    }
+
+    protected override void death()
+    {
+        base.death();
+        if(lastAttacker.tag == "Player")
+            ((Player) lastAttacker).addXp(xpWorth);
+
+        //TODO: Spawn item drops
     }
 
     public override void knockback(Vector2 target, int force, float targetHeight)

@@ -8,6 +8,12 @@ public abstract class CMoveCombatable : CMoveable {
     [Header("Combat Variables")]
     public GameObject weapon;
 
+    //Character Stats
+    protected int level = 1;
+    protected int strength;
+    protected int agility;
+    protected int endurance;
+
     //Weapon Variables
     protected bool weaponDrawn = false;
 
@@ -149,7 +155,6 @@ public abstract class CMoveCombatable : CMoveable {
 
             //Replace ability action with combo ability, if it can be a combo attack
             ability = ability.getComboAttack();
-            Debug.Log("ATTACK " + ability.getName());
 
             animator.SetTrigger(ability.getAnimation());
 

@@ -6,12 +6,22 @@ using UnityEngine;
 public class Player : CMoveCombatable
 {
     public static Player instance;
+
+    //Experiance Variables
+    public static int pointsOnLevelUp = 3;
+    private int levelUpPoints = 0;
+    private int xpPerLevelIncrease = 5;
+    private int xpPerLevel = 5; //Reach this to level up
+    private int xp = 0;
+
+    //Input Variables
     private bool chargingAttack = false;
 
     //Inventory Variables
     [HideInInspector]
     public Bag bag;
     private Item itemInRange;
+    
 
     public new void Start()
     {
@@ -35,6 +45,20 @@ public class Player : CMoveCombatable
         weapon.SetActive(false);
 
         UIManager.instance.setAbilities(abilities); //REmove when player is generated
+    }
+
+    public void levelup(int pointsLeft, int[] stats)
+    {
+        levelUpPoints = pointsLeft;
+
+        strength += stats[0];
+        agility += stats[1];
+        endurance += stats[2];
+    }
+
+    internal int getLevelUpPoints()
+    {
+        return levelUpPoints;
     }
 
     public void itemEnterProximity(Item item)
@@ -235,6 +259,24 @@ public class Player : CMoveCombatable
             CameraFollow.cam.GetComponentInParent<CameraShake>().shake = .5f;
     }
 
+    public void addXp(int xpGained)
+    {
+        xp += xpGained;
+
+        if(xp >= xpPerLevel)
+        {
+            UIManager.instance.newLevelUpWindow();
+            xp -= xpPerLevel;
+            level++;
+            xpPerLevel += xpPerLevelIncrease;
+        }
+    }
+
+    public int[] getStats()
+    {
+        int[] stats = { strength, agility, endurance };
+        return stats;
+    }
     // Update is called once per frame
     new void Update()
     {
