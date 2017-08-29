@@ -53,6 +53,17 @@ public class WorldManager : MonoBehaviour {
         Invoke("zoomOut", respawnTime * Time.timeScale);
     }
 
+    public void stopTime()
+    {
+        //Disable shake or it will keep going when game is in paused state
+        CameraFollow.cam.GetComponentInParent<CameraShake>().enabled = false;
+
+        //Start slow motion
+        Time.timeScale = 0;
+        Time.fixedDeltaTime = 0; //Scale physics time 0.02f is default value so times it by that to remain to the same scale as time
+
+    }
+
     public void slowTime()
     {
         //Start slow motion
@@ -63,6 +74,8 @@ public class WorldManager : MonoBehaviour {
 
     public void normalTime()
     {
+        CameraFollow.cam.GetComponentInParent<CameraShake>().enabled = true;
+
         //Stop slow motion
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;

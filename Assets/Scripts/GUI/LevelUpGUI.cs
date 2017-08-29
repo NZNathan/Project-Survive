@@ -16,6 +16,7 @@ public class LevelUpGUI : MonoBehaviour {
 
     public void setPoints(int points)
     {
+        WorldManager.instance.stopTime();
         this.points = points + Player.instance.getLevelUpPoints();
 
         //Reinitialize statPints array so all values are at 0
@@ -72,6 +73,7 @@ public class LevelUpGUI : MonoBehaviour {
             statTexts[i].text = "";
         }
 
+        WorldManager.instance.normalTime();
         levelUpWindow.gameObject.SetActive(false);
     }
 }

@@ -14,6 +14,7 @@ public class CameraShake : MonoBehaviour {
     {
         if (shake > 0)
         {
+            Debug.Log("Shake");
             transform.localPosition = Random.insideUnitSphere * (shakeAmount/2);
             transform.position = new Vector3(transform.position.x, transform.position.y, -10);
             shake -= Time.deltaTime * decreaseFactor;
