@@ -19,7 +19,6 @@ public class HeavyAttack : Ability {
 
     //Raycast Variables
     private float abilityRange = 0.65f;
-    private float timeBeforeRay = 0.25f;
 
     //Directional Variables
     private Vector2 pos;
@@ -35,6 +34,9 @@ public class HeavyAttack : Ability {
         abilityDamage = caster.attackDamage * 2;
     }
 
+    /// <summary>
+    /// Returns itself, as heavy attack cannot combo
+    /// </summary>
     public Ability getComboAttack()
     {
         return this;

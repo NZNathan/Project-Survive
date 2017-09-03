@@ -22,11 +22,11 @@ public class DT : MonoBehaviour {
         //Depth = 1
         //Yes it is safe
         DTNode people = (DTNode)DTNode.CreateInstance("DTNode");
-        people.setUpDTNode("People", 0.5f);
+        people.setUpDTNode("People", 0.3f);
 
         //No it isn't safe
         DTNode faction = (DTNode)DTNode.CreateInstance("DTNode");
-        faction.setUpDTNode("Faction", 0.5f);
+        faction.setUpDTNode("Faction", 0.7f);
 
         root.add(people, faction);
 
@@ -34,7 +34,7 @@ public class DT : MonoBehaviour {
         //Depth = 2
         //It is safe -> Yes there are People
         DTLeaf camp = (DTLeaf)DTLeaf.CreateInstance("DTLeaf");
-        camp.setUpDTNode("Camping", 0.5f);
+        camp.setUpDTNode("Campers", 0.5f);
         camp.setPrefab(LandscapeGen.prefabs.friendlyCamps);
 
         //It is safe -> No there aren't People

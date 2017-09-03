@@ -81,7 +81,7 @@ public abstract class CMoveCombatable : CMoveable {
 
     IEnumerator collisionsOff(float collisionlessTime)
     {
-        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        gameObject.layer = noCollisionLayer;
         yield return new WaitForSeconds(collisionlessTime);
         gameObject.layer = originalLayer;
     }
@@ -112,7 +112,7 @@ public abstract class CMoveCombatable : CMoveable {
 
     IEnumerator fallDown(float floorY)
     {
-        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        gameObject.layer = noCollisionLayer;
         stunned = true;
 
         yield return new WaitForSeconds(.1f);

@@ -23,10 +23,6 @@ public abstract class CHitable : MonoBehaviour {
     protected bool knockedback = false;
     protected CMoveCombatable lastAttacker;
 
-    //Collisions
-    public static int hitabelLayer = 5;
-    public static int noCollisionsLayer = 6;
-
     //Abstract Functions
     protected abstract IEnumerator flash();
     protected abstract void death();

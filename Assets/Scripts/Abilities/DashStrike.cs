@@ -86,7 +86,7 @@ public class DashStrike : Ability {
     IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
     {
         string oldLayer = LayerMask.LayerToName(caster.gameObject.layer);
-        caster.gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        caster.gameObject.layer = C.noCollisionLayer;
 
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 

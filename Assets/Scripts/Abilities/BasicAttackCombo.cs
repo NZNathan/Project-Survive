@@ -20,7 +20,6 @@ public class BasicAttackCombo : Ability
 
     //Raycast Variables
     private float abilityRange = 0.4f;
-    private float timeBeforeRay = 0.1f;
 
     //Combo Variables
     private Ability comboAttack = new BasicAttackFinisher();

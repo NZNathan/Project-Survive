@@ -7,9 +7,9 @@ using System.Text;
 public class SpriteGen : MonoBehaviour {
 
     //Base Prefabs
-    Player playerBase;
-    Enemy enemyBase;
-    C npcBase;
+    public Player playerBase;
+    public Enemy enemyBase;
+    public C npcBase;
 
     //Sprites
     SpriteSet[] spriteSets;
@@ -24,11 +24,6 @@ public class SpriteGen : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        //Load in base Prefabs
-        playerBase = Resources.Load<Player>("Prefabs/Player");
-        enemyBase = Resources.Load<Enemy>("Prefabs/Feral");
-        npcBase = Resources.Load<C>("Prefabs/NPC");
-
         //Load in Sprites
         Object[] sprites;
 
@@ -72,11 +67,14 @@ public class SpriteGen : MonoBehaviour {
         return lastNames[random];
     }
 
-    public void generateCharacters(C[] characters)
+    public void generateCharacters(Spawner[] spawners)
     {
         //TODO: Extend to treat characters differently depending on their faction and details
-        foreach (C character in characters)
+        foreach (Spawner spawner in spawners)
         {
+            //Get the spawner to spawn the prefab
+            C character = spawner.spawnCharacter();
+
             //Change the new NPCs look
             character.setSpriteSet(getNewSprites());
 

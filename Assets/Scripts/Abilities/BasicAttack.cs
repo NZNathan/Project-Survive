@@ -25,9 +25,6 @@ public class BasicAttack : Ability
     //How far the ray will be cast
     private float abilityRange = 0.4f;
 
-    //Time animation takes to get to the frame where it deals damage
-    private float timeBeforeRay = 0.1f;
-
     //Combo Variables
     private Ability comboAttack = new BasicAttackCombo();
     private float lastAttack = -1f;

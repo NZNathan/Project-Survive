@@ -15,6 +15,7 @@ public class C : CHitable {
 
     //Collision Variables
     protected int originalLayer;
+    public static readonly int noCollisionLayer = 9;// LayerMask.NameToLayer("NoCharacterCollisions"); //readonly = const?
 
     //Sprite Variables
     protected int facingFront = 1;
@@ -34,6 +35,7 @@ public class C : CHitable {
 
     public new void Start()
     {
+        Debug.Log(LayerMask.NameToLayer("NoCharacterCollisions"));
         base.Start();
         originalLayer = gameObject.layer;
 
@@ -87,7 +89,7 @@ public class C : CHitable {
     //force is knockback force of the attack
     public override void knockUp(Vector2 target, int knockbackForce, int knockupForce, float targetHeight)
     {
-        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        gameObject.layer = noCollisionLayer;
         falling = true;
 
         rb2D.AddForce(Vector2.up * knockupForce);
@@ -105,7 +107,7 @@ public class C : CHitable {
 
     IEnumerator fallDown(float floorY)
     {
-        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
+        gameObject.layer = noCollisionLayer;
 
         yield return new WaitForSeconds(.1f);
 
@@ -133,16 +135,17 @@ public class C : CHitable {
     protected override void death()
     {
         //StopAllCoroutines();
-        gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
-        GetComponentInChildren<BoxCollider2D>().gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions"); //Make sure object with collider on it can no longer be hit 
+        gameObject.layer = noCollisionLayer;
+        GetComponentInChildren<BoxCollider2D>().gameObject.layer = noCollisionLayer; //Make sure object with collider on it can no longer be hit 
         StopCoroutine("showHealth");
 
+        /* WHY????
         foreach (Transform child in gameObject.GetComponentInChildren<Transform>())
         {
             child.gameObject.layer = 0;
         }
 
-        gameObject.layer = 0;
+        gameObject.layer = 0;*/
         animator.SetBool("dead", true);
         Invoke("removeDeadBody", 1);
         dead = true;

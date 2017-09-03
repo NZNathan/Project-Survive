@@ -8,6 +8,9 @@ public interface Ability {
 
     void setCooldown(bool cooldown);
 
+    /// <summary>
+    /// Returns either itself, or the ability it combos into if this ability is activated while comboing is possible
+    /// </summary>
     Ability getComboAttack();
 
     bool canComboAttack();

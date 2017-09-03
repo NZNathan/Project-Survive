@@ -51,7 +51,7 @@ public class LandscapeGen : MonoBehaviour {
 
     public void resetLandscape(Player player)
     {
-        Area respawnArea = Instantiate(areas[0], new Vector3(0, 0, 0), Quaternion.identity);
+        Area respawnArea = Instantiate(areas[0], new Vector3(-areaWidth, 0, 0), Quaternion.identity);
         respawnArea.name = "Respawned Area";
 
         //Delete and reset all other areas
@@ -91,6 +91,8 @@ public class LandscapeGen : MonoBehaviour {
 
             if(i == 0)
             {
+                areas[i].gameObject.name = "Safe Zone";
+
                 //Give town extra area to make it bigger?
                 Area biggerArea = Instantiate(baseArea, new Vector3(areaPos-areaWidth, 0, 0), Quaternion.identity);
                 biggerArea.transform.SetParent(areas[i].transform);
@@ -107,7 +109,7 @@ public class LandscapeGen : MonoBehaviour {
                 scenario.transform.SetParent(areas[i].transform);
 
                 //Generation all Characters in scenario
-                C[] characters = scenario.GetComponentsInChildren<C>();
+                Spawner[] characters = scenario.GetComponentsInChildren<Spawner>();
                 spriteGenerator.generateCharacters(characters);
             }
 

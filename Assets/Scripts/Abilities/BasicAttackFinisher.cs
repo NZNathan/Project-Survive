@@ -20,7 +20,6 @@ public class BasicAttackFinisher : Ability
 
     //Raycast Variables
     private float abilityRange = 0.4f;
-    private float timeBeforeRay = 0.1f;
 
     //Directional Variables
     private Vector2 pos;
