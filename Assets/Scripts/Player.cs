@@ -17,6 +17,11 @@ public class Player : CMoveCombatable
     //Input Variables
     private bool chargingAttack = false;
 
+    //Menu Variables
+    private bool inMenu = false;
+    private bool inBagMenu = false;
+    private bool inLevelMenu = false;
+
     //Inventory Variables
     [HideInInspector]
     public Bag bag;
@@ -45,6 +50,18 @@ public class Player : CMoveCombatable
         weapon.SetActive(false);
 
         UIManager.instance.setAbilities(abilities); //REmove when player is generated
+    }
+
+    public void closeBagMenu()
+    {
+        inMenu = false;
+        inBagMenu = false;
+    }
+
+    public void closeLevelupMenu()
+    {
+        inMenu = false;
+        inLevelMenu = false;
     }
 
     public void levelup(int pointsLeft, int[] stats)
@@ -175,11 +192,24 @@ public class Player : CMoveCombatable
     {
         //Bag Input
         bool bKeyDown = Input.GetKeyDown(KeyCode.B);
+        bool cKeyDown = Input.GetKeyDown(KeyCode.C);
 
-        if (bKeyDown && !attacking && !chargingAttack)
+        if (bKeyDown && !attacking && !chargingAttack && (!inMenu || inBagMenu))
+        {
+            inMenu = !inMenu;
+            inBagMenu = !inBagMenu;
             bag.input();
+        }
 
-        if(bag.isOpen())
+        if (cKeyDown && !attacking && !chargingAttack && (!inMenu || inLevelMenu))
+        {
+            inMenu = !inMenu;
+            inLevelMenu = !inLevelMenu;
+            UIManager.instance.toggleLevelUpWindow();
+        }
+
+        //Only take menu inputs if in menu
+        if (inMenu)
             yield break;
 
         //Weapon Inputs
@@ -265,11 +295,14 @@ public class Player : CMoveCombatable
 
         if(xp >= xpPerLevel)
         {
-            UIManager.instance.newLevelUpWindow();
+            levelUpPoints += pointsOnLevelUp;
             xp -= xpPerLevel;
             level++;
             xpPerLevel += xpPerLevelIncrease;
         }
+
+        //Update UI xp bar
+        UIManager.instance.addXp(xp, xpPerLevel);
     }
 
     public int[] getStats()

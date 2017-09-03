@@ -51,6 +51,7 @@ public class BagGUI : MonoBehaviour {
     public void closeBagBtn()
     {
         Player.instance.bag.closeBag();
+        Player.instance.closeBagMenu();
     }
 
 }

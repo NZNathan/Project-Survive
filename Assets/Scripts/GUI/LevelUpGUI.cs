@@ -14,10 +14,11 @@ public class LevelUpGUI : MonoBehaviour {
     private int[] statPoints;
 
 
-    public void setPoints(int points)
+    public void openWindow()
     {
         WorldManager.instance.stopTime();
-        this.points = points + Player.instance.getLevelUpPoints();
+
+        points = Player.instance.getLevelUpPoints();
 
         //Reinitialize statPints array so all values are at 0
         statPoints = new int[statTexts.Length];
@@ -63,11 +64,18 @@ public class LevelUpGUI : MonoBehaviour {
         }
     }
 
-    public void closeWindow()
+    //Sends changes to player to update stats
+    public void saveLevelup()
     {
         Player.instance.levelup(points, statPoints);
+    }
 
-        for(int i = 0; i < statPoints.Length; i++)
+    //Closes the window without saving changes
+    public void closeWindow()
+    {
+        Player.instance.closeLevelupMenu();
+
+        for (int i = 0; i < statPoints.Length; i++)
         {
             statPoints[i] = 0;
             statTexts[i].text = "";

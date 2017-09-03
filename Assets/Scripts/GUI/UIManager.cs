@@ -36,6 +36,11 @@ public class UIManager : MonoBehaviour {
     }
 
     //--- PLAYER GUI METHODS ---
+    public void addXp(float xp, float xpCap)
+    {
+        playerGUI.addXp(xp, xpCap);
+    }
+
     public void usedAbility(int ability)
     {
         playerGUI.usedAbility(ability);
@@ -72,9 +77,12 @@ public class UIManager : MonoBehaviour {
     }
 
     //--- Level Up Window ---
-    public void newLevelUpWindow()
+    public void toggleLevelUpWindow()
     {
-        levelUpWindow.setPoints(Player.pointsOnLevelUp);
+        if(levelUpWindow.levelUpWindow.activeInHierarchy)
+            levelUpWindow.closeWindow();
+        else
+            levelUpWindow.openWindow();
     }
 
     //--- UI CONTROL METHODS ---
