@@ -98,6 +98,25 @@ public class CameraFollow : MonoBehaviour
         revengeTextName.text = newTarget.GetComponent<C>().firstName + " " + newTarget.GetComponent<C>().lastName;
     }
 
+    bool cameraAtMapEdge(Vector2 nextPos)
+    {
+        //At Right edge of map
+        if (nextPos.x > LandscapeGen.rightEdge)
+        {
+            transform.position = new Vector2(LandscapeGen.rightEdge, nextPos.y);
+            return true;
+        }
+        //At Left edge of map
+        if (nextPos.x < LandscapeGen.leftEdge)
+        {
+            transform.position = new Vector2(LandscapeGen.leftEdge, nextPos.y);
+            return true;
+        }
+
+        //Not at an edge
+        return false;
+    }
+
     //Always match the update of the camera to the update of the player (possibly lateupdate to update)
     void FixedUpdate()
     {
@@ -109,7 +128,10 @@ public class CameraFollow : MonoBehaviour
             Vector3 desiredPos = target.position + offest;
             Vector3 smoothPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothSpeed);
 
-            transform.position = smoothPos;
+            if (!cameraAtMapEdge(smoothPos))
+            {
+                transform.position = smoothPos;
+            }
         }
     }
 }

@@ -16,7 +16,11 @@ public class LandscapeGen : MonoBehaviour {
     //Area Gen Variables
     public static int levelSize = 21;
     private Area[] areas;
-    
+
+    //Area Limits Variables
+    public static float leftEdge;
+    public static float rightEdge;
+
     //Area Spawn Location Variables
     private int currentArea = 0;
     private float lastAreaPos;
@@ -36,6 +40,8 @@ public class LandscapeGen : MonoBehaviour {
 
         Area.width = areaWidth;
 
+        rightEdge = (levelSize-2) * areaWidth - (areaWidth/2);
+        leftEdge = -areaWidth*1.5f; //Need to change if town size is changed
     }
 
     public Area getFirstArea()
@@ -67,7 +73,7 @@ public class LandscapeGen : MonoBehaviour {
 
     void generateNewAreas()
     {
-        float areaPos = 0f;
+        float areaPos = -areaWidth;
         
         for (int i = 0; i < levelSize; i++)
         {
@@ -80,7 +86,21 @@ public class LandscapeGen : MonoBehaviour {
             areas[i] = Instantiate(baseArea, new Vector3(areaPos, 0, 0), Quaternion.identity);
 
             areas[i].setUpArea();
-            if (i > 0)
+
+            //If i == 0 then Area is the town Area
+
+            if(i == 0)
+            {
+                //Give town extra area to make it bigger?
+                Area biggerArea = Instantiate(baseArea, new Vector3(areaPos-areaWidth, 0, 0), Quaternion.identity);
+                biggerArea.transform.SetParent(areas[i].transform);
+
+                //Get the town prefab and instantiate it, setting its parten to the area
+                GameObject town = Instantiate(prefabs.getTown(), new Vector3(areaPos, 0, 0), Quaternion.identity);
+                town.transform.SetParent(areas[i].transform);
+            }
+
+            if (i > 1)
             {
                 //Get random scenario and instantiate it
                 GameObject scenario = Instantiate(scenarioTree.getScenario(), new Vector3(areaPos, 0, 0), Quaternion.identity);
@@ -103,11 +123,12 @@ public class LandscapeGen : MonoBehaviour {
         }
 
         currentArea = 0;
-        lastAreaPos = 0;
-        firstAreaPos = -areaWidth;
+        lastAreaPos = -areaWidth;
+        firstAreaPos = -areaWidth*2;
 
         areas[0].gameObject.SetActive(true);
         areas[1].gameObject.SetActive(true);
+        areas[2].gameObject.SetActive(true);
     }
 
     // Update is called once per frame
