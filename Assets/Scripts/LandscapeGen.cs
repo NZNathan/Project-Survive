@@ -13,8 +13,8 @@ public class LandscapeGen : MonoBehaviour {
     //Sprite Gen Variables
     public SpriteGen spriteGenerator;
 
-    //Area Gen Variables
-    public static int levelSize = 21;
+    //Area Gen Variables -- Have a enum here for terrian type? (Forest, desert, grassland)
+    public static int levelSize = 21; //first area is a town, last area will always be a transition area
     private Area[] areas;
 
     //Area Limits Variables
@@ -101,8 +101,15 @@ public class LandscapeGen : MonoBehaviour {
                 GameObject town = Instantiate(prefabs.getTown(), new Vector3(areaPos, 0, 0), Quaternion.identity);
                 town.transform.SetParent(areas[i].transform);
             }
+            else if(i == levelSize - 1)
+            {
+                areas[i].gameObject.name = "Transition Zone";
 
-            if (i > 1)
+                //Get the town prefab and instantiate it, setting its parten to the area
+                GameObject transition = Instantiate(prefabs.getTransition(), new Vector3(areaPos, 0, 0), Quaternion.identity);
+                transition.transform.SetParent(areas[i].transform);
+            }
+            else if (i > 1)
             {
                 //Get random scenario and instantiate it
                 GameObject scenario = Instantiate(scenarioTree.getScenario(), new Vector3(areaPos, 0, 0), Quaternion.identity);

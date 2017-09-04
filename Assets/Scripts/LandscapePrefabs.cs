@@ -11,6 +11,9 @@ public class LandscapePrefabs : MonoBehaviour {
     //Town Prefabs
     public GameObject[] towns;
 
+    //Transition Prefabs
+    public GameObject[] transitions;
+
     //Forest Trees
     public GameObject[] forestTrees;
 
@@ -36,5 +39,11 @@ public class LandscapePrefabs : MonoBehaviour {
         int i = Random.Range(0, towns.Length);
         return towns[i];
     }
-	
+
+    public GameObject getTransition()
+    {
+        int i = Random.Range(0, transitions.Length);
+        return transitions[i];
+    }
+
 }
