@@ -15,6 +15,7 @@ public class Player : CMoveCombatable
     private int xp = 0;
 
     //Input Variables
+    public bool asdf = true;
     private bool chargingAttack = false;
 
     //Menu Variables
@@ -50,6 +51,11 @@ public class Player : CMoveCombatable
         weapon.SetActive(false);
 
         UIManager.instance.setAbilities(abilities); //REmove when player is generated
+    }
+
+    public void setInMenu(bool inMenu)
+    {
+        this.inMenu = inMenu;
     }
 
     public void closeBagMenu()
@@ -320,6 +326,9 @@ public class Player : CMoveCombatable
 
         if (startedHolding + chargeTime < Time.time)
             animator.SetBool("charged", true);
+
+        if (inMenu)
+            animator.SetFloat("movementSpeed", 0);
     }
 
 }

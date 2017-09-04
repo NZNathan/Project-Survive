@@ -23,6 +23,7 @@ public class WorldManager : MonoBehaviour {
     public LandscapeGen landscapeGen;
     public SpriteGen spriteGenerator;
     private float respawnTime = 4f;
+    public static int mapLevel = 1;
 
     //Dialogue
     [HideInInspector]
@@ -35,6 +36,7 @@ public class WorldManager : MonoBehaviour {
     {
         instance = this;
         banterGen = new BanterGenerator();
+        currentPlayer = Player.instance;
         cam = Camera.main.GetComponentInParent<CameraFollow>();
     }
 
@@ -109,6 +111,17 @@ public class WorldManager : MonoBehaviour {
         Invoke("resetPlayer", respawnTime * Time.timeScale);
     }
 
+    public void newMap()
+    {
+        landscapeGen.resetLandscape(currentPlayer);
+
+        currentPlayer.transform.position = new Vector3(0, 0, 0);
+        cam.resetCamera(currentPlayer.transform);
+
+        //Enable the UI
+        UIManager.instance.enableUI();
+    }
+
     private void resetPlayer()
     {
         normalTime();        
@@ -116,12 +129,8 @@ public class WorldManager : MonoBehaviour {
         currentPlayer = spriteGenerator.createNewPlayer();
 
         currentPlayer.name = "Player";
-        landscapeGen.resetLandscape(currentPlayer);
 
-        cam.resetCamera(currentPlayer.transform);
-
-        //Enable the UI
-        UIManager.instance.enableUI();
+        newMap();
     }
 
 }

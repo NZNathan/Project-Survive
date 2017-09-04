@@ -7,14 +7,13 @@ public class LandscapeGen : MonoBehaviour {
     //Prefabs
     public static LandscapePrefabs prefabs;
     public Area baseArea;
-    public GameObject player;
     public DT scenarioTree;
 
     //Sprite Gen Variables
     public SpriteGen spriteGenerator;
 
     //Area Gen Variables -- Have a enum here for terrian type? (Forest, desert, grassland)
-    public static int levelSize = 21; //first area is a town, last area will always be a transition area
+    public static int levelSize = 3; //first area is a town, seond is empty, last area will always be a transition area so always need at least 3
     private Area[] areas;
 
     //Area Limits Variables
@@ -60,7 +59,6 @@ public class LandscapeGen : MonoBehaviour {
         areas[0] = respawnArea;
         generateNewAreas();
 
-        this.player = player.gameObject;
     }
 
     void deleteLandscape()
@@ -143,11 +141,11 @@ public class LandscapeGen : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (player == null)
+        if (Player.instance == null)
             return;
 
         //Move into a invoke repeating method so it can be stopped and more efficient?
-        if (player.transform.position.x > lastAreaPos && currentArea <= levelSize - 2)
+        if (Player.instance.transform.position.x > lastAreaPos && currentArea <= levelSize - 2)
         {
             //Set active the next area in front of the player and disable the one two areas behind
             areas[currentArea + activeRange].gameObject.SetActive(true);
@@ -162,7 +160,7 @@ public class LandscapeGen : MonoBehaviour {
                 firstAreaPos += areaWidth;
             }
         }
-        else if (player.transform.position.x < firstAreaPos && currentArea > activeRange)
+        else if (Player.instance.transform.position.x < firstAreaPos && currentArea > activeRange)
         {
             //Set active the next area behind of the player and disable the one two areas ahead
             areas[currentArea - activeRange - 1].gameObject.SetActive(true);

@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour {
     private HealthBarManager healthBarManager;
     private PlayerGUI playerGUI;
     private ItemPopup itemPopup;
+    private LoadScreen loadScreen;
     public LevelUpGUI levelUpWindow;
 
     //UI Objects
@@ -33,6 +34,7 @@ public class UIManager : MonoBehaviour {
         healthBarManager = GetComponent<HealthBarManager>();
         playerGUI = GetComponent<PlayerGUI>();
         itemPopup = itemPopupObject.GetComponent<ItemPopup>();
+        loadScreen = GetComponent<LoadScreen>();
     }
 
     //--- PLAYER GUI METHODS ---
@@ -83,6 +85,12 @@ public class UIManager : MonoBehaviour {
             levelUpWindow.closeWindow();
         else
             levelUpWindow.openWindow();
+    }
+
+    //--- Load Screen METHODS ---
+    public void newLoadScreen()
+    {
+        loadScreen.activate();
     }
 
     //--- UI CONTROL METHODS ---

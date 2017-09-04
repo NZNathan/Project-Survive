@@ -35,7 +35,6 @@ public class C : CHitable {
 
     public new void Start()
     {
-        Debug.Log(LayerMask.NameToLayer("NoCharacterCollisions"));
         base.Start();
         originalLayer = gameObject.layer;
 
