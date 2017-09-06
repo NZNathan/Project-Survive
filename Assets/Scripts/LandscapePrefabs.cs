@@ -28,6 +28,9 @@ public class LandscapePrefabs : MonoBehaviour {
     //Enemy Variables
     public GameObject[] feralCrowds;
 
+    //Fight Variables
+    public GameObject[] fightCrowds;
+
     // Use this for initialization
     void Start ()
     {
