@@ -7,7 +7,11 @@ public class C : CHitable {
 
     //Components
     protected SpriteRenderer[] spriteRenderers;
-    protected Animator animator;
+    [HideInInspector]
+    public Animator animator;
+
+    [Header("Faction Variables")]
+    public Faction faction;
 
     [Header("Character Variables")]
     public string firstName;
@@ -53,6 +57,11 @@ public class C : CHitable {
     public bool isDead()
     {
         return dead;
+    }
+
+    public bool isFalling()
+    {
+        return falling;
     }
 
     public void faceBack()

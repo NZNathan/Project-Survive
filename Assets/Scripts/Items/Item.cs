@@ -6,6 +6,9 @@ public class Item : MonoBehaviour {
 
     public ItemAbility itemAbility;
 
+    [Range(0f, 1.0f)]
+    public float dropRate;
+
 	// Use this for initialization
 	void Start ()
     {

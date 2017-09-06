@@ -99,6 +99,7 @@ public class BasicAttack : Ability
     {
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 
+        //Wait until the attack frame in the animation has been reached
         while (!caster.getAttackTrigger().hasAttackTriggered())
             yield return null;
 
@@ -107,7 +108,6 @@ public class BasicAttack : Ability
         //Check if attack can go through
         if (!caster.isDead())
         {
-
             Vector2 newPos = new Vector2(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2);
 
             RaycastHit2D[] hitObject = Physics2D.RaycastAll(newPos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
@@ -132,7 +132,7 @@ public class BasicAttack : Ability
                     //Hit attack
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
 
-                    if (objectHit.isInvuln() || objectHit.tag == caster.tag || objectHit.isKnockedback())
+                    if (objectHit.isInvuln() || objectHit.tag == caster.tag || objectHit.isKnockedback()) //Add faction to hitables to use here instead of tags
                         continue;
 
                     //Apply damage and knockback

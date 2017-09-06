@@ -11,7 +11,7 @@ public class Enemy : CMoveCombatable {
     [Header("AI Variables")]
     public float aggroRange = 5f;
     public float attackRange = 0.65f;
-    AIState state;
+    private Stack<AIState> state;
 
     //Stun Variables
     public float stunTime = 0.5f;
@@ -24,7 +24,8 @@ public class Enemy : CMoveCombatable {
     protected float collisionOffTime = 0.3f;
 
     //Movement Variables
-    protected Transform target;
+    //[HideInInspector]
+    public Transform target;
     protected Player player;
 
     // Use this for initialization
@@ -35,7 +36,25 @@ public class Enemy : CMoveCombatable {
         animator = GetComponentInChildren<Animator>();
         player = Player.instance;
         target = player.transform;
+
+        //Manage State
+        state = new Stack<AIState>();
+        state.Push(new IdleState(this));
     }
+
+    #region States
+
+    public void popState()
+    {
+        state.Pop();
+    }
+
+    public void pushState(AIState aiState)
+    {
+        state.Push(aiState);
+    }
+
+    #endregion
 
     protected override Vector2 movement()
     {
@@ -54,7 +73,7 @@ public class Enemy : CMoveCombatable {
 
     }
 
-    void attackTarget()
+    public void attackTarget()
     {
         Vector2 direction = getDirection(target.position, target.gameObject.GetComponent<CHitable>().objectHeight);
 
@@ -84,6 +103,12 @@ public class Enemy : CMoveCombatable {
             ((Player) lastAttacker).addXp(xpWorth);
 
         //TODO: Spawn item drops
+        int itemType = UnityEngine.Random.Range(0, dropableItems.Length);
+
+        float drop = UnityEngine.Random.Range(0f, 1f);
+
+        if (dropableItems[itemType].dropRate > drop)
+            Instantiate(dropableItems[itemType], transform.position, Quaternion.identity);
     }
 
     public override void knockback(Vector2 target, int force, float targetHeight)
@@ -127,17 +152,13 @@ public class Enemy : CMoveCombatable {
     // Update is called once per frame
     void FixedUpdate ()
     {
+        state.Peek().action();
+        return;
         if(player == null)
             player = Player.instance;
 
         if (stunned || dead || player == null || player.isDead() || falling)
             return;
-
-        //Abstract out a get target method for future enemies?
-        if ((player.transform.position - transform.position).magnitude < aggroRange)
-            target = player.transform;
-        else
-            target = null;
 
         //If the enemy has a target, and its out of attack range move closer to it, else make sure the move animation is not playing
         if (target != null && (player.transform.position - transform.position).magnitude > attackRange)

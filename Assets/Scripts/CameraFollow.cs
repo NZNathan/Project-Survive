@@ -43,7 +43,7 @@ public class CameraFollow : MonoBehaviour
 
     void checkPlayerObscured()
     {
-        if (Player.instance != null)
+        if (Player.instance != null && !Player.instance.isInMenu())
         {
             RaycastHit2D hit = Physics2D.Raycast(Player.instance.transform.position, cam.transform.forward, 500, blockMask);
             if (hit.collider != null)

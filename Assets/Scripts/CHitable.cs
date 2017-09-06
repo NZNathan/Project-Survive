@@ -67,7 +67,7 @@ public abstract class CHitable : MonoBehaviour {
         StartCoroutine("beingKnockedBack");
     }
 
-    protected Vector2 getDirection(Vector2 target, float targetHeight)
+    public Vector2 getDirection(Vector2 target, float targetHeight)
     {
         //Get position of this
         Vector2 pos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);

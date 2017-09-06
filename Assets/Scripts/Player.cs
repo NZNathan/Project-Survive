@@ -53,6 +53,11 @@ public class Player : CMoveCombatable
         UIManager.instance.setAbilities(abilities); //REmove when player is generated
     }
 
+    public bool isInMenu()
+    {
+        return inMenu;
+    }
+
     public void setInMenu(bool inMenu)
     {
         this.inMenu = inMenu;

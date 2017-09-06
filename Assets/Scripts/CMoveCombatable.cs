@@ -27,7 +27,9 @@ public abstract class CMoveCombatable : CMoveable {
     protected IEnumerator attackAction;
 
     //Attack Variables
+    [HideInInspector]
     public bool attacking = false;
+    [HideInInspector]
     public bool canCombo = false; //So player can get inputs for combos in while attacking
     protected AttackRayTrigger attackTrigger;
 
@@ -41,7 +43,7 @@ public abstract class CMoveCombatable : CMoveable {
     protected float startedHolding = float.MaxValue;
 
     //Stun Variables
-    public bool stunned = false;
+    protected bool stunned = false;
 
     [Header("Audio Variables")]
     public AudioClip attackSound;

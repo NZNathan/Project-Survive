@@ -56,7 +56,7 @@ public class LoadScreen : MonoBehaviour {
 
         int waitTime = 0;
 
-        while (waitTime < 8)
+        while (waitTime < 0)
         {
             loadTextAnimation();
             waitTime += 1;
