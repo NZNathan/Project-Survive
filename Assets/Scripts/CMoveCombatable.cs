@@ -186,6 +186,11 @@ public abstract class CMoveCombatable : CMoveable {
         return false; //Attack failed
     }
 
+    public bool isStunned()
+    {
+        return stunned;
+    }
+
     public AttackRayTrigger getAttackTrigger()
     {
         return attackTrigger;

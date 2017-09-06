@@ -13,13 +13,13 @@ public class BasicAttack : Ability
     private int abilityDamage; //Scale to player damage?
 
     //The force to be applied to the caster in the attack direction
-    private float abilityVelocity = 5;
+    private float abilityVelocity = 0;
 
     //Animation name in animator
     private string animation = "attack";
 
     //Knockback applied to target that is hit by attack
-    private int abilityKnockback = 10; 
+    private int abilityKnockback = 0; 
     private float cooldownTime = 0f;
 
     //How far the ray will be cast

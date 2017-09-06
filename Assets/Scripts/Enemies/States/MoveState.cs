@@ -26,14 +26,18 @@ public class MoveState : AIState
             return;
         }
 
-        character.rb2D.AddForce(movement());
+        
 
         //Transition to Attack State if target gets within range
         if ((character.target.position - character.transform.position).magnitude < character.attackRange)
         {
             character.animator.SetFloat("movementSpeed", 0f);
             character.pushState(new AttackState(character));
+            return;
         }
+
+        //Leave till last so don't move if switching states
+        character.rb2D.AddForce(movement());
     }
 
     private Vector2 movement()

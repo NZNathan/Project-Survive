@@ -19,5 +19,10 @@ public abstract class AIState
         {
             character.pushState(new KnockedDown(character));
         }
+
+        if (character.isStunned())
+        {
+            character.pushState(new StunnedState(character));
+        }
     }
 }

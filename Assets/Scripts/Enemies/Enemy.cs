@@ -91,8 +91,9 @@ public class Enemy : CMoveCombatable {
         StopCoroutine("stun");
         attacking = false;
         animator.SetTrigger("stopAttack");
+        attackTrigger.resetTrigger();
 
-        if(!falling)
+        if (!falling)
             StartCoroutine("stun");
     }
 
