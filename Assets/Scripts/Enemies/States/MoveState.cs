@@ -27,12 +27,21 @@ public class MoveState : AIState
         }
 
         
-
         //Transition to Attack State if target gets within range
         if ((character.target.position - character.transform.position).magnitude < character.attackRange)
         {
-            character.animator.SetFloat("movementSpeed", 0f);
-            character.pushState(new AttackState(character));
+            if (FactionManager.instance.isHostile(character.faction, character.target.GetComponent<CMoveCombatable>().faction))
+            {
+                character.animator.SetFloat("movementSpeed", 0f);
+                character.pushState(new AttackState(character));
+                
+            }
+            else
+            {
+                character.animator.SetFloat("movementSpeed", 0f);
+                character.popState();
+                character.pushState(new ConverseState(character));
+            }
             return;
         }
 

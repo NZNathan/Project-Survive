@@ -24,4 +24,14 @@ public class BanterGenerator {
             return "Why won't you die?!";
     }
 
+    public string getSmallTalk()
+    {
+        float ran = Random.Range(0f, 1f);
+
+        if (ran < 0.5f)
+            return "Drink cactus juice, it's the quenchiest!";
+        else
+            return "Swooping is bad!";
+    }
+
 }
