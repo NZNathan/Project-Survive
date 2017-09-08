@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public abstract class AIState
 {
     //Hold a movement field to determine how to move?
     protected Enemy character;
+
+    //public abstract void exitState();
 
     public virtual void action()
     {

@@ -12,6 +12,7 @@ public class Enemy : CMoveCombatable {
     public float aggroRange = 5f;
     public float attackRange = 0.65f;
     private Stack<AIState> state;
+    public AIState currentState;
 
     //Stun Variables
     public float stunTime = 0.5f;
@@ -40,9 +41,15 @@ public class Enemy : CMoveCombatable {
         //Manage State
         state = new Stack<AIState>();
         state.Push(new IdleState(this));
+        currentState = state.Peek();
     }
 
     #region States
+
+    public AIState peekState()
+    {
+        return state.Peek();
+    }
 
     public void popState()
     {
@@ -52,6 +59,7 @@ public class Enemy : CMoveCombatable {
     public void pushState(AIState aiState)
     {
         state.Push(aiState);
+        currentState = state.Peek();
     }
 
     #endregion
@@ -154,6 +162,7 @@ public class Enemy : CMoveCombatable {
     void FixedUpdate ()
     {
         state.Peek().action();
+        Debug.Log(gameObject.name + " state: " + state.Peek());
         return;
         if(player == null)
             player = Player.instance;

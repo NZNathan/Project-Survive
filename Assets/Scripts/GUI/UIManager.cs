@@ -60,9 +60,9 @@ public class UIManager : MonoBehaviour {
     }
 
     //--- Floating Text Manager METHODS ---
-    public void newTextMessage(GameObject talker, string sentence)
+    public FloatingText newTextMessage(GameObject talker, string sentence)
     {
-        floatingTextManager.createText(talker, sentence);
+        return floatingTextManager.createText(talker, sentence);
     }
 
     //--- Item Popup METHODS ---

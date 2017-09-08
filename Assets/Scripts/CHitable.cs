@@ -15,7 +15,7 @@ public abstract class CHitable : MonoBehaviour {
     //Health Variables
     [Header("Health Variables")]
     public int maxHealth = 100;
-    protected int currentHealth;
+    public int currentHealth { get; protected set; }
 
     //Invulnerable Variables
     protected bool invulnerable = false;

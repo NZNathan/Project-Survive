@@ -15,7 +15,6 @@ public class Player : CMoveCombatable
     private int xp = 0;
 
     //Input Variables
-    public bool asdf = true;
     private bool chargingAttack = false;
 
     //Menu Variables

@@ -35,6 +35,14 @@ public abstract class CMoveable : C {
         audioSource = GetComponent<AudioSource>();
     }
 
+    public void facePoint(Vector3 point)
+    {
+        if (point.x < transform.position.x)
+            faceLeft();
+        else
+            faceRight();
+    }
+
     public void faceLeft()
     {
         transform.localScale = new Vector3(-1 * facingFront, 1, 1);

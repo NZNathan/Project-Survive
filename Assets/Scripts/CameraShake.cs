@@ -14,16 +14,15 @@ public class CameraShake : MonoBehaviour {
     {
         if (shake > 0)
         {
-            Debug.Log("Shake");
             transform.localPosition = Random.insideUnitSphere * (shakeAmount/2);
-            transform.position = new Vector3(transform.position.x, transform.position.y, -10);
+            transform.position = new Vector3(transform.position.x, transform.position.y);
             shake -= Time.deltaTime * decreaseFactor;
 
         }
         else if (shake != 0.0f)
         {
             shake = 0.0f;
-            transform.localPosition = new Vector3(0, 0, -10);
+            transform.localPosition = new Vector3(0, 0);
         }
     }
 

@@ -187,6 +187,7 @@ public class C : CHitable {
         {
             sr.sortingOrder = (int) (transform.position.y*10 *-1);
         }
+        
 	}
 
 }

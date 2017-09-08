@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class IdleState : AIState
 {
 
@@ -22,7 +23,7 @@ public class IdleState : AIState
         //Only run aggro check every 5 ticks to save computation
         if (tick % tickUntillCall == 0)
         {
-            //Transition to Move State If player is within range
+            //Transition to Move State If hostile target is within range
             if (enemyNearby())
             {
                 character.popState();
@@ -33,7 +34,7 @@ public class IdleState : AIState
         //Only run convo call check every 50 ticks to save computation
         if (tick >= tickUntillConvoCall)
         {
-            //Transition to Move State If player is within range
+            //Transition to Move State If friendly target is within range
             if (friendlyNearby())
             {
                 character.popState();
@@ -63,7 +64,7 @@ public class IdleState : AIState
             //Try and get the component from the collider to check if its actually a character
             CMoveCombatable target = hitColliders[i].GetComponent<CMoveCombatable>();
 
-            //if the target is actually a CMoveCombatable and is hostile to the character
+            //if the target is actually an Enemy and is hostile to the character
             if (target != null && FactionManager.instance.isHostile(character.faction, target.faction))
             {
                 
@@ -100,10 +101,10 @@ public class IdleState : AIState
         while (i < collidersLength)
         {
             //Try and get the component from the collider to check if its actually a character
-            CMoveCombatable target = hitColliders[i].GetComponent<CMoveCombatable>();
+            Enemy target = hitColliders[i].GetComponent<Enemy>();
 
-            //if the target is actually a CMoveCombatable and is hostile to the character
-            if (target != null && !FactionManager.instance.isHostile(character.faction, target.faction) && target.gameObject != character.gameObject)
+            //if the target is actually an Enemy and is friendly to the character and is not the character and is idle
+            if (target != null && !FactionManager.instance.isHostile(character.faction, target.faction) && target.gameObject != character.gameObject && target.peekState().GetType() == typeof(IdleState))
             {
 
                 //If there is no closer enemy. assign the new target as the closest

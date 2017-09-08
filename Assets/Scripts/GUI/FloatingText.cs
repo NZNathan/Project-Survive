@@ -12,13 +12,16 @@ public class FloatingText : MonoBehaviour {
 
     [Header("Floating Text Variables")]
     public static float textOffset = 0.35f;
-    private float textDuration = 2f;
+    public float textDuration { get; private set; }
 
     public void Start()
     {
         textbox = GetComponent<Text>();
     }
 
+    /// <summary>
+    /// Creates a text line above the targets head for a duration based on the length of the string
+    /// </summary>
     public void setup(GameObject target, string sentence)
     {
         this.sentence = sentence;
@@ -31,8 +34,14 @@ public class FloatingText : MonoBehaviour {
         Invoke("turnoff", textDuration);
     }
 
+    /// <summary>
+    /// Clears the text and target, and turns the text object off
+    /// </summary>
     public void turnoff()
     {
+        //Cancel invoke incase this method was called before the invoke called it
+        CancelInvoke();
+
         textbox.text = "";
         target = null;
 

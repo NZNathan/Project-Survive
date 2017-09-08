@@ -29,7 +29,7 @@ public class FloatingTextManager : MonoBehaviour {
 
 	}
 
-    public void createText(GameObject target, string sentence)
+    public FloatingText createText(GameObject target, string sentence)
     {
         checkTarget(target);
         for (int i = 0; i < poolSize; i++)
@@ -38,7 +38,7 @@ public class FloatingTextManager : MonoBehaviour {
             {
                 pool[i].gameObject.SetActive(true);
                 pool[i].setup(target, sentence);
-                return;
+                return pool[i];
             }
         }
         throw new System.Exception("No floating texts available");
