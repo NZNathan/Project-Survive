@@ -26,7 +26,6 @@ public class IdleState : AIState
             //Transition to Move State If hostile target is within range
             if (enemyNearby())
             {
-                character.popState();
                 character.pushState(new MoveState(character));
             }
         }
@@ -37,7 +36,6 @@ public class IdleState : AIState
             //Transition to Move State If friendly target is within range
             if (friendlyNearby())
             {
-                character.popState();
                 character.pushState(new MoveState(character));
             }
             tick = -1;

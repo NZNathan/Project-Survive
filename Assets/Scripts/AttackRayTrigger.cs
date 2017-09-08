@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AttackRayTrigger : MonoBehaviour {
 
+    private int comboNumber = 0;
     private bool attackTriggered = false;
     private CMoveCombatable character;
 

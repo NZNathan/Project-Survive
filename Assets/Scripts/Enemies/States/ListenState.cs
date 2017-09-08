@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class ListenState : AIState {
 
-    Enemy talker;
+    public Enemy talker { get; private set; }
 
     public ListenState(Enemy character, Enemy talker)
     {

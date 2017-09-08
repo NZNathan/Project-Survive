@@ -28,7 +28,7 @@ public class BasicAttack : Ability
     //Combo Variables
     private Ability comboAttack = new BasicAttackCombo();
     private float lastAttack = -1f;
-    private float comboChainTime = 0.4f;
+    private float comboChainTime = 0.35f;
 
     //Directional Variables
     private Vector2 pos;

@@ -52,8 +52,8 @@ public class ConverseState : AIState
                 currentSpeech.turnoff();
         }
 
-        //If target is no longer listening
-        if (talkingTarget == null || talkingTarget.peekState().GetType() != typeof(ListenState))
+        //If target is no longer listening or no longer listening to you
+        if (talkingTarget == null || talkingTarget.peekState().GetType() != typeof(ListenState) || ((ListenState)talkingTarget.peekState()).talker != character)
         {
             character.target = null;
             character.popState();
