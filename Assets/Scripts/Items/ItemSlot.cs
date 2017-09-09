@@ -1,15 +1,21 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class ItemSlot : MonoBehaviour {
+public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    //Item Descriptors
+    private string itemName;
+    private string itemDescription;
+    private int itemPrice;
 
-    Image itemIcon;
+    //Item Sprite
+    public Image itemIcon;
 
-    void Start()
+    private void Start()
     {
-        itemIcon = GetComponent<Image>();
+        itemIcon = GetComponentsInChildren<Image>()[1];
     }
 
     public void useItem(int index)
@@ -19,18 +25,35 @@ public class ItemSlot : MonoBehaviour {
             Player.instance.useItem(index);
             itemIcon.sprite = null;
             itemIcon.enabled = false;
+            UIManager.instance.closeTooltip();
         }
     }
 
-	public void setIcon(Sprite sprite)
+	public void setIcon(Sprite sprite, Item item)
     {
-        itemIcon = GetComponent<Image>();
         itemIcon.sprite = sprite;
 
         if (sprite != null)
+        {
             itemIcon.enabled = true;
+            itemName = item.itemName;
+            itemDescription = item.itemDescription;
+            itemPrice = item.itemPrice;
+        }
         else
             itemIcon.enabled = false;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(itemIcon.enabled == true)
+            UIManager.instance.newTooltip(itemName, itemDescription, itemPrice);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (itemIcon.enabled == true)
+            UIManager.instance.closeTooltip();
     }
 
 }

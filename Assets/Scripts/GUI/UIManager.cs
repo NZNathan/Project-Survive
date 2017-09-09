@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour {
     private PlayerGUI playerGUI;
     private ItemPopup itemPopup;
     private LoadScreen loadScreen;
+    public Tooltip tooltip;
     public LevelUpGUI levelUpWindow;
 
     //UI Objects
@@ -76,6 +77,17 @@ public class UIManager : MonoBehaviour {
     {
         itemPopupObject.SetActive(false);
         //itemPopup.closePopup();
+    }
+
+    //--- Tooltip METHODS ---
+    public void newTooltip(string title, string bodyText, int price)
+    {
+        tooltip.newTooltip(title, bodyText, price);
+    }
+
+    public void closeTooltip()
+    {
+        tooltip.closeTooltip();
     }
 
     //--- Level Up Window ---

@@ -21,6 +21,7 @@ public class BasicAttack : Ability
     //Knockback applied to target that is hit by attack
     private int abilityKnockback = 0;
     //Stunned time applied to the target
+    private float stunTime = 0.1f;
 
     //Cooldown of the ability
     private float cooldownTime = 0f;

@@ -21,7 +21,7 @@ public class Enemy : CMoveCombatable {
     protected float collisionOffTime = 0.3f;
 
     //Movement Variables
-    [HideInInspector]
+    //[HideInInspector]
     public Transform target;
     protected Player player;
 
@@ -80,6 +80,13 @@ public class Enemy : CMoveCombatable {
         Vector2 direction = getDirection(target.position, target.gameObject.GetComponent<CHitable>().objectHeight);
 
         attack(target.position, direction, basicAttack);
+    }
+
+    public override void loseHealth(int damage)
+    {
+        base.loseHealth(damage);
+
+        target = lastAttacker.transform;
     }
 
     protected override void death()

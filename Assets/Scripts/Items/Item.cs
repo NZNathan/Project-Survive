@@ -5,6 +5,9 @@ using UnityEngine;
 public class Item : MonoBehaviour {
 
     public string itemName;
+    [TextArea]
+    public string itemDescription;
+    public int itemPrice;
     public ItemAbility itemAbility;
 
 	// Use this for initialization

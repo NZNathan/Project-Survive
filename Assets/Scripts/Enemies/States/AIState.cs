@@ -27,11 +27,6 @@ public abstract class AIState
 
         if (character.isStunned())
         {
-            //When the character is hit, make the attacker the new target and push a move state, so after they become unstunned they'll start moving to new target, instead of grabbing the closest target
-            character.target = character.getAttacker().transform;
-            if(character.target != null)
-                character.pushState(new MoveState(character));
-
             character.pushState(new StunnedState(character));
             return;
         }

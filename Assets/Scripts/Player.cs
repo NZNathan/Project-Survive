@@ -64,14 +64,19 @@ public class Player : CMoveCombatable
 
     public void closeBagMenu()
     {
-        inMenu = false;
         inBagMenu = false;
+        Invoke("closeMenu", 0.1f);
     }
 
     public void closeLevelupMenu()
     {
-        inMenu = false;
         inLevelMenu = false;
+        Invoke("closeMenu", 0.1f);
+    }
+
+    public void closeMenu()
+    {
+        inMenu = false;
     }
 
     public void levelup(int pointsLeft, int[] stats)
@@ -263,7 +268,7 @@ public class Player : CMoveCombatable
             chargingAttack = true;
         }
         //If left click with no weapon out and not attacking or charging, then draw weapon
-        else if (leftClickDown && !attacking && !chargingAttack && !weaponDrawn)
+        else if (leftClickUp && !attacking && !chargingAttack && !weaponDrawn)
         {
             drawWeapon();
         }

@@ -7,12 +7,18 @@ public class BagGUI : MonoBehaviour {
 
 	public GameObject bagWindow;
 
-	public ItemSlot[] slots;
+	private ItemSlot[] slots;
 
+    private void Start()
+    {
+        slots = GetComponentsInChildren<ItemSlot>();
+        bagWindow.SetActive(false);
+    }
 
-	public void addItem(int i, Item item)
+    public void addItem(int i, Item item)
 	{
-        slots[i].setIcon(item.GetComponent<SpriteRenderer>().sprite);    
+        slots[i].setIcon(item.GetComponent<SpriteRenderer>().sprite, item);
+
 	}
 
 	public void removeItem(int index)
@@ -21,7 +27,7 @@ public class BagGUI : MonoBehaviour {
 		{
 			if(i == index)
 			{
-                slots[i].setIcon(null);
+                slots[i].setIcon(null, null);
                 return;
 			}
 		}
@@ -31,7 +37,7 @@ public class BagGUI : MonoBehaviour {
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            slots[i].setIcon(null);
+            slots[i].setIcon(null, null);
         }
     }
 
@@ -45,6 +51,7 @@ public class BagGUI : MonoBehaviour {
 	public void closeBag()
 	{
 		bagWindow.SetActive(false);
+        UIManager.instance.closeTooltip();
 		WorldManager.instance.normalTime();
 	}
 
