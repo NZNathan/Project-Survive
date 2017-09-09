@@ -36,7 +36,7 @@ public class WorldManager : MonoBehaviour {
     {
         instance = this;
         banterGen = new BanterGenerator();
-        currentPlayer = Player.instance;
+        currentPlayer = spriteGenerator.createNewPlayer();
         cam = Camera.main.GetComponentInParent<CameraFollow>();
     }
 

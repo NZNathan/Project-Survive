@@ -39,7 +39,8 @@ public class LoadScreen : MonoBehaviour {
 
     IEnumerator transitionToNewMap()
     {
-        Player.instance.setInMenu(true);
+        if(Player.instance != null)
+            Player.instance.setInMenu(true);
 
         loadScreen.gameObject.SetActive(true);
         levelText.text = "Forest 1-" + WorldManager.mapLevel;

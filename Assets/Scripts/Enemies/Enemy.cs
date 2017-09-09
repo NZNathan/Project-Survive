@@ -23,7 +23,6 @@ public class Enemy : CMoveCombatable {
     //Movement Variables
     //[HideInInspector]
     public Transform target;
-    protected Player player;
 
     // Use this for initialization
     new void Start()
@@ -31,8 +30,6 @@ public class Enemy : CMoveCombatable {
         base.Start();
         
         animator = GetComponentInChildren<Animator>();
-        player = Player.instance;
-        target = player.transform;
 
         //Manage State
         state = new Stack<AIState>();
@@ -133,23 +130,6 @@ public class Enemy : CMoveCombatable {
     void FixedUpdate ()
     {
         state.Peek().action();
-
-        return;
-        if(player == null)
-            player = Player.instance;
-
-        if (stunned || dead || player == null || player.isDead() || falling)
-            return;
-
-        //If the enemy has a target, and its out of attack range move closer to it, else make sure the move animation is not playing
-        if (target != null && (player.transform.position - transform.position).magnitude > attackRange)
-            rb2D.AddForce(movement());
-        else
-            animator.SetFloat("movementSpeed", 0);
-
-        //If the enemy has a target and is within attacking range, and not already attacking, attack the target
-        if (target != null && (player.transform.position - transform.position).magnitude < attackRange && !attacking)
-            attackTarget();
     }
 
     //Just landed a hit on an enemy

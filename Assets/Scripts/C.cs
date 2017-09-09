@@ -35,7 +35,7 @@ public class C : CHitable {
     protected bool falling = false;
 
     //Sprites
-    Sprite[] sprites;
+    private Sprite[] sprites;
 
     public new void Start()
     {
