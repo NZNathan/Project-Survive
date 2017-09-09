@@ -6,6 +6,9 @@ using UnityEngine;
 public class ListenState : AIState {
 
     public Enemy talker { get; private set; }
+    private int tick = 0; //tick is one frame
+    private int tickUntillCall = 5;
+
 
     public ListenState(Enemy character, Enemy talker)
     {
@@ -40,7 +43,23 @@ public class ListenState : AIState {
             character.target = null;
             character.popState();
             character.pushState(new IdleState(character));
+            return;
         }
+
+        //Only run aggro check every 5 ticks to save computation
+        if (tick >= tickUntillCall)
+        {
+            //Transition to Move State If hostile target is within range
+            if (enemyNearby())
+            {
+                character.popState();
+                character.pushState(new MoveState(character));
+            }
+
+            tick = 0;
+        }
+
+        tick++;
     }
 
 }

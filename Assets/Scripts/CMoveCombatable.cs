@@ -44,6 +44,12 @@ public abstract class CMoveCombatable : CMoveable {
 
     //Stun Variables
     protected bool stunned = false;
+    protected float stunTime = 0;
+
+    //Immunities
+    [Header("Immunities")]
+    public bool stunImmunity = false;
+    public bool knockbackImmunity = false;
 
     [Header("Audio Variables")]
     public AudioClip attackSound;
@@ -95,6 +101,7 @@ public abstract class CMoveCombatable : CMoveable {
             StopCoroutine(attackAction);
             attacking = false;
             canMove = true;
+            attackTrigger.resetTrigger();
         }
 
         falling = true;
@@ -184,6 +191,38 @@ public abstract class CMoveCombatable : CMoveable {
         }
 
         return false; //Attack failed
+    }
+
+    public override void applyStun(float stunTime)
+    {
+        if (!stunImmunity)
+        {
+            this.stunTime = stunTime;
+
+            //Stop enemy if they are currently attacking and stun them 
+            if (attackAction != null)
+                StopCoroutine(attackAction);
+
+
+            attacking = false;
+            animator.SetTrigger("stopAttack");
+            attackTrigger.resetTrigger();
+
+
+            StopCoroutine("stun");
+            if (!falling)
+                StartCoroutine("stun");
+        }
+    }
+
+    public IEnumerator stun()
+    {
+        stunned = true;
+        animator.SetFloat("movementSpeed", 0);
+
+        yield return new WaitForSeconds(stunTime);
+
+        stunned = false;
     }
 
     public bool isStunned()

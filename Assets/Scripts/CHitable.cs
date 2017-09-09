@@ -40,6 +40,8 @@ public abstract class CHitable : MonoBehaviour {
         healthBar.setActive(false);
     }
 
+    public abstract void applyStun(float stunTime);
+
     public bool isInvuln()
     {
         return invulnerable;
@@ -157,5 +159,4 @@ public abstract class CHitable : MonoBehaviour {
         healthBar.setActive(false);
     }
 
-	
 }

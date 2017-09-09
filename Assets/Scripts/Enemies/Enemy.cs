@@ -12,20 +12,16 @@ public class Enemy : CMoveCombatable {
     public float aggroRange = 5f;
     public float attackRange = 0.65f;
     private Stack<AIState> state;
-    public AIState currentState;
-
-    //Stun Variables
-    public float stunTime = 0.5f;
 
     [Header("Drop On Death Variables")]
-    public Item[] dropableItems;
+    public DropableItem[] dropableItems;
     public int xpWorth;
 
     //Knockback collisions off time
     protected float collisionOffTime = 0.3f;
 
     //Movement Variables
-    //[HideInInspector]
+    [HideInInspector]
     public Transform target;
     protected Player player;
 
@@ -41,7 +37,6 @@ public class Enemy : CMoveCombatable {
         //Manage State
         state = new Stack<AIState>();
         state.Push(new IdleState(this));
-        currentState = state.Peek();
     }
 
     #region States
@@ -59,7 +54,6 @@ public class Enemy : CMoveCombatable {
     public void pushState(AIState aiState)
     {
         state.Push(aiState);
-        currentState = state.Peek();
     }
 
     #endregion
@@ -88,36 +82,17 @@ public class Enemy : CMoveCombatable {
         attack(target.position, direction, basicAttack);
     }
 
-    public override void loseHealth(int damage)
-    {
-        base.loseHealth(damage);
-
-        //Stop enemy if they are currently attacking and stun them 
-        if(attackAction != null)
-            StopCoroutine(attackAction);
-
-        StopCoroutine("stun");
-        attacking = false;
-        animator.SetTrigger("stopAttack");
-        attackTrigger.resetTrigger();
-
-        if (!falling)
-            StartCoroutine("stun");
-    }
-
     protected override void death()
     {
         base.death();
         if(lastAttacker.tag == "Player")
             ((Player) lastAttacker).addXp(xpWorth);
 
-        //TODO: Spawn item drops
-        int itemType = UnityEngine.Random.Range(0, dropableItems.Length);
-
-        float drop = UnityEngine.Random.Range(0f, 1f);
-
-        if (dropableItems[itemType].dropRate > drop)
-            Instantiate(dropableItems[itemType], transform.position, Quaternion.identity);
+        //Item drops
+        foreach(DropableItem dropableItem in dropableItems)
+        {
+            dropableItem.dropItem(transform.position); 
+        }
     }
 
     public override void knockback(Vector2 target, int force, float targetHeight)
@@ -126,17 +101,6 @@ public class Enemy : CMoveCombatable {
         base.knockback(target, force, targetHeight);
 
         startCollisionsOff(collisionOffTime);
-    }
-
-
-    public IEnumerator stun()
-    {
-        stunned = true;
-        animator.SetFloat("movementSpeed", 0);
-
-        yield return new WaitForSeconds(stunTime);
-
-        stunned = false;
     }
 
     public void setRevengeTarget()
@@ -162,7 +126,7 @@ public class Enemy : CMoveCombatable {
     void FixedUpdate ()
     {
         state.Peek().action();
-        Debug.Log(gameObject.name + " state: " + state.Peek());
+
         return;
         if(player == null)
             player = Player.instance;

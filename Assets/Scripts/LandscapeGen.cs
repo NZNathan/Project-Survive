@@ -13,7 +13,8 @@ public class LandscapeGen : MonoBehaviour {
     public SpriteGen spriteGenerator;
 
     //Area Gen Variables -- Have a enum here for terrian type? (Forest, desert, grassland)
-    public static int levelSize = 5; //first area is a town, seond is empty, last area will always be a transition area so always need at least 3
+    [Range(3, 99)]
+    public int levelSize = 5; //first area is a town, seond is empty, last area will always be a transition area so always need at least 3
     private Area[] areas;
 
     //Area Limits Variables

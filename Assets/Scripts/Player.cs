@@ -225,6 +225,7 @@ public class Player : CMoveCombatable
         //Weapon Inputs
         //Attack
         bool leftClickDown = Input.GetMouseButtonDown(0);
+        bool leftClickHeld = Input.GetMouseButton(0);
         bool leftClickUp = Input.GetMouseButtonUp(0);
         //Ability #1
         bool rightClick = Input.GetMouseButtonDown(1);
@@ -254,13 +255,20 @@ public class Player : CMoveCombatable
 
         yield return new WaitForFixedUpdate(); //For rigidbody interactions
 
-        if (leftClickDown && !attacking && weaponDrawn)
+        //If left click with weapon out and not already attacking, then start charging
+        if (((leftClickHeld && !chargingAttack && !stunned) || leftClickDown) && !attacking && weaponDrawn)
         {
+            Debug.Log("Ars");
             startedHolding = Time.time;
             chargingAttack = true;
         }
-
-        if (leftClickUp && !attacking && weaponDrawn)
+        //If left click with no weapon out and not attacking or charging, then draw weapon
+        else if (leftClickDown && !attacking && !chargingAttack && !weaponDrawn)
+        {
+            drawWeapon();
+        }
+        //If releasing left click after charging up and not already attacking then execute either a heavy or light attack based on charge time
+        else if (leftClickUp && !attacking && weaponDrawn && chargingAttack)
         {
             if (startedHolding + chargeTime < Time.time)
                 attack(heavyAttack); 
@@ -269,6 +277,7 @@ public class Player : CMoveCombatable
 
             chargingAttack = false;
         }
+        //If you are attacking and can combo then attack with basic attack
         else if (leftClickUp && canCombo && weaponDrawn)
         {
             attack(basicAttack);
@@ -313,6 +322,15 @@ public class Player : CMoveCombatable
 
         //Update UI xp bar
         UIManager.instance.addXp(xp, xpPerLevel);
+    }
+
+    public override void applyStun(float stunTime)
+    {
+        base.applyStun(stunTime);
+
+        startedHolding = Mathf.Infinity;
+        animator.SetBool("charged", false);
+        chargingAttack = false;
     }
 
     public int[] getStats()

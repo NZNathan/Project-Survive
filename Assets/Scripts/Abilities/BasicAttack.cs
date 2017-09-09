@@ -19,7 +19,10 @@ public class BasicAttack : Ability
     private string animation = "attack";
 
     //Knockback applied to target that is hit by attack
-    private int abilityKnockback = 0; 
+    private int abilityKnockback = 0;
+    //Stunned time applied to the target
+
+    //Cooldown of the ability
     private float cooldownTime = 0f;
 
     //How far the ray will be cast
@@ -97,7 +100,6 @@ public class BasicAttack : Ability
 
     public IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
     {
-        caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 
         //Wait until the attack frame in the animation has been reached
         while (!caster.getAttackTrigger().hasAttackTriggered())
@@ -139,6 +141,9 @@ public class BasicAttack : Ability
                     objectHit.setAttacker(caster);
                     //objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
                     objectHit.loseHealth(abilityDamage);
+
+                    //Apply stun to the target
+                    objectHit.applyStun(stunTime);
 
                     caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();

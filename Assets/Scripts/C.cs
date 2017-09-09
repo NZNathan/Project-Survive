@@ -94,6 +94,11 @@ public class C : CHitable {
         }
     }
 
+    public override void applyStun(float stunTime)
+    {
+        return;
+    }
+
     //force is knockback force of the attack
     public override void knockUp(Vector2 target, int knockbackForce, int knockupForce, float targetHeight)
     {

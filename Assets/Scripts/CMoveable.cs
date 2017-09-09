@@ -53,6 +53,11 @@ public abstract class CMoveable : C {
         transform.localScale = new Vector3(1 * facingFront, 1, 1);
     }
 
+    public override void applyStun(float stunTime)
+    {
+        return;
+    }
+
     public void jump()
     {
         jumping = true;

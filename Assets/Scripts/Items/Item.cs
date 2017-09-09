@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Item : MonoBehaviour {
 
+    public string itemName;
     public ItemAbility itemAbility;
-
-    [Range(0f, 1.0f)]
-    public float dropRate;
 
 	// Use this for initialization
 	void Start ()
@@ -18,6 +16,12 @@ public class Item : MonoBehaviour {
     public void useItem()
     {
         itemAbility.useItem();
+    }
+
+    public void instantiate(Vector3 spawnPos)
+    {
+        Item item = Instantiate(this, spawnPos, Quaternion.identity);
+        item.gameObject.name = itemName;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
