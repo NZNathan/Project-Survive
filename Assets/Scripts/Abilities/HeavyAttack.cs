@@ -25,11 +25,13 @@ public class HeavyAttack : Ability {
     private Vector2 direction;
 
 
-    public void setTarget(CMoveCombatable caster, Vector2 pos, Vector2 direction)
+    public void setTarget(CMoveCombatable caster, Vector2 pos)
     {
         this.caster = caster;
         this.pos = pos;
-        this.direction = direction;
+
+        //Get direction based on caster facing direction
+        direction = new Vector2(caster.transform.localScale.x, 0);
 
         abilityDamage = caster.attackDamage * 2;
     }
@@ -79,10 +81,10 @@ public class HeavyAttack : Ability {
 
     public IEnumerator getAction()
     {
-        return abilityActionSequence(pos, direction);
+        return abilityActionSequence();
     }
 
-    public IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
+    public IEnumerator abilityActionSequence()
     {
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 

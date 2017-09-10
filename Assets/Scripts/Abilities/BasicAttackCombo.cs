@@ -31,11 +31,13 @@ public class BasicAttackCombo : Ability
     private Vector2 direction;
 
 
-    public void setTarget(CMoveCombatable caster, Vector2 pos, Vector2 direction)
+    public void setTarget(CMoveCombatable caster, Vector2 pos)
     {
         this.caster = caster;
         this.pos = pos;
-        this.direction = direction;
+
+        //Get direction based on caster facing direction
+        direction = new Vector2(caster.transform.localScale.x, 0);
 
         abilityDamage = (int) (caster.attackDamage * 1.2f);
     }
@@ -87,10 +89,10 @@ public class BasicAttackCombo : Ability
 
     public IEnumerator getAction()
     {
-        return abilityActionSequence(pos, direction);
+        return abilityActionSequence();
     }
 
-    public IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
+    public IEnumerator abilityActionSequence()
     {
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 
@@ -140,7 +142,7 @@ public class BasicAttackCombo : Ability
                     caster.attackHit();
 
                     lastAttack = Time.time;
-                    caster.canCombo = true;
+                    //caster.canCombo = true;
                     caster.setComboAnimation(true);
 
                     hitTarget = true;
@@ -154,13 +156,28 @@ public class BasicAttackCombo : Ability
                 caster.audioSource.Play();
             }
 
-            if(caster.pauseAfterAttack < 0.5f)
-                yield return new WaitForSeconds(0.5f);
-            else
-                yield return new WaitForSeconds(caster.pauseAfterAttack);
+            //Wait till attack animation is over
+            while (!caster.getAttackTrigger().isAttackOver())
+                yield return null;
+
+            caster.getAttackTrigger().resetAttack();
+            
         }
-        caster.setComboAnimation(false);
-        caster.canCombo = false;
+        
+        if (caster.canCombo)
+        {
+            caster.attack(comboAttack);
+            Debug.Log("Combo Finish");
+            yield break;
+        }
+        else
+        {
+            //Pause for caster
+            yield return new WaitForSeconds(caster.pauseAfterAttack);
+            caster.setComboAnimation(false);
+            caster.canCombo = false;
+        }
+
         caster.canMove = true;
         caster.attacking = false;
     }

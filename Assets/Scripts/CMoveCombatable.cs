@@ -29,7 +29,7 @@ public abstract class CMoveCombatable : CMoveable {
     //Attack Variables
     [HideInInspector]
     public bool attacking = false;
-    [HideInInspector]
+    //[HideInInspector]
     public bool canCombo = false; //So player can get inputs for combos in while attacking
     protected AttackRayTrigger attackTrigger;
 
@@ -151,7 +151,7 @@ public abstract class CMoveCombatable : CMoveable {
         stunned = false; //Add in option to roll up off ground
     }
 
-    protected bool attack(Vector2 target, Vector2 dir, Ability ability)
+    public virtual bool attack(Ability ability)
     {
         //Check if ability is not on cooldown
         if (!ability.onCooldown() && !falling & !stunned)
@@ -165,22 +165,13 @@ public abstract class CMoveCombatable : CMoveable {
             animator.SetFloat("movementSpeed", 0);
             animator.ResetTrigger("stopAttack");
 
-            //Replace ability action with combo ability, if it can be a combo attack
-            ability = ability.getComboAttack();
-
             animator.SetTrigger(ability.getAnimation());
 
             //Get position of player
             Vector2 pos = new Vector2(transform.position.x, transform.position.y + objectHeight / 2);
 
-            //Face attack direction
-            if (target.x < pos.x)
-                faceLeft();
-            else
-                faceRight();
-
             //Set as a variable so it can be referenced and stopped else where and to get a unique action that matches the ability
-            ability.setTarget(this, pos, dir);
+            ability.setTarget(this, pos);
             attackAction = ability.getAction();
 
             //UIManager.instance.newTextMessage(this.gameObject, WorldManager.instance.banterGen.getAttackYell());

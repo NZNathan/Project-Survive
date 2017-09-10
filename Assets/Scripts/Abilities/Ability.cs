@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface Ability {
 
-    void setTarget(CMoveCombatable caster, Vector2 pos, Vector2 direction);
+    void setTarget(CMoveCombatable caster, Vector2 pos);
 
     void setCooldown(bool cooldown);
 

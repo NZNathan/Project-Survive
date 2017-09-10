@@ -34,6 +34,11 @@ public class Ancestor {
         revengeTarget = player.getAttacker();
     }
 
+    public string getName()
+    {
+        return firstName + lastName;
+    }
+
     public Ancestor getParent()
     {
         return parent;

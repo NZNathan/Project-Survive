@@ -29,11 +29,13 @@ public class DashStrike : Ability {
     private Vector2 direction;
 
 
-    public void setTarget(CMoveCombatable caster, Vector2 pos, Vector2 direction)
+    public void setTarget(CMoveCombatable caster, Vector2 pos)
     {
         this.caster = caster;
         this.pos = pos;
-        this.direction = direction;
+
+        //Get direction based on caster facing direction
+        direction = new Vector2(caster.transform.localScale.x, 0);
 
         abilityDamage = caster.attackDamage * 2;
     }
@@ -80,10 +82,10 @@ public class DashStrike : Ability {
 
     public IEnumerator getAction()
     {
-        return abilityActionSequence(pos, direction);
+        return abilityActionSequence();
     }
 
-    IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
+    IEnumerator abilityActionSequence()
     {
         string oldLayer = LayerMask.LayerToName(caster.gameObject.layer);
         caster.gameObject.layer = C.noCollisionLayer;

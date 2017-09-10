@@ -7,13 +7,8 @@ using UnityEngine;
 /// </summary>
 public class CharacterUI : MonoBehaviour {
 
-    private Image[] images;
+    public Image[] images;
     private float pixelSize = 0.04f;
-
-    private void Start()
-    {
-        images = GetComponentsInChildren<Image>();
-    }
 
     public void setSprites(Sprite[] sprites)
     {

@@ -26,7 +26,7 @@ public class ConverseState : AIState
         talkingTarget = character.target.GetComponent<Enemy>();
 
         //Check if the target is still idle or if their stack is empty
-        if (talkingTarget.peekState() == null || talkingTarget.peekState().GetType() == typeof(IdleState))
+        if (talkingTarget != null && talkingTarget.peekState() != null && talkingTarget.peekState().GetType() == typeof(IdleState))
         {
             talkingTarget.pushState(new ListenState(talkingTarget, character));
 

@@ -6,6 +6,7 @@ public class AttackRayTrigger : MonoBehaviour {
 
     private int comboNumber = 0;
     private bool attackTriggered = false;
+    private bool attackIsOver = false;
     private CMoveCombatable character;
 
     private void Start()
@@ -27,6 +28,22 @@ public class AttackRayTrigger : MonoBehaviour {
     public void resetTrigger()
     {
         attackTriggered = false;
+    }
+
+    public void attackOver()
+    {
+        attackIsOver = true;
+        Invoke("resetAttack", 1f);
+    }
+
+    public bool isAttackOver()
+    {
+        return attackIsOver;
+    }
+
+    public void resetAttack()
+    {
+        attackIsOver = false;
     }
 
     public void idleState()

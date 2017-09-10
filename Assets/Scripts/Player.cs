@@ -182,18 +182,18 @@ public class Player : CMoveCombatable
         return movement * movementSpeed;// * Time.deltaTime;
     }
 
-    bool attack(Ability action)
+    public override bool attack(Ability action)
     {
         //Reset charge attack time, so players can't hold it while using an ability and come straight out for a follow up heavy attack
         startedHolding = float.MaxValue;
         animator.SetBool("charged", false);
 
         //Get mouse position in relation to the world
-        Vector2 mousePos = CameraFollow.cam.ScreenToWorldPoint(Input.mousePosition);
+        /*Vector2 mousePos = CameraFollow.cam.ScreenToWorldPoint(Input.mousePosition);
 
-        Vector2 direction = getDirection(mousePos, 0);
+        Vector2 direction = getDirection(mousePos, 0);*/
 
-        return attack(mousePos, direction, action);
+        return base.attack(action);
     }
 
     protected override void death()
@@ -247,11 +247,6 @@ public class Player : CMoveCombatable
         if (eKeyDown && !attacking)
             pickupItem();
 
-        if (spaceKeyDown && !attacking && !jumping && !chargingAttack && !weaponDrawn)
-        {
-            jump();
-        }
-
         //Call movement function to handle movements
         Vector3 movementVector = Vector3.zero;
 
@@ -282,9 +277,9 @@ public class Player : CMoveCombatable
             chargingAttack = false;
         }
         //If you are attacking and can combo then attack with basic attack
-        else if (leftClickUp && canCombo && weaponDrawn)
+        else if (leftClickUp && attacking && weaponDrawn)
         {
-            attack(basicAttack);
+            canCombo = true;
             chargingAttack = false;
         }
 
@@ -294,7 +289,7 @@ public class Player : CMoveCombatable
             if (attack(abilities[0]))
                 UIManager.instance.usedAbility(0);
         }
-        else if (spaceKeyDown && !attacking && weaponDrawn)
+        else if (spaceKeyDown && !attacking)
         {
             if (attack(abilities[1]))
                 UIManager.instance.usedAbility(1);

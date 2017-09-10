@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BanterGenerator {
 
-
     public string getPainYell()
     {
         float ran = Random.Range(0f, 1f);
@@ -37,8 +36,9 @@ public class BanterGenerator {
 
     public string[] getConvo()
     {
-        string[] convo = { "Hello there", "Hey", "Nice weather today, eh?", "Yes I would say so" };
-        return convo;
+        //int ran = Random.Range(0, converations.Length);
+        string[] t = { "Hello there", "Hey", "Nice weather today, eh?", "Yes I would say so" };
+        return t;
     }
 
 }

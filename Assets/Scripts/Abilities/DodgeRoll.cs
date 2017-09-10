@@ -31,12 +31,16 @@ public class DodgeRoll : Ability
     private Vector2 direction;
 
 
-    public void setTarget(CMoveCombatable caster, Vector2 pos, Vector2 direction)
+    public void setTarget(CMoveCombatable caster, Vector2 pos)
     {
         this.caster = caster;
         this.pos = pos;
-        this.direction = direction;
 
+        //Direction is either walking direction of caster or facing direction if not moving
+        if(caster.rb2D.velocity == Vector2.zero)
+            direction = Vector2.right * caster.transform.localScale.x;
+        else
+            direction = caster.rb2D.velocity.normalized;
     }
 
     public Ability getComboAttack()
@@ -81,14 +85,19 @@ public class DodgeRoll : Ability
 
     public IEnumerator getAction()
     {
-        return abilityActionSequence(pos, direction);
+        return abilityActionSequence();
     }
 
-    public IEnumerator abilityActionSequence(Vector2 pos, Vector2 direction)
+    public IEnumerator abilityActionSequence()
     {
         caster.rb2D.AddForce(direction * abilityVelocity);
         caster.setInvulnerable(abilityDuration);
         caster.startCollisionsOff(abilityDuration);
+
+        if (caster.rb2D.velocity.x < 0)
+            caster.faceLeft();
+        else
+            caster.faceRight();
 
         float duration = 0;
 
@@ -100,6 +109,7 @@ public class DodgeRoll : Ability
             yield return new WaitForSeconds(stepAmount);
         }
 
+        caster.rb2D.velocity /= 2;
         caster.canMove = true;
         caster.attacking = false;
     }
