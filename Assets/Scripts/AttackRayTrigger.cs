@@ -16,6 +16,7 @@ public class AttackRayTrigger : MonoBehaviour {
     public void attackTrigger()
     {
         attackTriggered = true;
+        Invoke("resetTrigger", 1f);
     }
 
     public bool hasAttackTriggered()

@@ -40,7 +40,10 @@ public class Enemy : CMoveCombatable {
 
     public AIState peekState()
     {
-        return state.Peek();
+        if(state.Count > 0)
+            return state.Peek();
+
+        return null;
     }
 
     public void popState()

@@ -263,7 +263,6 @@ public class Player : CMoveCombatable
         //If left click with weapon out and not already attacking, then start charging
         if (((leftClickHeld && !chargingAttack && !stunned) || leftClickDown) && !attacking && weaponDrawn)
         {
-            Debug.Log("Ars");
             startedHolding = Time.time;
             chargingAttack = true;
         }

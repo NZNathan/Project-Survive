@@ -68,6 +68,9 @@ public abstract class CMoveCombatable : CMoveable {
         basicAttack = new BasicAttack();
         heavyAttack = new HeavyAttack();
 
+        float atkspd = 1f;
+        animator.SetFloat("attackSpeed", atkspd);
+
         //TEMP
         abilities = new Ability[2];
         abilities[0] = new DashStrike();
@@ -206,9 +209,7 @@ public abstract class CMoveCombatable : CMoveable {
 
             attacking = false;
             animator.SetTrigger("stopAttack");
-            attackTrigger.resetTrigger();
-
-
+            
             StopCoroutine("stun");
             if (!falling)
                 StartCoroutine("stun");
@@ -222,6 +223,7 @@ public abstract class CMoveCombatable : CMoveable {
 
         yield return new WaitForSeconds(stunTime);
 
+        attackTrigger.resetTrigger();
         stunned = false;
     }
 

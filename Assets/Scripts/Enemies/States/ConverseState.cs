@@ -7,6 +7,7 @@ public class ConverseState : AIState
 {
 
     int talking = 0;
+    string[] conversationLines;
     FloatingText currentSpeech;
     float timeStarted = 0;
     Enemy talkingTarget;
@@ -14,12 +15,25 @@ public class ConverseState : AIState
     public ConverseState(Enemy character)
     {
         this.character = character;
-        talkingTarget = character.target.GetComponent<Enemy>();
-        talkingTarget.facePoint(character.transform.position);
 
-        //If the target is no longer idle
-        if (talkingTarget.peekState().GetType() == typeof(IdleState))
+        //Check if target still exists
+        if(character.target == null)
+        {
+            character.popState();
+            return;
+        }
+
+        talkingTarget = character.target.GetComponent<Enemy>();
+
+        //Check if the target is still idle or if their stack is empty
+        if (talkingTarget.peekState() == null || talkingTarget.peekState().GetType() == typeof(IdleState))
+        {
             talkingTarget.pushState(new ListenState(talkingTarget, character));
+
+            //Make characters face each other
+            talkingTarget.facePoint(character.transform.position);
+            character.facePoint(talkingTarget.transform.position);
+        }
     }
 
 
@@ -65,19 +79,29 @@ public class ConverseState : AIState
             return;
         }
 
+        conversation();
+    }
+
+    private void conversation()
+    {
         if (talking == 0)
         {
-            currentSpeech = UIManager.instance.newTextMessage(character.gameObject, WorldManager.instance.banterGen.getSmallTalk());
+            conversationLines = WorldManager.instance.banterGen.getConvo();
+            currentSpeech = UIManager.instance.newTextMessage(character.gameObject, conversationLines[0]);
             timeStarted = Time.time;
             talking = 1;
         }
-        else if (Time.time > timeStarted + currentSpeech.textDuration && talking == 1)
+        else if (Time.time > timeStarted + currentSpeech.textDuration && talking < conversationLines.Length)
         {
-            currentSpeech = UIManager.instance.newTextMessage(talkingTarget.gameObject, WorldManager.instance.banterGen.getSmallTalk());
+            if(talking % 2 == 0)
+                currentSpeech = UIManager.instance.newTextMessage(character.gameObject, conversationLines[talking]);
+            else
+                currentSpeech = UIManager.instance.newTextMessage(talkingTarget.gameObject, conversationLines[talking]);
+
             timeStarted = Time.time;
-            talking = 2;
+            talking++;
         }
-        else if (Time.time > timeStarted + currentSpeech.textDuration && talking == 2)
+        else if (Time.time > timeStarted + currentSpeech.textDuration && talking >= conversationLines.Length)
         {
             character.target = null;
             talkingTarget.popState();

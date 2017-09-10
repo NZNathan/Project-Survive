@@ -95,7 +95,7 @@ public abstract class CHitable : MonoBehaviour {
         StopCoroutine("showHealth");
         StartCoroutine("showHealth");
 
-        healthBar.healthBar.fillAmount = (float) currentHealth /  (float) maxHealth;
+        healthBar.loseHealth((float) currentHealth /  (float) maxHealth);
 
         if (currentHealth <= 0)
         {
@@ -119,7 +119,7 @@ public abstract class CHitable : MonoBehaviour {
         StopCoroutine("showHealth");
         StartCoroutine("showHealth");
 
-        healthBar.healthBar.fillAmount = (float)currentHealth / (float)maxHealth;
+        healthBar.recoverHealth((float)currentHealth / (float)maxHealth);
     }
 
     public void setInvulnerable(float invulnTime)
