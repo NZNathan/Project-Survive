@@ -29,8 +29,8 @@ public class MoveState : AIState
         }
 
         
-        //Transition to Attack State if target gets within range
-        if ((character.target.position - character.transform.position).magnitude < character.attackRange)
+        //Transition to Attack State or converse state if target gets within range
+        if ((character.getTargetPositon() - character.transform.position).magnitude < 0.2f)
         {
             if (FactionManager.instance.isHostile(character.faction, character.target.GetComponent<CMoveCombatable>().faction))
             {
@@ -48,7 +48,7 @@ public class MoveState : AIState
         }
 
         //Leave till last so don't move if switching states
-        character.rb2D.AddForce(movement());
+        character.rb2D.AddForce(character.movement());
     }
 
     private Vector2 movement()
@@ -56,12 +56,12 @@ public class MoveState : AIState
 
         float movementSpeed = character.walkSpeed;
 
-        Vector3 dir = character.getDirection(character.target.position, character.target.gameObject.GetComponent<CHitable>().objectHeight);
-
-        if (dir.x < 0 && character.transform.localScale.x != -1)
+        if (character.target.transform.position.x < character.transform.position.x && character.transform.localScale.x != -1)
             character.faceLeft();
-        else if (dir.x > 0 && character.transform.localScale.x != 1)
+        else if (character.target.transform.position.x > character.transform.position.x && character.transform.localScale.x != 1)
             character.faceRight();
+
+        Vector3 dir = character.getDirection(character.getTargetPositon(), character.target.gameObject.GetComponent<CHitable>().objectHeight);
 
         character.animator.SetFloat("movementSpeed", 2.5f);
         

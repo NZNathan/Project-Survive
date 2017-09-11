@@ -23,12 +23,13 @@ public class Enemy : CMoveCombatable {
     //Movement Variables
     //[HideInInspector]
     public Transform target;
+    private float stopDistance = .2f; //Distance to stop away from target by defualt
 
     // Use this for initialization
     new void Start()
     {
         base.Start();
-        
+
         animator = GetComponentInChildren<Animator>();
 
         //Manage State
@@ -58,20 +59,28 @@ public class Enemy : CMoveCombatable {
 
     #endregion
 
-    protected override Vector2 movement()
+    public Vector3 getTargetPositon()
     {
+        Vector3 targetOffset = new Vector3(-stopDistance * transform.localScale.x, 0, 0);
+        
+        return target.position + targetOffset;
+    }
+
+    public override Vector2 movement()
+    {//Abstract out different move types?
+
         float movementSpeed = walkSpeed;
 
-        Vector3 dir = getDirection(target.position, target.gameObject.GetComponent<CHitable>().objectHeight);
-
-        if (dir.x < 0 && transform.localScale.x != -1 * facingFront)
+        if (target.transform.position.x < transform.position.x && transform.localScale.x != -1)
             faceLeft();
-        else if (dir.x > 0 && transform.localScale.x != 1 * facingFront)
+        else if (target.transform.position.x > transform.position.x && transform.localScale.x != 1)
             faceRight();
 
+        Vector3 dir = getDirection(getTargetPositon(), target.gameObject.GetComponent<CHitable>().objectHeight);
+
         animator.SetFloat("movementSpeed", 2.5f);
-        //rb2D.MovePosition(transform.position + dir * movementSpeed * Time.deltaTime);
-        return(dir * movementSpeed);
+
+        return (dir * movementSpeed);
 
     }
 

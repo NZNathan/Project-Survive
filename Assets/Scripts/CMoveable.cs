@@ -24,7 +24,7 @@ public abstract class CMoveable : C {
     public bool canMove = true;
     protected bool moving = false;
     //Movement
-    protected abstract Vector2 movement();
+    public abstract Vector2 movement();
 
     protected new void Start()
     {

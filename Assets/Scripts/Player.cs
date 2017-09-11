@@ -127,7 +127,7 @@ public class Player : CMoveCombatable
         CameraFollow.cam.GetComponentInParent<CameraShake>().shake = .5f;
     }
 
-    protected override Vector2 movement()
+    public override Vector2 movement()
     {
         // read key inputs
         bool wKeyDown = Input.GetKey(KeyCode.W);

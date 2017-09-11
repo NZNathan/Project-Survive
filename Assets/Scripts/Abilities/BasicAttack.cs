@@ -179,7 +179,6 @@ public class BasicAttack : Ability
         if (caster.canCombo)
         {
             caster.attack(comboAttack);
-            Debug.Log("Combo");
             yield break;
         }
         else
