@@ -25,13 +25,15 @@ public class Player : CMoveCombatable
     //Inventory Variables
     [HideInInspector]
     public Bag bag;
-    private Item itemInRange;
+    private List<Item> itemsInRange;
+    private int gold = 900;
     
 
     public new void Start()
     {
         base.Start();
         bag = new Bag(UIManager.instance.bagGUIObject.GetComponent<BagGUI>());
+        itemsInRange = new List<Item>();
 
         //Singleton
         if (instance == null)
@@ -79,6 +81,21 @@ public class Player : CMoveCombatable
         inMenu = false;
     }
 
+    public int getGoldAmount()
+    {
+        return gold;
+    }
+
+    public void addGold(int goldAmount)
+    {
+        gold += goldAmount;
+    }
+
+    public void removeGold(int goldAmount)
+    {
+        gold -= goldAmount;
+    }
+
     public void levelup(int pointsLeft, int[] stats)
     {
         levelUpPoints = pointsLeft;
@@ -93,16 +110,49 @@ public class Player : CMoveCombatable
         return levelUpPoints;
     }
 
+    //Abstract out to new class
+    public void sortList()
+    {
+        for (int i = 0; i < itemsInRange.Count; i++)
+        {
+            for (int j = i + 1; j < itemsInRange.Count; j++)
+            {
+                Item item1 = itemsInRange[i];
+                Item item2 = itemsInRange[j];
+
+                if (Mathf.Abs((item1.transform.position - transform.position).magnitude) > Mathf.Abs((item2.transform.position - transform.position).magnitude))
+                {
+                    itemsInRange[i] = item2;
+                    itemsInRange[j] = item1;
+                }
+
+            }
+        }
+
+        for (int i = 0; i < itemsInRange.Count; i++)
+        {
+            Debug.Log(itemsInRange[i].name);
+        }
+    }
+
     public void itemEnterProximity(Item item)
     {
-        UIManager.instance.newPopup(item.gameObject);
-        itemInRange = item;
+        itemsInRange.Add(item);
+        sortList();
+        UIManager.instance.newPopup(itemsInRange[0].gameObject);
     }
 
     public void itemLeaveProximity(Item item)
     {
         UIManager.instance.closePopup();
-        itemInRange = null;
+
+        if (itemsInRange.Contains(item))
+            itemsInRange.Remove(item);
+        else
+            Debug.LogError("No such item in list: " + item.name);
+
+        if(itemsInRange.Count > 0)
+            UIManager.instance.newPopup(itemsInRange[0].gameObject);
     }
 
     public void useItem(int i)
@@ -112,14 +162,20 @@ public class Player : CMoveCombatable
 
     void pickupItem()
     {
-        if(itemInRange != null)
+        if(itemsInRange.Count > 0)
         {
-            if (bag.addItem(itemInRange))
+            if (bag.addItem(itemsInRange[0]))
             {
-                itemInRange.gameObject.SetActive(false);
-                itemInRange = null;
+                Item i = itemsInRange[0];
+                //itemsInRange.Remove(itemsInRange[0]);
+                i.gameObject.SetActive(false);
             }
         }
+    }
+
+    void itemPopup()
+    {
+
     }
 
     public override void attackHit()

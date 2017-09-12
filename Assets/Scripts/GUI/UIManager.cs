@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour {
     private LoadScreen loadScreen;
     public Tooltip tooltip;
     public LevelUpGUI levelUpWindow;
+    public shopSystem shopWindow;
 
     //UI Objects
     public GameObject floatingTextManagerObject;
@@ -103,6 +104,17 @@ public class UIManager : MonoBehaviour {
     public void newLoadScreen()
     {
         loadScreen.activate();
+    }
+
+    //--- Shop System METHODS ---
+    public void newShopWindow()
+    {
+        shopWindow.openShopWindow();
+    }
+
+    public void closeShopWindow()
+    {
+        shopWindow.closeShopWindow();
     }
 
     //--- UI CONTROL METHODS ---

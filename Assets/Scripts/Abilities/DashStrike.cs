@@ -97,9 +97,11 @@ public class DashStrike : Ability {
         //Check if attack can go through
         if (!caster.isDead())
         {
+            //Actual distance travelled by caster
+            float distanceCovered = Mathf.Abs(caster.transform.position.x - pos.x);
 
-            RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
-            Debug.DrawRay(pos, direction * abilityRange, Color.blue, 3f);
+            RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos, direction, distanceCovered, CMoveCombatable.attackMask, -10, 10);
+            Debug.DrawRay(pos, direction * distanceCovered, Color.blue, 3f);
 
             bool hitTarget = false;
 

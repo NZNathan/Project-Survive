@@ -5,6 +5,9 @@ using System;
 using UnityEditor;
 #endif
 
+//Author: Evil Window Dog
+//https://www.assetstore.unity3d.com/en/#!/content/64563
+
 /**
  *  Adjusts the Camera component's orthographic size according to the supplied targeted size. If PixelPerfect is enabled, 
  *  the camera's pixels per unit will be set to a multiple of the assets' pixels per unit. Thus, an asset pixel will

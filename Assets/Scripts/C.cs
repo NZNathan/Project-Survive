@@ -152,13 +152,8 @@ public class C : CHitable {
         GetComponentInChildren<BoxCollider2D>().gameObject.layer = noCollisionLayer; //Make sure object with collider on it can no longer be hit 
         StopCoroutine("showHealth");
 
-        /* WHY????
-        foreach (Transform child in gameObject.GetComponentInChildren<Transform>())
-        {
-            child.gameObject.layer = 0;
-        }
-
-        gameObject.layer = 0;*/
+        animator.ResetTrigger("attack");
+        animator.SetBool("combo", false);
         animator.SetBool("dead", true);
         Invoke("removeDeadBody", 1);
         dead = true;
