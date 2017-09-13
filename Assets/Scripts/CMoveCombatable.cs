@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CharacterStat {STR, AGL, END }; 
+
 public abstract class CMoveCombatable : CMoveable {
 
     [Header("Combat Variables")]
@@ -13,6 +15,10 @@ public abstract class CMoveCombatable : CMoveable {
     protected int strength;
     protected int agility;
     protected int endurance;
+
+    //Character Traits
+    protected Trait[] traits;
+    private int traitsLimit = 6;
 
     //Weapon Variables
     protected bool weaponDrawn = false;
@@ -59,15 +65,22 @@ public abstract class CMoveCombatable : CMoveable {
     protected new void Start()
     {
         base.Start();
+
+        //Set up layers
         attackMask = LayerMask.GetMask("Hitable");
         originalLayer = gameObject.layer;
 
+        //Get attackTrigger from child
         attackTrigger = GetComponentInChildren<AttackRayTrigger>();
+
+        //Set up traits with a limit on it
+        traits = new Trait[traitsLimit];
 
         //Ability Setup
         basicAttack = new BasicAttack();
         heavyAttack = new HeavyAttack();
 
+        //Alter attack speed in the animator
         float atkspd = 1f;
         animator.SetFloat("attackSpeed", atkspd);
 
@@ -78,6 +91,16 @@ public abstract class CMoveCombatable : CMoveable {
     }
 
     public abstract void attackHit();
+
+    public void addToStat(CharacterStat stat, int amount)
+    {
+        if (stat == CharacterStat.STR)
+            strength += amount;
+        else if (stat == CharacterStat.AGL)
+            agility += amount;
+        else if (stat == CharacterStat.END)
+            endurance += amount;
+    }
 
     protected void drawWeapon()
     {

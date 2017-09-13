@@ -31,7 +31,7 @@ public class Item : MonoBehaviour {
     {
         if(collider.tag == "Player")
         {
-            Player.instance.itemEnterProximity(this);
+            Player.instance.itemsInRange.itemEnterProximity(this);
         }
     }
 
@@ -39,7 +39,7 @@ public class Item : MonoBehaviour {
     {
         if (collider.tag == "Player")
         {
-            Player.instance.itemLeaveProximity(this);
+            Player.instance.itemsInRange.itemLeaveProximity(this);
         }
     }
 

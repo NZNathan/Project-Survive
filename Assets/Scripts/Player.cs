@@ -25,7 +25,7 @@ public class Player : CMoveCombatable
     //Inventory Variables
     [HideInInspector]
     public Bag bag;
-    private List<Item> itemsInRange;
+    public ItemsInRange itemsInRange;
     private int gold = 900;
     
 
@@ -33,7 +33,11 @@ public class Player : CMoveCombatable
     {
         base.Start();
         bag = new Bag(UIManager.instance.bagGUIObject.GetComponent<BagGUI>());
-        itemsInRange = new List<Item>();
+
+        itemsInRange = new ItemsInRange(this);
+
+        traits[0] = Trait.getTrait();
+        traits[0].applyTrait(this);
 
         //Singleton
         if (instance == null)
@@ -110,72 +114,9 @@ public class Player : CMoveCombatable
         return levelUpPoints;
     }
 
-    //Abstract out to new class
-    public void sortList()
-    {
-        for (int i = 0; i < itemsInRange.Count; i++)
-        {
-            for (int j = i + 1; j < itemsInRange.Count; j++)
-            {
-                Item item1 = itemsInRange[i];
-                Item item2 = itemsInRange[j];
-
-                if (Mathf.Abs((item1.transform.position - transform.position).magnitude) > Mathf.Abs((item2.transform.position - transform.position).magnitude))
-                {
-                    itemsInRange[i] = item2;
-                    itemsInRange[j] = item1;
-                }
-
-            }
-        }
-
-        for (int i = 0; i < itemsInRange.Count; i++)
-        {
-            Debug.Log(itemsInRange[i].name);
-        }
-    }
-
-    public void itemEnterProximity(Item item)
-    {
-        itemsInRange.Add(item);
-        sortList();
-        UIManager.instance.newPopup(itemsInRange[0].gameObject);
-    }
-
-    public void itemLeaveProximity(Item item)
-    {
-        UIManager.instance.closePopup();
-
-        if (itemsInRange.Contains(item))
-            itemsInRange.Remove(item);
-        else
-            Debug.LogError("No such item in list: " + item.name);
-
-        if(itemsInRange.Count > 0)
-            UIManager.instance.newPopup(itemsInRange[0].gameObject);
-    }
-
     public void useItem(int i)
     {
         bag.useItem(i);
-    }
-
-    void pickupItem()
-    {
-        if(itemsInRange.Count > 0)
-        {
-            if (bag.addItem(itemsInRange[0]))
-            {
-                Item i = itemsInRange[0];
-                //itemsInRange.Remove(itemsInRange[0]);
-                i.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    void itemPopup()
-    {
-
     }
 
     public override void attackHit()
@@ -301,7 +242,7 @@ public class Player : CMoveCombatable
             drawWeapon();
 
         if (eKeyDown && !attacking)
-            pickupItem();
+            itemsInRange.pickupItem();
 
         //Call movement function to handle movements
         Vector3 movementVector = Vector3.zero;

@@ -43,6 +43,9 @@ public class SpriteGen : MonoBehaviour {
             i++;
         }
 
+        //Generate Traits
+        Trait.generateTraits();
+
         //Read in the names from the name files
         readInNames();
     }
