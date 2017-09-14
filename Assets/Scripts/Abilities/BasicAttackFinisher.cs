@@ -37,11 +37,6 @@ public class BasicAttackFinisher : Ability
         abilityDamage = (int)(caster.attackDamage * 1.2f);
     }
 
-    public Ability getComboAttack()
-    {
-        return this;
-    }
-
     public bool canComboAttack()
     {
         return false;

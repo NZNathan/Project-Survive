@@ -32,6 +32,10 @@ public class Player : CMoveCombatable
     public new void Start()
     {
         base.Start();
+
+        //TEMP
+        basicAttack = new BasicShoot();
+
         bag = new Bag(UIManager.instance.bagGUIObject.GetComponent<BagGUI>());
 
         itemsInRange = new ItemsInRange(this);

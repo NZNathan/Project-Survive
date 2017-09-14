@@ -90,6 +90,9 @@ public abstract class CMoveCombatable : CMoveable {
         abilities[1] = new DodgeRoll();
     }
 
+    /// <summary>
+    /// Method to be run when the Character takes a hit
+    /// </summary>
     public abstract void attackHit();
 
     public void addToStat(CharacterStat stat, int amount)

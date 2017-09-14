@@ -43,11 +43,6 @@ public class DodgeRoll : Ability
             direction = caster.rb2D.velocity.normalized;
     }
 
-    public Ability getComboAttack()
-    {
-        return this;
-    }
-
     public bool canComboAttack()
     {
         return false;

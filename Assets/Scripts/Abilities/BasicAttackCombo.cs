@@ -42,16 +42,6 @@ public class BasicAttackCombo : Ability
         abilityDamage = (int) (caster.attackDamage * 1.2f);
     }
 
-    public Ability getComboAttack()
-    {
-        if (canComboAttack())
-        {
-            lastAttack = 0;
-            return comboAttack.getComboAttack();
-        }
-        return this;
-    }
-
     public bool canComboAttack()
     {
         return lastAttack + comboChainTime > Time.time || comboAttack.canComboAttack();

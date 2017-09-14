@@ -52,6 +52,10 @@ public abstract class CHitable : MonoBehaviour {
         return knockedback;
     }
 
+    /// <summary>
+    /// Sets the character that landed the last hit on this object
+    /// </summary>
+    /// <param name="attacker"></param>
     public void setAttacker(CMoveCombatable attacker)
     {
         lastAttacker = attacker;
