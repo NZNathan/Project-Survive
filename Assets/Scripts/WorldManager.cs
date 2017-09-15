@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,7 +43,6 @@ public class WorldManager : MonoBehaviour {
 
     public void zoomIn(Transform t)
     {
-        Debug.Log("REVENGE");
         //Disable the UI
         UIManager.instance.disableUI();
 
@@ -96,6 +96,16 @@ public class WorldManager : MonoBehaviour {
         UIManager.instance.enableUI();
     }
 
+    public Enemy getRevengeTarget()
+    {
+        if (headAncestor == null)
+            return null;
+
+        Debug.Log("Returning " + headAncestor.revengeTarget.firstName);
+
+        return (Enemy) headAncestor.revengeTarget;
+    }
+
     public void playerDied(Player player)
     {
         player.bag.closeBag();
@@ -107,6 +117,14 @@ public class WorldManager : MonoBehaviour {
 
         if (headAncestor == null)
             headAncestor = tailAncestor;
+
+        Ancestor an = tailAncestor;
+        while(an != null)
+        {
+            Debug.Log("Ancestor: " + an.firstName + ", Killed by: " + an.revengeTarget.firstName + " " + an.revengeTarget.lastName);
+
+            an = an.getParent();
+        }
 
         Invoke("resetPlayer", respawnTime * Time.timeScale);
     }

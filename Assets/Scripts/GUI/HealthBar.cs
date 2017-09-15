@@ -11,6 +11,9 @@ public class HealthBar : MonoBehaviour {
     public Image whiteBar;
     public Image bgBar;
 
+    //Boss Variable
+    public bool bossBar = false;
+
     //Positioning Variables
     private Transform target;
     private float healthBarOffset = 0.7f;
@@ -34,17 +37,20 @@ public class HealthBar : MonoBehaviour {
 
 	void Update ()
     {
-        //If no target, target must be dead
-        if (target == null)
+        if (!bossBar)
         {
-            Destroy(this.gameObject);
-            return;
+            //If no target, target must be dead
+            if (target == null)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+
+            //Position the health bar above its targets head
+            Vector2 healthBarPos = new Vector2(target.position.x, target.position.y + healthBarOffset);
+
+            transform.position = CameraFollow.cam.WorldToScreenPoint(healthBarPos);
         }
-
-        //Position the health bar above its targets head
-        Vector2 healthBarPos = new Vector2(target.position.x, target.position.y + healthBarOffset);
-
-        transform.position = CameraFollow.cam.WorldToScreenPoint(healthBarPos);
     }
 
     public void recoverHealth(float fillAmount)
@@ -56,7 +62,9 @@ public class HealthBar : MonoBehaviour {
     public void loseHealth(float fillAmount)
     {
         healthBar.fillAmount = fillAmount;
-        StartCoroutine(animateFill());
+
+        if(this.gameObject.activeInHierarchy)
+            StartCoroutine(animateFill());
     }
 
     IEnumerator animateFill()

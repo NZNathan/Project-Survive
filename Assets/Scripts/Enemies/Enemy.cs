@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : CMoveCombatable {
 
     //Revenge Target Variables
+    public bool isBoss = false;
     protected bool revengeTarget = false;
 
     [Header("AI Variables")]
@@ -91,7 +92,27 @@ public class Enemy : CMoveCombatable {
 
     public override void loseHealth(int damage)
     {
-        base.loseHealth(damage);
+        StartCoroutine("flash");
+        currentHealth -= damage;
+
+        //Stop showHealth so it doesn't remove the health bar off an earilier call
+        if (!isBoss)
+        {
+            StopCoroutine("showHealth");
+            StartCoroutine("showHealth");
+        }
+
+        healthBar.loseHealth((float)currentHealth / (float)maxHealth);
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            death();
+        }
+        else
+        {
+            setInvulnerable(invulnTime);
+        }
 
         target = lastAttacker.transform;
     }
@@ -120,10 +141,18 @@ public class Enemy : CMoveCombatable {
     public void setRevengeTarget()
     {
         revengeTarget = true;
+        StopCoroutine("onBecameVisible");
         StartCoroutine("onBecameVisible");
     }
 
-    //If the enemy is a revenge target, when they first appear on camera, zoom into them
+    public void setBoss()
+    {
+        isBoss = true;
+        StopCoroutine("onBecameVisible");
+        StartCoroutine("onBecameVisible");
+    }
+
+    //If the enemy is a revenge target, or a boss, when they first appear on camera, zoom into them
     private IEnumerator onBecameVisible()
     {
         SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
@@ -133,6 +162,7 @@ public class Enemy : CMoveCombatable {
             yield return new WaitForSeconds(0.3f);
         }
 
+        UIManager.instance.newBossGUI(this);
         WorldManager.instance.zoomIn(transform);
     }
 

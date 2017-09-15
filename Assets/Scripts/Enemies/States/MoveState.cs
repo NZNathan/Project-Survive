@@ -30,7 +30,7 @@ public class MoveState : AIState
 
         
         //Transition to Attack State or converse state if target gets within range
-        if ((character.getTargetPositon() - character.transform.position).magnitude < 0.2f)
+        if ((character.getTargetPositon() - character.transform.position).magnitude < character.attackRange)
         {
             if (FactionManager.instance.isHostile(character.faction, character.target.GetComponent<CMoveCombatable>().faction))
             {

@@ -95,6 +95,18 @@ public abstract class CMoveCombatable : CMoveable {
     /// </summary>
     public abstract void attackHit();
 
+    /// <summary>
+    /// Takes a health bar and sets it as this characters health bar, assumes given health bar is already in position and matches the characters health
+    /// </summary>
+    /// <param name="newHealthBar"></param>
+    public void setHealthbar(HealthBar newHealthBar)
+    {
+        healthBar = newHealthBar;
+    }
+
+    /// <summary>
+    /// Adds the amount to the specified stat
+    /// </summary>
     public void addToStat(CharacterStat stat, int amount)
     {
         if (stat == CharacterStat.STR)

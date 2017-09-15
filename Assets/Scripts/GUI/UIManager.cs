@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour {
+public class UIManager : MonoBehaviour
+{
 
     public static UIManager instance;
 
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour {
     private HealthBarManager healthBarManager;
     private PlayerGUI playerGUI;
     private ItemPopup itemPopup;
+    private BossGUI bossGUI;
     private LoadScreen loadScreen;
     public Tooltip tooltip;
     public LevelUpGUI levelUpWindow;
@@ -23,9 +25,10 @@ public class UIManager : MonoBehaviour {
     public GameObject healthBarManagerObject;
     public GameObject itemPopupObject;
     public GameObject bagGUIObject;
+    public GameObject bossGUIObject;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         if (instance != null)
             Destroy(instance.gameObject);
@@ -37,9 +40,10 @@ public class UIManager : MonoBehaviour {
         playerGUI = GetComponent<PlayerGUI>();
         itemPopup = itemPopupObject.GetComponent<ItemPopup>();
         loadScreen = GetComponent<LoadScreen>();
+        bossGUI = GetComponent<BossGUI>();
     }
 
-    //--- PLAYER GUI METHODS ---
+    #region ---- PLAYER GUI METHODS ----
     public void addXp(float xp, float xpCap)
     {
         playerGUI.addXp(xp, xpCap);
@@ -54,20 +58,23 @@ public class UIManager : MonoBehaviour {
     {
         playerGUI.setAbilities(abilities);
     }
+#endregion
 
-    //--- Health Bar Manager METHODS ---
+    #region ---- Health Bar Manager METHODS ----
     public HealthBar newHealthBar()
     {
         return healthBarManager.newHealthBar();
     }
+#endregion
 
-    //--- Floating Text Manager METHODS ---
+    #region ---- Floating Text Manager METHODS ----
     public FloatingText newTextMessage(GameObject talker, string sentence)
     {
         return floatingTextManager.createText(talker, sentence);
     }
+#endregion
 
-    //--- Item Popup METHODS ---
+    #region ---- Item Popup METHODS ----
     public void newPopup(GameObject target)
     {
         itemPopupObject.SetActive(true);
@@ -79,8 +86,9 @@ public class UIManager : MonoBehaviour {
         itemPopupObject.SetActive(false);
         //itemPopup.closePopup();
     }
+#endregion
 
-    //--- Tooltip METHODS ---
+    #region ---- Tooltip METHODS ----
     public void newTooltip(string title, string bodyText, int price)
     {
         tooltip.newTooltip(title, bodyText, price);
@@ -90,23 +98,38 @@ public class UIManager : MonoBehaviour {
     {
         tooltip.closeTooltip();
     }
+    #endregion
 
-    //--- Level Up Window ---
+    #region ---- Level Up Window METHODS ----
     public void toggleLevelUpWindow()
     {
-        if(levelUpWindow.levelUpWindow.activeInHierarchy)
+        if (levelUpWindow.levelUpWindow.activeInHierarchy)
             levelUpWindow.closeWindow();
         else
             levelUpWindow.openWindow();
     }
+    #endregion
 
-    //--- Load Screen METHODS ---
+    #region ---- Boss GUI METHODS ----
+    public void newBossGUI(CMoveCombatable boss)
+    {
+        bossGUI.setup(boss);
+    }
+
+    public void closeBossGUI(CMoveCombatable boss)
+    {
+        bossGUI.closeGUI();
+    }
+    #endregion
+
+    #region ---- Load Screen METHODS ----
     public void newLoadScreen()
     {
         loadScreen.activate();
     }
+#endregion
 
-    //--- Shop System METHODS ---
+    #region ---- Shop System METHODS ----
     public void newShopWindow()
     {
         shopWindow.openShopWindow();
@@ -116,7 +139,9 @@ public class UIManager : MonoBehaviour {
     {
         shopWindow.closeShopWindow();
     }
+#endregion
 
+    #region UI Control Methods
     //--- UI CONTROL METHODS ---
     public void disableUI()
     {
@@ -124,7 +149,7 @@ public class UIManager : MonoBehaviour {
         disablefloatingTextManager();
         disablePlayerGUI();
         disableBagGUI();
-        enableItemPopupGUI();
+        disableBossGUI();
     }
 
     public void enableUI()
@@ -133,7 +158,17 @@ public class UIManager : MonoBehaviour {
         enablefloatingTextManager();
         enablePlayerGUI();
         enableBagGUI();
-        disableItemPopupGUI();
+        enableBossGUI();
+    }
+
+    public void disableBossGUI()
+    {
+        bossGUIObject.SetActive(false);
+    }
+
+    public void enableBossGUI()
+    {
+        bossGUIObject.SetActive(true);
     }
 
     public void disableItemPopupGUI()
@@ -186,4 +221,5 @@ public class UIManager : MonoBehaviour {
     {
         playerGUIObject.SetActive(true);
     }
+#endregion
 }

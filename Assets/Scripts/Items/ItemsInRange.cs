@@ -30,11 +30,6 @@ public class ItemsInRange  {
 
             }
         }
-
-        for (int i = 0; i < itemsInRange.Count; i++)
-        {
-            Debug.Log(itemsInRange[i].name);
-        }
     }
 
     public void itemEnterProximity(Item item)

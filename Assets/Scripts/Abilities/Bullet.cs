@@ -12,6 +12,10 @@ public class Bullet : MonoBehaviour {
     public int damage;
     private float stunTime;
     private bool hitTarget;
+    
+    //Lifetime variables
+    private float spawnTime;
+    private float lifeTime = 2f;
 
     //Speed Variables
     private float velocity = .25f;
@@ -22,6 +26,7 @@ public class Bullet : MonoBehaviour {
     {
         rb2D = GetComponent<Rigidbody2D>();
         hitTarget = false;
+        spawnTime = Time.time;
 
         this.caster = caster;
         this.damage = damage;
@@ -34,7 +39,6 @@ public class Bullet : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("Bullet hit " + collider.gameObject.name);
 
         //If an object has been hit first, destroy the bullet
         if (collider.transform.gameObject.tag == "Object")
@@ -68,6 +72,12 @@ public class Bullet : MonoBehaviour {
 
             this.gameObject.SetActive(false);
         }
+    }
+
+    private void Update()
+    {
+        if(Time.time > spawnTime + lifeTime)
+            this.gameObject.SetActive(false);
     }
 
     private void LateUpdate()

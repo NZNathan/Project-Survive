@@ -75,21 +75,37 @@ public class SpriteGen : MonoBehaviour {
         //TODO: Extend to treat characters differently depending on their faction and details
         foreach (Spawner spawner in spawners)
         {
-            //Get the spawner to spawn the prefab
-            C character = spawner.spawnCharacter();
+            if (spawner.bossSpawn)
+            {
+                generateBoss(spawner);
+            }
+            else
+            {
+                //Get the spawner to spawn the prefab
+                C character = spawner.spawnCharacter();
 
-            //Change the new NPCs look
-            character.setSpriteSet(getNewSprites());
+                //Change the new NPCs look
+                character.setSpriteSet(getNewSprites());
 
-            //Set NPC stats and details
-            character.firstName = getFirstName();
-            character.lastName = getLastName();
+                //Set NPC stats and details
+                character.firstName = getFirstName();
+                character.lastName = getLastName();
+            }
         }
+    }
+
+    public void generateBoss(Spawner spawner)
+    {
+        Enemy boss = spawner.spawnBoss(WorldManager.instance.getRevengeTarget());
+
+        //spawner.spawnBoss(boss);
+
+        Debug.Log("Craeted Boss");
     }
 
     public Player createNewPlayer()
     {
-        Player p = Instantiate(playerBase, new Vector3(0, 0, 0), Quaternion.identity);
+        Player p = Instantiate(playerBase, new Vector3(-5f, 0, 0), Quaternion.identity);
 
         p.setSpriteSet(getNewSprites());
 

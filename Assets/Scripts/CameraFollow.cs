@@ -23,6 +23,7 @@ public class CameraFollow : MonoBehaviour
     //Revenge Variables  - Extract out into different class?
     [Header("Revenge Variables")]
     public GameObject cutsceneBars;
+    public Text revengeText;
     public Text revengeTextName;
 
     //Smooth Variables
@@ -95,7 +96,16 @@ public class CameraFollow : MonoBehaviour
         target = newTarget;
 
         cutsceneBars.SetActive(true);
-        revengeTextName.text = newTarget.GetComponent<C>().firstName + " " + newTarget.GetComponent<C>().lastName;
+
+        Enemy enemy = newTarget.GetComponent<Enemy>();
+
+        //Setup text phrase
+        if(enemy.isBoss)
+            revengeText.text = "BOSS:";
+        else
+            revengeText.text = "New Revenge Target:";
+
+        revengeTextName.text = enemy.firstName + " " + enemy.lastName;
     }
 
     bool cameraAtMapEdge(Vector2 nextPos)

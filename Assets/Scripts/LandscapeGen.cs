@@ -87,7 +87,6 @@ public class LandscapeGen : MonoBehaviour {
             areas[i].setUpArea();
 
             //If i == 0 then Area is the town Area
-
             if(i == 0)
             {
                 areas[i].gameObject.name = "Safe Zone";
@@ -100,13 +99,19 @@ public class LandscapeGen : MonoBehaviour {
                 GameObject town = Instantiate(prefabs.getTown(), new Vector3(areaPos, 0, 0), Quaternion.identity);
                 town.transform.SetParent(areas[i].transform);
             }
+            //If at last area, the area will be a transition zone
             else if(i == levelSize - 1)
             {
                 areas[i].gameObject.name = "Transition Zone";
 
-                //Get the town prefab and instantiate it, setting its parten to the area
+                //Get the transition prefab
                 GameObject transition = Instantiate(prefabs.getTransition(), new Vector3(areaPos, 0, 0), Quaternion.identity);
                 transition.transform.SetParent(areas[i].transform);
+
+                //Geneate Enemies still?
+                //Generation all Characters in scenario
+                Spawner[] characters = transition.GetComponentsInChildren<Spawner>();
+                spriteGenerator.generateCharacters(characters);
             }
             else if (i > 1)
             {

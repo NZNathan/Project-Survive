@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : CMoveCombatable
 {
     public static Player instance;
+    public static string familyName = "";
 
     //Experiance Variables
     public static int pointsOnLevelUp = 3;
@@ -32,6 +33,12 @@ public class Player : CMoveCombatable
     public new void Start()
     {
         base.Start();
+
+        //Set up family Name
+        if (familyName == "")
+            familyName = lastName;
+        else
+            lastName = familyName;
 
         //TEMP
         basicAttack = new BasicShoot();
