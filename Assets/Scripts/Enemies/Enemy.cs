@@ -110,7 +110,7 @@ public class Enemy : CMoveCombatable {
     public override Vector2 movement()
     {//Abstract out different move types?
 
-        float movementSpeed = walkSpeed;
+        float movementSpeed = sprintSpeed;
 
         if (target.transform.position.x < transform.position.x && transform.localScale.x != -1)
             faceLeft();
@@ -119,7 +119,10 @@ public class Enemy : CMoveCombatable {
 
         Vector3 dir = getDirection(getTargetPositon(), target.gameObject.GetComponent<CHitable>().objectHeight);
 
-        animator.SetFloat("movementSpeed", 2.5f);
+        if (movementSpeed == walkSpeed)
+            animator.SetFloat("movementSpeed", 2.5f);
+        else
+            animator.SetFloat("movementSpeed", 5f);
 
         return (dir * movementSpeed);
 
@@ -153,6 +156,10 @@ public class Enemy : CMoveCombatable {
         {
             setInvulnerable(invulnTime);
         }
+
+        //If idle and attacked, move toward new attack target
+        popState();
+        pushState(new MoveState(this));
 
         target = lastAttacker.transform;
     }

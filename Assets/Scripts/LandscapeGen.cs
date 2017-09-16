@@ -14,7 +14,7 @@ public class LandscapeGen : MonoBehaviour {
 
     //Area Gen Variables -- Have a enum here for terrian type? (Forest, desert, grassland)
     [Range(3, 99)]
-    public int levelSize = 5; //first area is a town, seond is empty, last area will always be a transition area so always need at least 3
+    public int levelSize = 6; //first area is a town, seond is empty, last area will always be a transition area so always need at least 3
     private Area[] areas;
     private Area lastTown;
 
@@ -79,7 +79,7 @@ public class LandscapeGen : MonoBehaviour {
     {
         float areaPos = -areaWidth;
 
-        bossAreaLocation = Random.Range(2, levelSize - 1);
+        bossAreaLocation = Random.Range(3, levelSize - 1);
 
         for (int i = 0; i < areas.Length; i++)
         {

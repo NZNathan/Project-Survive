@@ -101,7 +101,7 @@ public class SpriteGen : MonoBehaviour {
 
     public Player createNewPlayer()
     {
-        Player p = Instantiate(playerBase, new Vector3(-5f, 0, 0), Quaternion.identity);
+        Player p = Instantiate(playerBase, Player.spawmPos, Quaternion.identity);
 
         p.setSpriteSet(getNewSprites());
 

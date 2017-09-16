@@ -7,6 +7,7 @@ public class Player : CMoveCombatable
 {
     public static Player instance;
     public static string familyName = "";
+    public static Vector3 spawmPos = new Vector3(-5,0,0);
 
     //Experiance Variables
     public static int pointsOnLevelUp = 3;
@@ -28,7 +29,6 @@ public class Player : CMoveCombatable
     public Bag bag;
     public ItemsInRange itemsInRange;
     private int gold = 900;
-    
 
     public new void Start()
     {

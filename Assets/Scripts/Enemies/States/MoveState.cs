@@ -19,7 +19,7 @@ public class MoveState : AIState
         base.action();
 
         //Transition to Idle State if target gets too far away or they don't exist anymore
-        if (character.target == null || (character.target.position - character.transform.position).magnitude > character.aggroRange)
+        if (character.getAttacker() == null && (character.target == null || character.target.GetComponent<C>().isDead() ||(character.target.position - character.transform.position).magnitude > character.aggroRange))
         {
             character.target = null;
             character.animator.SetFloat("movementSpeed", 0f);
@@ -63,8 +63,11 @@ public class MoveState : AIState
 
         Vector3 dir = character.getDirection(character.getTargetPositon(), character.target.gameObject.GetComponent<CHitable>().objectHeight);
 
-        character.animator.SetFloat("movementSpeed", 2.5f);
-        
+        if(movementSpeed == character.walkSpeed)
+            character.animator.SetFloat("movementSpeed", 2.5f);
+        else
+            character.animator.SetFloat("movementSpeed", 5f);
+
         return (dir * movementSpeed);
 
     }

@@ -61,7 +61,7 @@ public class LoadScreen : MonoBehaviour {
         //Load new map
         WorldManager.instance.newMap();
         if (Player.instance != null)
-            Player.instance.transform.position = Vector3.zero;
+            Player.instance.transform.position = Player.spawmPos;
 
             int waitTime = 0;
 

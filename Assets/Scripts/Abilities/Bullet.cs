@@ -6,16 +6,13 @@ public class Bullet : MonoBehaviour {
 
     //Components
     private Rigidbody2D rb2D;
+    new private SpriteRenderer renderer;
 
     //Information Variables
     private CMoveCombatable caster;
     public int damage;
     private float stunTime;
     private bool hitTarget;
-    
-    //Lifetime variables
-    private float spawnTime;
-    private float lifeTime = 2f;
 
     //Speed Variables
     private float velocity = .25f;
@@ -25,8 +22,8 @@ public class Bullet : MonoBehaviour {
 	public void Setup(CMoveCombatable caster, int damage, float stunTime, Vector3 dir)
     {
         rb2D = GetComponent<Rigidbody2D>();
+        renderer = GetComponent<SpriteRenderer>();
         hitTarget = false;
-        spawnTime = Time.time;
 
         this.caster = caster;
         this.damage = damage;
@@ -76,7 +73,7 @@ public class Bullet : MonoBehaviour {
 
     private void Update()
     {
-        if(Time.time > spawnTime + lifeTime)
+        if(!renderer.isVisible)
             this.gameObject.SetActive(false);
     }
 
