@@ -117,6 +117,11 @@ public abstract class CMoveCombatable : CMoveable {
             endurance += amount;
     }
 
+    public Trait[] getTraits()
+    {
+        return traits;
+    }
+
     protected void drawWeapon()
     {
         weaponDrawn = !weaponDrawn;

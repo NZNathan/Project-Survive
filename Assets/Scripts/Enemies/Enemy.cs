@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class Enemy : CMoveCombatable {
 
+    //Components
+    private new SpriteRenderer renderer;
+
     //Revenge Target Variables
     public bool isBoss = false;
-    protected bool revengeTarget = false;
+    public bool revengeTarget = false;
+    public bool hasBeenSeen = false;
+    private int tick = 0;
 
     [Header("AI Variables")]
     public float aggroRange = 5f;
@@ -32,6 +37,7 @@ public class Enemy : CMoveCombatable {
         base.Start();
 
         animator = GetComponentInChildren<Animator>();
+        renderer = GetComponentInChildren<SpriteRenderer>();
 
         //Manage State
         state = new Stack<AIState>();
@@ -59,6 +65,40 @@ public class Enemy : CMoveCombatable {
     }
 
     #endregion
+
+    public int[] getStats()
+    {
+        int[] stats = new int[4];
+        stats[0] = level;
+        stats[1] = strength;
+        stats[2] = agility;
+        stats[3] = endurance;
+
+        return stats;
+    }
+
+    public void setupRevengeTarget(RevengeTarget self)
+    {
+        //Set Details
+        firstName = self.firstName;
+        lastName = self.lastName;
+        faction = self.faction;
+
+        //Set Stats
+        level = self.level;
+        strength = self.strength;
+        agility = self.agility;
+        endurance = self.endurance;
+
+        traits = self.traits;
+
+        //Set Sprites
+        setSpriteSet(self.sprites);
+
+        //Set animator
+        animator = GetComponentInChildren<Animator>();
+        animator.runtimeAnimatorController = self.animatorController;
+    }
 
     public Vector3 getTargetPositon()
     {
@@ -120,8 +160,14 @@ public class Enemy : CMoveCombatable {
     protected override void death()
     {
         base.death();
+
+        //If the player killed this enemy, award xp to player
         if(lastAttacker.tag == "Player")
             ((Player) lastAttacker).addXp(xpWorth);
+
+        //If enemy was a boss, then turn off boss GUI
+        if(isBoss)
+            UIManager.instance.closeBossGUI();
 
         //Item drops
         foreach(DropableItem dropableItem in dropableItems)
@@ -138,32 +184,36 @@ public class Enemy : CMoveCombatable {
         startCollisionsOff(collisionOffTime);
     }
 
-    public void setRevengeTarget()
-    {
-        revengeTarget = true;
-        StopCoroutine("onBecameVisible");
-        StartCoroutine("onBecameVisible");
-    }
-
-    public void setBoss()
-    {
-        isBoss = true;
-        StopCoroutine("onBecameVisible");
-        StartCoroutine("onBecameVisible");
-    }
-
     //If the enemy is a revenge target, or a boss, when they first appear on camera, zoom into them
-    private IEnumerator onBecameVisible()
+    private void onBecameVisible()
     {
-        SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
-        while (!renderer.isVisible)
+        //If not a boos or revenge target, then stop calling this method
+        if (!isBoss && !revengeTarget)
         {
-            Debug.Log("Revenegs");
-            yield return new WaitForSeconds(0.3f);
+            hasBeenSeen = true;
+            return;
         }
 
-        UIManager.instance.newBossGUI(this);
-        WorldManager.instance.zoomIn(transform);
+        if (renderer.isVisible)
+        {
+            UIManager.instance.newBossGUI(this);
+            WorldManager.instance.zoomIn(transform);
+
+            hasBeenSeen = true;
+            Debug.Log("Bos has been seen");
+        }
+
+        tick = 0;
+    }
+
+    private new void Update()
+    {
+        base.Update();
+
+        if(!hasBeenSeen && tick >= 4)
+            onBecameVisible();
+
+        tick++;
     }
 
     // Update is called once per frame

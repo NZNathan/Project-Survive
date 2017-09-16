@@ -24,18 +24,23 @@ public class Spawner : MonoBehaviour {
     }
 
     //REFACTOR
-    public Enemy spawnBoss(Enemy boss)
+    public Enemy spawnBoss(RevengeTarget revengeTarget)
     {
-        if (boss == null)
-            boss = (Enemy)characterSpawnType;
-        else
-            boss.setRevengeTarget();
+        Debug.Log("PASSED " + revengeTarget);
 
-        boss = (Enemy) Instantiate(boss, transform.position, Quaternion.identity);
+        Enemy boss = (Enemy) Instantiate(characterSpawnType, transform.position, Quaternion.identity);
         boss.transform.SetParent(transform.parent);
 
-        boss.setBoss();
-        boss.gameObject.name = "BOSS";
+        if (revengeTarget == null)
+            SpriteGen.generateEnemy(boss);
+        else
+            boss.setupRevengeTarget(revengeTarget);
+
+        boss.hasBeenSeen = false;
+        boss.isBoss = true;
+        boss.gameObject.name = "BOSS:_" + boss.firstName;
+
+        Debug.Log("Created " + boss.gameObject.name);
 
         return boss;
     }

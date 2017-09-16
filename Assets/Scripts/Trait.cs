@@ -17,7 +17,7 @@ public class Trait  {
         traits.Add(strengthBlessing);
 
         Trait agilityBlessing = new Trait("Blessing of Agility", new BlessingEffect(CharacterStat.AGL, 3));
-        traits.Add(strengthBlessing);
+        traits.Add(agilityBlessing);
 
         //Curses
         Trait agilityCurse = new Trait("Curse of Agility", new CurseEffect(CharacterStat.AGL, 3));

@@ -12,11 +12,11 @@ public class SpriteGen : MonoBehaviour {
     public C npcBase;
 
     //Sprites
-    SpriteSet[] spriteSets;
+    public static SpriteSet[] spriteSets;
 
     //Details
-    string[] firstNames;
-    string[] lastNames;
+    public static string[] firstNames;
+    public static string[] lastNames;
 
     //Stats
 
@@ -51,20 +51,20 @@ public class SpriteGen : MonoBehaviour {
     }
 
     //Returns a random sprite[] 
-    public Sprite[] getNewSprites()
+    public static Sprite[] getNewSprites()
     {
         int spriteSet = Random.Range(0, spriteSets.Length); //Will never be 2
 
         return spriteSets[spriteSet].getSprites();
     }
 
-    public string getFirstName()
+    public static string getFirstName()
     {
         int random = Mathf.FloorToInt(Random.Range(0, firstNames.Length));
         return firstNames[random];
     }
 
-    public string getLastName()
+    public static string getLastName()
     {
         int random = Mathf.FloorToInt(Random.Range(0, lastNames.Length));
         return lastNames[random];
@@ -96,11 +96,7 @@ public class SpriteGen : MonoBehaviour {
 
     public void generateBoss(Spawner spawner)
     {
-        Enemy boss = spawner.spawnBoss(WorldManager.instance.getRevengeTarget());
-
-        //spawner.spawnBoss(boss);
-
-        Debug.Log("Craeted Boss");
+       spawner.spawnBoss(WorldManager.instance.getRevengeTarget());
     }
 
     public Player createNewPlayer()
@@ -148,7 +144,7 @@ public class SpriteGen : MonoBehaviour {
         generateEnemy(enemy);
     }
 
-    void generateEnemy(Enemy enemy)
+    public static void generateEnemy(Enemy enemy)
     {
         //Change the new NPCs look
         enemy.setSpriteSet(getNewSprites());

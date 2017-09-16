@@ -116,7 +116,7 @@ public class UIManager : MonoBehaviour
         bossGUI.setup(boss);
     }
 
-    public void closeBossGUI(CMoveCombatable boss)
+    public void closeBossGUI()
     {
         bossGUI.closeGUI();
     }

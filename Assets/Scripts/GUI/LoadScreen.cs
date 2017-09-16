@@ -9,6 +9,8 @@ public class LoadScreen : MonoBehaviour {
     public Text levelText;
     public Text loadText;
 
+    public static bool loading = false;
+
     //Animation Variables
     private int count = 0;
     private float fadeStep = 0.05f;
@@ -20,7 +22,11 @@ public class LoadScreen : MonoBehaviour {
 
     public void activate()
     {
-        StartCoroutine("transitionToNewMap");
+        if (!loading)
+        {
+            StartCoroutine("transitionToNewMap");
+            loading = true;
+        }
     }
 
     void loadTextAnimation()
@@ -54,8 +60,10 @@ public class LoadScreen : MonoBehaviour {
 
         //Load new map
         WorldManager.instance.newMap();
+        if (Player.instance != null)
+            Player.instance.transform.position = Vector3.zero;
 
-        int waitTime = 0;
+            int waitTime = 0;
 
         while (waitTime < 1)
         {
@@ -73,5 +81,6 @@ public class LoadScreen : MonoBehaviour {
 
         loadScreen.gameObject.SetActive(false);
         Player.instance.setInMenu(false);
+        loading = false;
     }
 }

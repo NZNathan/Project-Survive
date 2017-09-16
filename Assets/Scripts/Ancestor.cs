@@ -9,7 +9,7 @@ public class Ancestor {
     private Ancestor child;
 
     //Revenge Target
-    public CMoveCombatable revengeTarget;
+    public RevengeTarget revengeTarget;
 
     //Stats
     private string causeOfDeath;
@@ -31,7 +31,7 @@ public class Ancestor {
         lastName = player.lastName;
         sprite = player.getSprites();
 
-        revengeTarget = player.getAttacker();
+        revengeTarget = new RevengeTarget((Enemy) player.getAttacker());
     }
 
     public string getName()

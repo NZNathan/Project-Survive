@@ -31,10 +31,19 @@ public class LandscapePrefabs : MonoBehaviour {
     //Fight Variables
     public GameObject[] fightCrowds;
 
+    //Boss Variables
+    public GameObject[] bossAreas;
+
     // Use this for initialization
     void Start ()
     {
         prefabs = this;
+    }
+
+    public GameObject getBossArea()
+    {
+        int i = Random.Range(0, bossAreas.Length);
+        return bossAreas[i];
     }
 
     public GameObject getTown()

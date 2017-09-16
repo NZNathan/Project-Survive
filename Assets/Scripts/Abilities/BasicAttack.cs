@@ -130,8 +130,9 @@ public class BasicAttack : Ability
                     if (objectHit.isInvuln() || objectHit.tag == caster.tag || objectHit.isKnockedback()) //Add faction to hitables to use here instead of tags
                         continue;
 
-                    //Apply damage and knockback
+                    //Set attacker and info on hit 
                     objectHit.setAttacker(caster);
+                    objectHit.lastAttackInfo = "A basic hit"; 
                     //objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
                     objectHit.loseHealth(abilityDamage);
 

@@ -16,10 +16,14 @@ public class LandscapeGen : MonoBehaviour {
     [Range(3, 99)]
     public int levelSize = 5; //first area is a town, seond is empty, last area will always be a transition area so always need at least 3
     private Area[] areas;
+    private Area lastTown;
 
     //Area Limits Variables
     public static float leftEdge;
     public static float rightEdge;
+
+    //Boss Spawn Variables
+    private int bossAreaLocation = 0;
 
     //Area Spawn Location Variables
     private int currentArea = 0;
@@ -35,8 +39,9 @@ public class LandscapeGen : MonoBehaviour {
         scenarioTree = GetComponent<DT>();
         scenarioTree.createTree();
 
-        areas = new Area[levelSize];
+        areas = new Area[1];
         generateNewAreas();
+        lastTown = areas[0];
 
         Area.width = areaWidth;
 
@@ -49,12 +54,11 @@ public class LandscapeGen : MonoBehaviour {
         return areas[0];
     }
 
-    public void resetLandscape(Player player)
+    public void resetLandscape()
     {
         Area respawnArea = Instantiate(areas[0], new Vector3(-areaWidth, 0, 0), Quaternion.identity);
         respawnArea.name = "Respawned Area";
-
-        //Delete and reset all other areas
+        //Delete and reset all other areas if not already deleted
         deleteLandscape();
         areas = new Area[levelSize];
         areas[0] = respawnArea;
@@ -62,19 +66,22 @@ public class LandscapeGen : MonoBehaviour {
 
     }
 
-    void deleteLandscape()
+    public void deleteLandscape()
     {
-        for (int i = 0; i < levelSize; i++)
+        for (int i = 1; i < areas.Length; i++)
         {
-            Destroy(areas[i].gameObject);
+            if(areas[i] != null)
+                Destroy(areas[i].gameObject);
         }
     }
 
     void generateNewAreas()
     {
         float areaPos = -areaWidth;
-        
-        for (int i = 0; i < levelSize; i++)
+
+        bossAreaLocation = Random.Range(2, levelSize - 1);
+
+        for (int i = 0; i < areas.Length; i++)
         {
             if(areas[i] != null)
             {
@@ -113,6 +120,17 @@ public class LandscapeGen : MonoBehaviour {
                 Spawner[] characters = transition.GetComponentsInChildren<Spawner>();
                 spriteGenerator.generateCharacters(characters);
             }
+            //Spawn in Boss
+            else if(i == bossAreaLocation)
+            {
+                //Get random scenario and instantiate it
+                GameObject bossArea = Instantiate(prefabs.getBossArea(), new Vector3(areaPos, 0, 0), Quaternion.identity);
+                bossArea.transform.SetParent(areas[i].transform);
+
+                //Generation all Characters in scenario
+                Spawner[] characters = bossArea.GetComponentsInChildren<Spawner>();
+                spriteGenerator.generateCharacters(characters);
+            }
             else if (i > 1)
             {
                 //Get random scenario and instantiate it
@@ -129,7 +147,8 @@ public class LandscapeGen : MonoBehaviour {
             //spriteGenerator.createNewNPC(areas[i].transform, new Vector2(-10, 2));
 
             //Turn off area
-            areas[i].gameObject.SetActive(false);
+            if(i > 2)
+                areas[i].gameObject.SetActive(false);
 
             //Increase the current area int and update the new area pos of the last area on the map
             areaPos += areaWidth;
@@ -138,16 +157,12 @@ public class LandscapeGen : MonoBehaviour {
         currentArea = 0;
         lastAreaPos = -areaWidth;
         firstAreaPos = -areaWidth*2;
-
-        areas[0].gameObject.SetActive(true);
-        areas[1].gameObject.SetActive(true);
-        areas[2].gameObject.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Player.instance == null)
+        if (Player.instance == null || LoadScreen.loading)
             return;
 
         //Move into a invoke repeating method so it can be stopped and more efficient?

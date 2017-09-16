@@ -21,6 +21,9 @@ public abstract class CHitable : MonoBehaviour {
     protected bool invulnerable = false;
     public float invulnTime = 0.3f;
     protected bool knockedback = false;
+
+    //Attacker Variables
+    public string lastAttackInfo;
     protected CMoveCombatable lastAttacker;
 
     //Abstract Functions

@@ -96,19 +96,25 @@ public class WorldManager : MonoBehaviour {
         UIManager.instance.enableUI();
     }
 
-    public Enemy getRevengeTarget()
+    public RevengeTarget getRevengeTarget()
     {
         if (headAncestor == null)
+        {
+            Debug.Log("Returning null");
             return null;
+        }
 
-        Debug.Log("Returning " + headAncestor.revengeTarget.firstName);
+        Debug.Log("Returning " + headAncestor.revengeTarget);
 
-        return (Enemy) headAncestor.revengeTarget;
+        return headAncestor.revengeTarget;
     }
 
     public void playerDied(Player player)
     {
         player.bag.closeBag();
+
+        //Turn off Boss UI in case its on
+        UIManager.instance.closeBossGUI();
 
         zoomIn(player.getAttacker().transform);
 
@@ -118,12 +124,15 @@ public class WorldManager : MonoBehaviour {
         if (headAncestor == null)
             headAncestor = tailAncestor;
 
-        Ancestor an = tailAncestor;
-        while(an != null)
+        Ancestor an = headAncestor;
+        while (an != null)
         {
-            Debug.Log("Ancestor: " + an.firstName + ", Killed by: " + an.revengeTarget.firstName + " " + an.revengeTarget.lastName);
+            if(an.revengeTarget != null)
+                Debug.Log("Ancestor: " + an.getName() + ", killed by " + an.revengeTarget.firstName + " " + an.revengeTarget.lastName);
+            else
+                Debug.Log("Ancestor: " + an.getName() + ", killed by null");
 
-            an = an.getParent();
+            an = an.getChild();
         }
 
         Invoke("resetPlayer", respawnTime * Time.timeScale);
@@ -131,10 +140,9 @@ public class WorldManager : MonoBehaviour {
 
     public void newMap()
     {
-        landscapeGen.resetLandscape(currentPlayer);
-
-        currentPlayer.transform.position = new Vector3(0, 0, 0);
         cam.resetCamera(currentPlayer.transform);
+
+        landscapeGen.resetLandscape();
 
         //Enable the UI
         UIManager.instance.enableUI();
@@ -142,13 +150,13 @@ public class WorldManager : MonoBehaviour {
 
     private void resetPlayer()
     {
-        normalTime();        
+        normalTime();
 
         currentPlayer = spriteGenerator.createNewPlayer();
 
-        currentPlayer.name = "Player";
+        currentPlayer.gameObject.name = "Player";
 
-        newMap();
+        UIManager.instance.newLoadScreen();
     }
 
 }
