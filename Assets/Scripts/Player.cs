@@ -53,11 +53,6 @@ public class Player : CMoveCombatable
         //Singleton
         if (instance == null)
             instance = this;
-        else if (instance != this)
-        {
-            Destroy(instance.gameObject);
-            instance = this;
-        }
 
         animator = GetComponentInChildren<Animator>();
 
@@ -67,6 +62,18 @@ public class Player : CMoveCombatable
         weapon.SetActive(false);
 
         UIManager.instance.setAbilities(abilities); //REmove when player is generated
+    }
+
+    public void setSingleton()
+    {
+        //Singleton
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+        {
+            Destroy(instance.gameObject);
+            instance = this;
+        }
     }
 
     public bool isInMenu()
@@ -209,6 +216,11 @@ public class Player : CMoveCombatable
         base.death();
 
         WorldManager.instance.playerDied(this);
+    }
+
+     protected override void removeDeadBody()
+    {
+        return;
     }
 
     IEnumerator inputHandler()

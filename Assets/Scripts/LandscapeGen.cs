@@ -16,7 +16,6 @@ public class LandscapeGen : MonoBehaviour {
     [Range(3, 99)]
     public int levelSize = 6; //first area is a town, seond is empty, last area will always be a transition area so always need at least 3
     private Area[] areas;
-    private Area lastTown;
 
     //Area Limits Variables
     public static float leftEdge;
@@ -39,9 +38,8 @@ public class LandscapeGen : MonoBehaviour {
         scenarioTree = GetComponent<DT>();
         scenarioTree.createTree();
 
-        areas = new Area[1];
+        areas = new Area[levelSize];
         generateNewAreas();
-        lastTown = areas[0];
 
         Area.width = areaWidth;
 
@@ -54,7 +52,7 @@ public class LandscapeGen : MonoBehaviour {
         return areas[0];
     }
 
-    public void resetLandscape()
+    public void regenLandscape()
     {
         Area respawnArea = Instantiate(areas[0], new Vector3(-areaWidth, 0, 0), Quaternion.identity);
         respawnArea.name = "Respawned Area";
@@ -66,9 +64,17 @@ public class LandscapeGen : MonoBehaviour {
 
     }
 
+        public void resetLandscape()
+    {
+        //Delete and reset all other areas if not already deleted
+        deleteLandscape();
+        areas = new Area[levelSize];
+        generateNewAreas();
+    }
+
     public void deleteLandscape()
     {
-        for (int i = 1; i < areas.Length; i++)
+        for (int i = 0; i < areas.Length; i++)
         {
             if(areas[i] != null)
                 Destroy(areas[i].gameObject);
@@ -145,7 +151,7 @@ public class LandscapeGen : MonoBehaviour {
             //Generate Sprites
             //spriteGenerator.createNewNPC(areas[i].transform, new Vector2(-10,0));
             //spriteGenerator.createNewNPC(areas[i].transform, new Vector2(-10, 2));
-
+            areas[i].transform.SetParent(transform);
             //Turn off area
             if(i > 2)
                 areas[i].gameObject.SetActive(false);

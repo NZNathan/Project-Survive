@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     private PlayerGUI playerGUI;
     private ItemPopup itemPopup;
     private BossGUI bossGUI;
+    private DeathScreen deathScreen;
     private LoadScreen loadScreen;
     public Tooltip tooltip;
     public LevelUpGUI levelUpWindow;
@@ -40,6 +41,7 @@ public class UIManager : MonoBehaviour
         playerGUI = GetComponent<PlayerGUI>();
         itemPopup = itemPopupObject.GetComponent<ItemPopup>();
         loadScreen = GetComponent<LoadScreen>();
+        deathScreen = GetComponent<DeathScreen>();
         bossGUI = GetComponent<BossGUI>();
     }
 
@@ -129,7 +131,7 @@ public class UIManager : MonoBehaviour
     }
 #endregion
 
-    #region ---- Shop System METHODS ----
+#region ---- Shop System METHODS ----
     public void newShopWindow()
     {
         shopWindow.openShopWindow();
@@ -138,6 +140,13 @@ public class UIManager : MonoBehaviour
     public void closeShopWindow()
     {
         shopWindow.closeShopWindow();
+    }
+#endregion
+
+#region ---- Death Screen METHODS ----
+    public void newDeathScreen()
+    {
+        deathScreen.newDeathScreen();
     }
 #endregion
 

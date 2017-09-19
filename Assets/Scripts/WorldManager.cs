@@ -135,7 +135,7 @@ public class WorldManager : MonoBehaviour {
             an = an.getChild();
         }
 
-        Invoke("resetPlayer", respawnTime * Time.timeScale);
+        Invoke("deathScreen", respawnTime/2 * Time.timeScale);
     }
 
     public void newMap()
@@ -148,15 +148,27 @@ public class WorldManager : MonoBehaviour {
         UIManager.instance.enableUI();
     }
 
-    private void resetPlayer()
+    private void deathScreen()
     {
+        landscapeGen.gameObject.SetActive(false);
+
         normalTime();
 
-        currentPlayer = spriteGenerator.createNewPlayer();
+        UIManager.instance.newDeathScreen();
+    }
 
-        currentPlayer.gameObject.name = "Player";
+    public void resetPlayer(Player newPlayer)
+    {
+        landscapeGen.gameObject.SetActive(true);
 
-        UIManager.instance.newLoadScreen();
+        currentPlayer = newPlayer;
+
+        newPlayer.setSingleton();
+
+        newPlayer.gameObject.name = "Player";
+        newPlayer.gameObject.SetActive(true);
+        
+        newMap();
     }
 
 }

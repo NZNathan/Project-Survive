@@ -54,6 +54,11 @@ public class C : CHitable {
         whiteMat = Resources.Load<Material>("Materials/SolidWhite");
     }
 
+    public string getName()
+    {
+        return firstName + " " + lastName;
+    }
+
     public bool isDead()
     {
         return dead;
@@ -88,6 +93,8 @@ public class C : CHitable {
 
     void setSprites()
     {
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+
         for (int i = 0; i < spriteRenderers.Length; i++)
         {
             spriteRenderers[i].sprite = sprites[i];
