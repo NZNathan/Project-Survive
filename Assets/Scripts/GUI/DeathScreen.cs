@@ -30,10 +30,7 @@ public class DeathScreen : MonoBehaviour {
 	{
 		deathScreen.SetActive(true);
 
-		//Set up text
-		characterName.text = Player.instance.firstName + " " + Player.instance.lastName;
-		revengeTarget.setSprites(Player.instance.getAttacker().getSprites());
-		player.setSprites(Player.instance.getSprites());
+        setupDeathScreen();
 
 		StartCoroutine("fadeIn");
 	}
@@ -73,7 +70,16 @@ public class DeathScreen : MonoBehaviour {
         }
 	}
 	
-	public void setupInheritance()
+    private void setupDeathScreen()
+    {
+        //Set up text
+        characterName.text = Player.instance.firstName + " " + Player.instance.lastName;
+        revengeTarget.setSprites(Player.instance.getAttacker().getSprites());
+        revengeName.text = Player.instance.getAttacker().getName();
+        player.setSprites(Player.instance.getSprites());
+    }
+
+	private void setupInheritance()
 	{
 		inheritanceGroup.gameObject.SetActive(true);
 

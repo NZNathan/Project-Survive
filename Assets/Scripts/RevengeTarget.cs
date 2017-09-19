@@ -52,6 +52,5 @@ public class RevengeTarget {
         sprites = target.getSprites();
 
         animatorController = target.animator.runtimeAnimatorController;
-        Debug.Log(animatorController.name);
     }
 }

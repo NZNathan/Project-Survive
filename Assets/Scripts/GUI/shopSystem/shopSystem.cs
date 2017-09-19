@@ -12,12 +12,14 @@ public class shopSystem : MonoBehaviour {
 	public List<shopItem> shoplist = new List<shopItem>();
 	private List<GameObject> itemHolderlist = new List<GameObject> ();
 
+	public List<GameObject> buybutton = new List<GameObject> ();
+
     public GameObject shopWindow;
-	public  GameObject itemHolderPrefab;
+    public  GameObject itemHolderPrefab;
     public Text moneyText;
-	public Transform grid;
+    public Transform grid;
 
-
+	// Use this for initialization
 	public void openShopWindow() {
 
         shopWindow.SetActive(true);
@@ -43,24 +45,25 @@ public class shopSystem : MonoBehaviour {
 			GameObject holder= Instantiate (itemHolderPrefab,grid,false);
 			itemHolder holderScript = holder.GetComponent<itemHolder> ();
 
-		
+
 			holderScript.itemName.text = shoplist [i].itemName;
 			holderScript.itemPrice.text = "$"+ shoplist [i].itemPrice.ToString();
 			holderScript.itemID = shoplist [i].itemID;
 
 			//buy button
-		    holderScript.buyButton.GetComponent<BuyButton>().itemID =shoplist [i].itemID ;
+			holderScript.buyButton.GetComponent<BuyButton>().itemID =shoplist [i].itemID ;
 
 			//handle list
 			itemHolderlist.Add(holder);
+			buybutton.Add (holderScript.buyButton);
 
 
 			if (shoplist [i].bought) {
-				holderScript.itemImage.sprite = shoplist [i].boughtSprite;
+				holderScript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [i].boughtSpriteName);
 			}
 
 			else {
-				holderScript.itemImage.sprite = shoplist [i].unboughtSprite;
+				holderScript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [i].unboughtSpriteName);
 
 			}			//older version: holder.transform.SetParent (grid);
 
@@ -76,9 +79,20 @@ public class shopSystem : MonoBehaviour {
 
 				for( int j = 0;j<shoplist.Count;j++){
 					if(shoplist[j].itemID == itemID){
-						
+
 						if(shoplist[j].bought){
-							
+
+
+							if (shoplist [j].bought) {
+								holderscript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [j].boughtSpriteName);
+								holderscript.itemPrice.text = "SOLD OUT";
+							}
+
+							else {
+								holderscript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [j].unboughtSpriteName);
+
+							}
+
 
 
 						}
@@ -97,5 +111,32 @@ public class shopSystem : MonoBehaviour {
 
 	}
 
+	/*public void updateBuyButton(){
+
+		int currentitemID = WorldManager.instance.currentitemId;
+
+		for(int i = 0;i <buybutton.Count;i++){
+			BuyButton buybuttonscript = buybutton [i].GetComponent<BuyButton> ();
+			for(int j = 0; j< shoplist.Count;i++){
+
+				if(shoplist[j].itemID == buybuttonscript.itemID&&shoplist[j].bought&& shoplist[j].itemID!=currentitemID){
+
+					buybuttonscript.buytext.text = "Use";
+
+				}
+
+				else if(shoplist[j].itemID == buybuttonscript.itemID&&shoplist[j].bought&& shoplist[j].itemID==currentitemID){
+					
+					buybuttonscript.buytext.text = "Using";
+
+				}
+
+			}
+
+
+		}
+
+
+	}*/
 
 }

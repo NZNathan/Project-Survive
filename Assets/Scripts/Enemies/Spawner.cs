@@ -26,7 +26,6 @@ public class Spawner : MonoBehaviour {
     //REFACTOR
     public Enemy spawnBoss(RevengeTarget revengeTarget)
     {
-        Debug.Log("PASSED " + revengeTarget);
 
         Enemy boss = (Enemy) Instantiate(characterSpawnType, transform.position, Quaternion.identity);
         boss.transform.SetParent(transform.parent);
@@ -39,8 +38,6 @@ public class Spawner : MonoBehaviour {
         boss.hasBeenSeen = false;
         boss.isBoss = true;
         boss.gameObject.name = "BOSS:_" + boss.firstName;
-
-        Debug.Log("Created " + boss.gameObject.name);
 
         return boss;
     }

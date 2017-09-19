@@ -131,7 +131,7 @@ public class UIManager : MonoBehaviour
     }
 #endregion
 
-#region ---- Shop System METHODS ----
+    #region ---- Shop System METHODS ----
     public void newShopWindow()
     {
         shopWindow.openShopWindow();
@@ -141,14 +141,14 @@ public class UIManager : MonoBehaviour
     {
         shopWindow.closeShopWindow();
     }
-#endregion
+    #endregion
 
-#region ---- Death Screen METHODS ----
+    #region ---- Death Screen METHODS ----
     public void newDeathScreen()
     {
         deathScreen.newDeathScreen();
     }
-#endregion
+    #endregion
 
     #region UI Control Methods
     //--- UI CONTROL METHODS ---

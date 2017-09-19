@@ -40,6 +40,8 @@ public class Player : CMoveCombatable
         else
             lastName = familyName;
 
+
+        
         //TEMP
         basicAttack = new BasicShoot();
 
@@ -266,6 +268,9 @@ public class Player : CMoveCombatable
 
         if (eKeyDown && !attacking)
             itemsInRange.pickupItem();
+
+        if (Input.GetKeyDown(KeyCode.Y))
+            UIManager.instance.newShopWindow();
 
         //Call movement function to handle movements
         Vector3 movementVector = Vector3.zero;

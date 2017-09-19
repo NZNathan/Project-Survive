@@ -99,12 +99,7 @@ public class WorldManager : MonoBehaviour {
     public RevengeTarget getRevengeTarget()
     {
         if (headAncestor == null)
-        {
-            Debug.Log("Returning null");
             return null;
-        }
-
-        Debug.Log("Returning " + headAncestor.revengeTarget);
 
         return headAncestor.revengeTarget;
     }

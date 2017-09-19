@@ -107,7 +107,12 @@ public class SpriteGen : MonoBehaviour {
 
         //Set Player stats and details
         p.firstName = getFirstName();
-        p.lastName = getLastName();
+
+        //Set up last name to be the family name
+        if (Player.familyName == "")
+            p.lastName = getLastName();
+        else
+            p.lastName = Player.familyName;
 
         return p;
     }
