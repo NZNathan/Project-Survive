@@ -40,11 +40,6 @@ public class Player : CMoveCombatable
         else
             lastName = familyName;
 
-
-        
-        //TEMP
-        basicAttack = new BasicShoot();
-
         bag = new Bag(UIManager.instance.bagGUIObject.GetComponent<BagGUI>());
 
         itemsInRange = new ItemsInRange(this);
