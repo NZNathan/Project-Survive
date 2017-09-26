@@ -360,16 +360,18 @@ public class Player : CMoveCombatable
     // Update is called once per frame
     new void Update()
     {
-        base.Update();
+        if (!WorldManager.isPaused)
+        {
+            base.Update();
 
-        if (!dead && !stunned)
-             StartCoroutine("inputHandler"); //Alternte than coroutine??
+            if (!dead && !stunned)
+                StartCoroutine("inputHandler"); //Alternte than coroutine??
 
-        if (startedHolding + chargeTime < Time.time)
-            animator.SetBool("charged", true);
+            if (startedHolding + chargeTime < Time.time)
+                animator.SetBool("charged", true);
 
-        if (inMenu)
-            animator.SetFloat("movementSpeed", 0);
+            if (inMenu)
+                animator.SetFloat("movementSpeed", 0);
+        }
     }
-
 }

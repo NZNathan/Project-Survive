@@ -229,6 +229,7 @@ public class UIManager : MonoBehaviour
     public void enablePlayerGUI()
     {
         playerGUIObject.SetActive(true);
+        playerGUI.restartCooldowns();
     }
 #endregion
 }

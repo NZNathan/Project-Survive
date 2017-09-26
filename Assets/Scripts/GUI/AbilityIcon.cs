@@ -34,6 +34,15 @@ public class AbilityIcon : MonoBehaviour {
         cooldown.gameObject.SetActive(true);
         StartCoroutine("cooldownAnimation");
     }
+
+    /// <summary>
+    /// If a cooldown has been stopped when not done, restart it
+    /// </summary>
+    public void restartCooldown()
+    {
+        if (cooldown.fillAmount > 0)
+            StartCoroutine("cooldownAnimation");
+    }
 	
 	IEnumerator cooldownAnimation()
     {

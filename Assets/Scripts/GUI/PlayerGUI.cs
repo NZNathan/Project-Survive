@@ -37,6 +37,17 @@ public class PlayerGUI : MonoBehaviour {
         abilityIcons[ability].startCooldown();
     }
 
+    /// <summary>
+    /// Goes through all abilities and starts their cooldowns again if they were paused when the UI was diabled
+    /// </summary>
+    public void restartCooldowns()
+    {
+        foreach(AbilityIcon ab in abilityIcons)
+        {
+            ab.restartCooldown();
+        }
+    }
+
     IEnumerator animateFill(float xp, float xpCap)
     {
         while(currentXp <= xp)

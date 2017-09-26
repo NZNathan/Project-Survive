@@ -12,6 +12,9 @@ public class WorldManager : MonoBehaviour {
     public static float lowerBoundary = -3.8f;
     public static float upperBoundary = 3.8f;
 
+    //Pause
+    public static bool isPaused = false;
+
     //Camera
     private CameraFollow cam;
 
@@ -46,7 +49,8 @@ public class WorldManager : MonoBehaviour {
         //Disable the UI
         UIManager.instance.disableUI();
 
-        //Start slow motion
+        //Start slow motion and pause game
+        isPaused = true;
         slowTime();
 
         //Zoom to revenge Target
@@ -85,6 +89,8 @@ public class WorldManager : MonoBehaviour {
 
     private void zoomOut()
     {
+        isPaused = false;
+
         //Stop slow motion
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;

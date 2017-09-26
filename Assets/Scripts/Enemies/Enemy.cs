@@ -215,18 +215,22 @@ public class Enemy : CMoveCombatable {
 
     private new void Update()
     {
-        base.Update();
+        if (!WorldManager.isPaused)
+        {
+            base.Update();
 
-        if(!hasBeenSeen && tick >= 4)
-            onBecameVisible();
+            if (!hasBeenSeen && tick >= 4)
+                onBecameVisible();
 
-        tick++;
+            tick++;
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate ()
     {
-        state.Peek().action();
+        if (!WorldManager.isPaused)
+            state.Peek().action();
     }
 
     //Just landed a hit on an enemy
