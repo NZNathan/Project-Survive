@@ -30,6 +30,8 @@ public class Parallax : MonoBehaviour {
         yValue = layers[0].transform.position.y;
         leftIndex = 0;
         rightIndex = layers.Length-1;
+
+        //transform.position = new Vector2(Player.spawmPos.x , transform.position.y);
     }
 
     void scrollLeft()
