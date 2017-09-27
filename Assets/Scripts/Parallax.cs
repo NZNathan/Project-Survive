@@ -24,6 +24,7 @@ public class Parallax : MonoBehaviour {
 
         lastCameraX = cameraTransform.position.x;
 
+        //Make sure children are in the right order in the Heirachy!
         for (int i = 0; i < layers.Length; i++)
             layers[i] = transform.GetChild(i);
 

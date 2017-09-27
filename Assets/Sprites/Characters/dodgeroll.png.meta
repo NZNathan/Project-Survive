@@ -1,15 +1,19 @@
 fileFormatVersion: 2
-guid: 7ad4f292079f5445d9cb0199935d0966
-timeCreated: 1506500491
+guid: 8d57df6cabe27d74d84e534335aed7c9
+timeCreated: 1506504793
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Shop UI_0
-    21300002: Shop UI_1
-    21300004: Shop UI_2
-    21300006: slot_UI
-    21300008: slotInbetween
-    21300010: square_UI
+    21300000: dodgeroll_0
+    21300002: dodgeroll_1
+    21300004: dodgeroll_2
+    21300006: dodgeroll_3
+    21300008: dodgeroll_4
+    21300010: dodgeroll_5
+    21300012: dodgeroll_6
+    21300014: dodgeroll_7
+    21300016: dodgeroll_8
+    21300018: dodgeroll_9
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -46,7 +50,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 25
+  spritePixelsToUnits: 33
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -80,23 +84,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: tvOS
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
   - buildTarget: Android
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-  - buildTarget: Tizen
     maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
@@ -112,92 +100,136 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Samsung TV
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shop UI_0
+      name: dodgeroll_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 67
-        width: 29
-        height: 41
+        x: 0
+        y: 54
+        width: 41
+        height: 27
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 3, y: 6, z: 3, w: 6}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Shop UI_1
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 71
-        width: 7
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Shop UI_2
+      name: dodgeroll_1
       rect:
         serializedVersion: 2
-        x: 9
-        y: 108
-        width: 64
-        height: 22
+        x: 41
+        y: 54
+        width: 41
+        height: 27
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: slot_UI
+      name: dodgeroll_2
       rect:
         serializedVersion: 2
-        x: 95
-        y: 107
-        width: 13
-        height: 12
+        x: 82
+        y: 54
+        width: 41
+        height: 27
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 2, w: 2}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: slotInbetween
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 111
-        width: 2
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: square_UI
+      name: dodgeroll_3
       rect:
         serializedVersion: 2
-        x: 77
-        y: 94
-        width: 10
-        height: 10
+        x: 123
+        y: 54
+        width: 41
+        height: 27
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dodgeroll_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 27
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dodgeroll_5
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 27
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dodgeroll_6
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 27
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dodgeroll_7
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 27
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dodgeroll_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dodgeroll_9
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 0
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

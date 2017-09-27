@@ -13,3 +13,6 @@ Death is inevitable in such a dangerous world, and when you die your legacy live
 Combat plays a big part of the game, and each character will have (semi) unique abilities that unlock as the player levels up and are randomly assigned on player generation.
 
 Another big part of the game is the dialogue system allowing player to talk with NPC and offer them unique responses. Players can try and talk there way out of a sticky situation, or try and convince people to help the player.
+
+Video:
+https://www.youtube.com/watch?v=Wfr5kFGZyyo

@@ -30,6 +30,11 @@ public class CameraFollow : MonoBehaviour
     public float smoothSpeed = 0.125f;
     public Vector3 offest;
 
+    //Camera Edges
+    //Y values to stop camera moving to high or low
+    public float yUpperClamp = 0.27f;
+    public float yLowerClamp = 0.26f;
+
     private Vector3 velocity = Vector3.zero;
 
     private void Start()
@@ -136,6 +141,13 @@ public class CameraFollow : MonoBehaviour
         if (target != null)
         {
             Vector3 desiredPos = target.position + offest;
+
+            //Clamp Y value if out of bounds
+            if(desiredPos.y > yUpperClamp)
+                desiredPos = new Vector3(desiredPos.x, yUpperClamp, 0);
+            else if (desiredPos.y < yLowerClamp)
+                desiredPos = new Vector3(desiredPos.x, yLowerClamp, 0);
+
             Vector3 smoothPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothSpeed);
 
             if (!cameraAtMapEdge(smoothPos))

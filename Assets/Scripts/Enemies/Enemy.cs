@@ -179,7 +179,7 @@ public class Enemy : CMoveCombatable {
         //Item drops
         foreach(DropableItem dropableItem in dropableItems)
         {
-            dropableItem.dropItem(transform.position); 
+            dropableItem.dropItem(transform.position, transform.parent); 
         }
     }
 

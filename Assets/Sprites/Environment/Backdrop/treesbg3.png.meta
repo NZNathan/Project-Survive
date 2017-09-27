@@ -1,15 +1,10 @@
 fileFormatVersion: 2
-guid: 7ad4f292079f5445d9cb0199935d0966
-timeCreated: 1506500491
+guid: 98321b5b6db7943e19fa52bd2d45f725
+timeCreated: 1506409180
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Shop UI_0
-    21300002: Shop UI_1
-    21300004: Shop UI_2
-    21300006: slot_UI
-    21300008: slotInbetween
-    21300010: square_UI
+    21300000: treesbg3_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -45,8 +40,8 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 25
+  spriteBorder: {x: 0, y: 84, z: 0, w: 0}
+  spritePixelsToUnits: 33
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -57,7 +52,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -65,7 +60,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -73,7 +68,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: iPhone
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -81,7 +76,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: tvOS
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -89,7 +84,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -97,7 +92,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Tizen
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -105,7 +100,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: WebGL
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -113,7 +108,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Samsung TV
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -124,78 +119,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shop UI_0
+      name: treesbg3_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 67
-        width: 29
-        height: 41
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 3, y: 6, z: 3, w: 6}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Shop UI_1
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 71
-        width: 7
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Shop UI_2
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 108
-        width: 64
-        height: 22
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: slot_UI
-      rect:
-        serializedVersion: 2
-        x: 95
-        y: 107
-        width: 13
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 2, z: 2, w: 2}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: slotInbetween
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 111
-        width: 2
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: square_UI
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 94
-        width: 10
-        height: 10
+        x: 0
+        y: 90
+        width: 316
+        height: 108
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

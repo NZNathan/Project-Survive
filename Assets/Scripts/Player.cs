@@ -9,6 +9,8 @@ public class Player : CMoveCombatable
     public static string familyName = "";
     public static Vector3 spawmPos = new Vector3(-5,0,0);
 
+    public new static HealthBar healthBar;
+
     //Experiance Variables
     public static int pointsOnLevelUp = 3;
     private int levelUpPoints = 0;
@@ -32,6 +34,10 @@ public class Player : CMoveCombatable
 
     public new void Start()
     {
+        healthBar.resetFill();
+        healthBar.setActive(true);
+        base.healthBar = healthBar;
+
         base.Start();
 
         //Set up family Name
@@ -322,8 +328,9 @@ public class Player : CMoveCombatable
     public override void loseHealth(int damage)
     {
         base.loseHealth(damage);
+        StopCoroutine("showHealth");
 
-        if(!dead)
+        if (!dead)
             CameraFollow.cam.GetComponentInParent<CameraShake>().shake = .5f;
     }
 

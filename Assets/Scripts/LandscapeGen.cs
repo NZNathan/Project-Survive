@@ -44,7 +44,7 @@ public class LandscapeGen : MonoBehaviour {
         Area.width = areaWidth;
 
         rightEdge = (levelSize-2) * areaWidth - (areaWidth/2);
-        leftEdge = -areaWidth*1.5f; //Need to change if town size is changed
+        leftEdge = -areaWidth; //Need to change if town size is changed
     }
 
     public Area getFirstArea()
@@ -105,8 +105,8 @@ public class LandscapeGen : MonoBehaviour {
                 areas[i].gameObject.name = "Safe Zone";
 
                 //Give town extra area to make it bigger?
-                Area biggerArea = Instantiate(baseArea, new Vector3(areaPos-areaWidth, 0, 0), Quaternion.identity);
-                biggerArea.transform.SetParent(areas[i].transform);
+                //Area biggerArea = Instantiate(baseArea, new Vector3(areaPos-areaWidth, 0, 0), Quaternion.identity);
+                //biggerArea.transform.SetParent(areas[i].transform);
 
                 //Get the town prefab and instantiate it, setting its parten to the area
                 GameObject town = Instantiate(prefabs.getTown(), new Vector3(areaPos, 0, 0), Quaternion.identity);
@@ -142,6 +142,12 @@ public class LandscapeGen : MonoBehaviour {
                 //Get random scenario and instantiate it
                 GameObject scenario = Instantiate(scenarioTree.getScenario(), new Vector3(areaPos, 0, 0), Quaternion.identity);
                 scenario.transform.SetParent(areas[i].transform);
+
+                //Generate Item
+                ItemSpawner[] items = scenario.GetComponentsInChildren<ItemSpawner>();
+
+                foreach (ItemSpawner it in items)
+                    it.spawnItem();
 
                 //Generation all Characters in scenario
                 Spawner[] characters = scenario.GetComponentsInChildren<Spawner>();

@@ -11,16 +11,29 @@ public class HealthBar : MonoBehaviour {
     public Image whiteBar;
     public Image bgBar;
 
-    //Boss Variable
+    //Dont Destroy Variables
     public bool bossBar = false;
+    public bool playerBar = false;
 
     //Positioning Variables
     private Transform target;
     private float healthBarOffset = 0.7f;
 
     //White bar Animation
-    private float initialPause = 0.4f;
+    private float initialPause = 0.8f;
     private float steps = 25f; // the amount of steps for the animation
+
+    private void Start()
+    {
+        if (playerBar)
+            Player.healthBar = this;
+    }
+
+    public void resetFill()
+    {
+        healthBar.fillAmount = 1;
+        whiteBar.fillAmount = 1;
+    }
 
     public void setTarget(Transform target)
     {
@@ -37,7 +50,7 @@ public class HealthBar : MonoBehaviour {
 
 	void Update ()
     {
-        if (!bossBar)
+        if (!bossBar && !playerBar)
         {
             //If no target, target must be dead
             if (target == null)
@@ -63,8 +76,11 @@ public class HealthBar : MonoBehaviour {
     {
         healthBar.fillAmount = fillAmount;
 
-        if(this.gameObject.activeInHierarchy)
+        if (this.gameObject.activeInHierarchy)
+        {
+            StopCoroutine(animateFill());
             StartCoroutine(animateFill());
+        }
     }
 
     IEnumerator animateFill()

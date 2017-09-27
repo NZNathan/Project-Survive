@@ -21,10 +21,11 @@ public class Item : MonoBehaviour {
         itemAbility.useItem();
     }
 
-    public void instantiate(Vector3 spawnPos)
+    public void instantiate(Vector3 spawnPos, Transform parent)
     {
         Item item = Instantiate(this, spawnPos, Quaternion.identity);
         item.gameObject.name = itemName;
+        item.transform.SetParent(parent);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

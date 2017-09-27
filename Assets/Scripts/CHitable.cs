@@ -38,9 +38,13 @@ public abstract class CHitable : MonoBehaviour {
 
         currentHealth = maxHealth;
 
-        healthBar = UIManager.instance.newHealthBar();
-        healthBar.setTarget(transform);
-        healthBar.setActive(false);
+        //Only create a health bar if the object doesn't already have one
+        if (healthBar == null)
+        {
+            healthBar = UIManager.instance.newHealthBar();
+            healthBar.setTarget(transform);
+            healthBar.setActive(false);
+        }
     }
 
     public abstract void applyStun(float stunTime);
@@ -121,10 +125,6 @@ public abstract class CHitable : MonoBehaviour {
 
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
-
-        //Stop showHealth so it doesn't remove the health bar off an earilier call
-        StopCoroutine("showHealth");
-        StartCoroutine("showHealth");
 
         healthBar.recoverHealth((float)currentHealth / (float)maxHealth);
     }
