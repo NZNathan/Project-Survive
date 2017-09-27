@@ -14,6 +14,10 @@ public class Bullet : MonoBehaviour {
     private float stunTime;
     private bool hitTarget;
 
+    //Lifetime Variables
+    private float lifespan = 1.1f;
+    private float timeShot = 0f;
+
     //Speed Variables
     private float velocity = .25f;
     private Vector3 dir;
@@ -29,6 +33,8 @@ public class Bullet : MonoBehaviour {
         this.damage = damage;
         this.stunTime = stunTime;
         this.dir = dir;
+
+        timeShot = Time.time;
 
         Vector3 spawnPos = new Vector3(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2, caster.transform.position.z);
         transform.position = spawnPos + (dir * 0.5f) ;
@@ -73,7 +79,7 @@ public class Bullet : MonoBehaviour {
 
     private void Update()
     {
-        if(!renderer.isVisible)
+        if(Time.time - lifespan > timeShot)
             this.gameObject.SetActive(false);
     }
 

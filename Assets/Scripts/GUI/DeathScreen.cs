@@ -20,6 +20,7 @@ public class DeathScreen : MonoBehaviour {
 	//Inheritance Screen
 	public CharacterUI[] childrenUI = new CharacterUI[3];
 	public Text[] namesText = new Text[3];
+	public Text[] classText= new Text[3];
 	private Player[] children = new Player[3];
 
 	//Animation Variables
@@ -87,6 +88,7 @@ public class DeathScreen : MonoBehaviour {
 			children[i] = spriteGen.createNewPlayer();
 			childrenUI[i].setSprites(children[i].getSprites());
 			namesText[i].text = children[i].getName();
+			classText[i].text = children[i].getClass().name;
 			children[i].gameObject.name = "child_" + i;
 
 			children[i].gameObject.SetActive(false);

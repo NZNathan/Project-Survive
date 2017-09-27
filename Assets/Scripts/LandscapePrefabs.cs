@@ -25,6 +25,9 @@ public class LandscapePrefabs : MonoBehaviour {
     public GameObject[] friendlyTravellers;
     public GameObject[] hostileTravellers;
 
+    //Empty Houses
+    public GameObject[] emptyHouses;
+
     //Enemy Variables
     public GameObject[] feralCrowds;
 

@@ -103,6 +103,8 @@ public class SpriteGen : MonoBehaviour {
     {
         Player p = Instantiate(playerBase, Player.spawmPos, Quaternion.identity);
 
+        p.chooseRandomClass();
+
         p.setSpriteSet(getNewSprites());
 
         //Set Player stats and details

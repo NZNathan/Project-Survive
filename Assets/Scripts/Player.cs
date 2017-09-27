@@ -64,7 +64,7 @@ public class Player : CMoveCombatable
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         weapon.SetActive(false);
 
-        UIManager.instance.setAbilities(abilities); //REmove when player is generated
+        UIManager.instance.setAbilities(characterClass.abilities); //REmove when player is generated
     }
 
     public void setSingleton()
@@ -296,9 +296,9 @@ public class Player : CMoveCombatable
         else if (leftClickUp && !attacking && weaponDrawn && chargingAttack)
         {
             if (startedHolding + chargeTime < Time.time)
-                attack(heavyAttack); 
+                attack(characterClass.heavyAttack); 
             else
-                attack(basicAttack);
+                attack(characterClass.basicAttack);
 
             chargingAttack = false;
         }
@@ -312,12 +312,12 @@ public class Player : CMoveCombatable
 
         else if (rightClick && !attacking && weaponDrawn)
         {
-            if (attack(abilities[0]))
+            if (attack(characterClass.abilities[0]))
                 UIManager.instance.usedAbility(0);
         }
         else if (spaceKeyDown && !attacking)
         {
-            if (attack(abilities[1]))
+            if (attack(characterClass.abilities[1]))
                 UIManager.instance.usedAbility(1);
         }
 

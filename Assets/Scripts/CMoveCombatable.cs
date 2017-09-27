@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,17 +15,15 @@ public abstract class CMoveCombatable : CMoveable {
     protected int agility;
     protected int endurance;
 
+    //Character Class
+    protected CClass characterClass;
+
     //Character Traits
     protected Trait[] traits;
     private int traitsLimit = 6;
 
     //Weapon Variables
     protected bool weaponDrawn = false;
-
-    //Ability Variables
-    protected Ability basicAttack;
-    protected Ability heavyAttack;
-    protected Ability[] abilities;
 
     //Raycast Variables
     public static LayerMask attackMask; //Layer that all attackable objects are on
@@ -77,17 +74,12 @@ public abstract class CMoveCombatable : CMoveable {
         traits = new Trait[traitsLimit];
 
         //Ability Setup
-        basicAttack = new BasicAttack();
-        heavyAttack = new HeavyAttack();
+        if(characterClass == null)
+            chooseRandomClass();
 
         //Alter attack speed in the animator
         float atkspd = 1f;
         animator.SetFloat("attackSpeed", atkspd);
-
-        //TEMP
-        abilities = new Ability[2];
-        abilities[0] = new DashStrike();
-        abilities[1] = new DodgeRoll();
     }
 
     /// <summary>
@@ -102,6 +94,16 @@ public abstract class CMoveCombatable : CMoveable {
     public void setHealthbar(HealthBar newHealthBar)
     {
         healthBar = newHealthBar;
+    }
+
+    public void chooseRandomClass()
+    {
+        float r = Random.Range(0f, 1f);
+
+        if(r > 0.5f)
+            characterClass = new MeleeClass();
+        else
+            characterClass = new GunnerClass();
     }
 
     /// <summary>
@@ -274,6 +276,11 @@ public abstract class CMoveCombatable : CMoveable {
     public void setComboAnimation(bool value)
     {
         animator.SetBool("combo", value);
+    }
+
+    public CClass getClass()
+    {
+        return characterClass;
     }
 
 }

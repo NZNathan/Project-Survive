@@ -22,11 +22,11 @@ public class DT : MonoBehaviour {
         //Depth = 1
         //Yes it is safe
         DTNode people = (DTNode)DTNode.CreateInstance("DTNode");
-        people.setUpDTNode("People", 0.3f);
+        people.setUpDTNode("People", 0.5f);
 
         //No it isn't safe
         DTNode faction = (DTNode)DTNode.CreateInstance("DTNode");
-        faction.setUpDTNode("Faction", 0.7f);
+        faction.setUpDTNode("Faction", 0.5f);
 
         root.add(people, faction);
 
@@ -38,11 +38,11 @@ public class DT : MonoBehaviour {
         camp.setPrefab(LandscapeGen.prefabs.friendlyCamps);
 
         //It is safe -> No there aren't People
-        DTLeaf travellers = (DTLeaf)DTLeaf.CreateInstance("DTLeaf");
-        travellers.setUpDTNode("Travellers", 0.5f);
-        travellers.setPrefab(LandscapeGen.prefabs.friendlyTravellers);
+        DTLeaf emptyHouse = (DTLeaf)DTLeaf.CreateInstance("DTLeaf");
+        emptyHouse.setUpDTNode("Empty Houses", 0.5f);
+        emptyHouse.setPrefab(LandscapeGen.prefabs.emptyHouses);
 
-        people.add(camp, travellers);
+        people.add(camp, emptyHouse);
 
 
         //Depth = 2

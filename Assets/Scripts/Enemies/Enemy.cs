@@ -130,7 +130,7 @@ public class Enemy : CMoveCombatable {
 
     public void attackTarget()
     {
-        attack(basicAttack);
+        attack(characterClass.basicAttack);
     }
 
     public override void loseHealth(int damage)
