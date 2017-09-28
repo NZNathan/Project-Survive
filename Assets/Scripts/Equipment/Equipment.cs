@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Quality { COMMON, RARE, EPIC, LENGENDARY }
+public enum Quality { ITEM, COMMON, RARE, EPIC, LENGENDARY }
 
 public class Equipment : Item {
 
@@ -11,7 +11,9 @@ public class Equipment : Item {
 	public int aglMod = 0;
 	public int endMod = 0;
 
-	//Equipment Details
-	public Quality quality;
-	
+    protected void Start()
+    {
+        itemAbility = GetComponent<EquipmentAbility>();
+    }
+
 }

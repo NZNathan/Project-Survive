@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     public Tooltip tooltip;
     public LevelUpGUI levelUpWindow;
     public shopSystem shopWindow;
+    public EquipmentGUI equipmentGUI;
 
     //UI Objects
     public GameObject floatingTextManagerObject;
@@ -60,7 +61,14 @@ public class UIManager : MonoBehaviour
     {
         playerGUI.setAbilities(abilities);
     }
-#endregion
+    #endregion
+
+    #region ----Equipment GUI METHODS ----
+    public void equipItem(int i, Equipment eq)
+    {
+        equipmentGUI.equipItem(i, eq);
+    }
+    #endregion
 
     #region ---- Health Bar Manager METHODS ----
     public HealthBar newHealthBar()
@@ -91,9 +99,9 @@ public class UIManager : MonoBehaviour
 #endregion
 
     #region ---- Tooltip METHODS ----
-    public void newTooltip(string title, string bodyText, int price)
+    public void newTooltip(string title, string bodyText, int price, string quality)
     {
-        tooltip.newTooltip(title, bodyText, price);
+        tooltip.newTooltip(title, bodyText, price, quality);
     }
 
     public void closeTooltip()
@@ -109,6 +117,11 @@ public class UIManager : MonoBehaviour
             levelUpWindow.closeWindow();
         else
             levelUpWindow.openWindow();
+    }
+
+    public void updateLevelUpWindow()
+    {
+        levelUpWindow.updateStats();
     }
     #endregion
 

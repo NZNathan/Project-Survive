@@ -7,21 +7,17 @@ using UnityEngine;
 /// </summary>
 public class CharacterUI : MonoBehaviour {
 
-    public Image[] images;
-    private float pixelSize = 0.04f;
+    private Image image;
+    private SpriteRenderer spriteRenderer;
 
-    public void setSprites(Sprite[] sprites)
+    private void Start()
     {
-        //Get height of head in pixels
-        int headPixelHeight = (int) sprites[0].rect.height;
+        image = GetComponent<Image>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
-        for (int i = 0; i < images.Length; i++)
-        {
-            images[i].sprite = sprites[i];
-
-            //To rescale image if heads are different sizes
-            if(i == 0)
-                images[i].rectTransform.sizeDelta = new Vector2(images[i].rectTransform.sizeDelta.x, pixelSize * headPixelHeight);
-        }
+    private void Update()
+    {
+        image.sprite = spriteRenderer.sprite;
     }
 }

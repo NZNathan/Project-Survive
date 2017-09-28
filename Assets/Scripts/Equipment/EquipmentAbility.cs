@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class EquipmentAbility : MonoBehaviour, ItemAbility {
 
-	void useItem()
+    private Equipment equipment;
+
+    private void Start()
+    {
+        equipment = GetComponent<Equipment > ();
+    }
+
+    public void useItem()
 	{
-		//Access equipment and add to player here
+        Player.instance.equipItem(equipment);
 	}
 }

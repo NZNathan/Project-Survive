@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Bag
 {
     private Item[] items;
@@ -23,6 +24,7 @@ public class Bag
         {
             if (items[i] == null)
             {
+                Debug.Log(item);
                 items[i] = item;
                 bagGUI.addItem(i, item);
                 return true;
@@ -32,10 +34,10 @@ public class Bag
         return false;
     }
 
-    public void useItem(int index)
+    public void useItem(int i)
     {
-        items[index].useItem();
-        items[index] = null;
+        items[i].useItem();
+        items[i] = null;
     }
 
     public void input()

@@ -11,8 +11,11 @@ public class Item : MonoBehaviour {
     public int itemPrice;
     public ItemAbility itemAbility;
 
-	// Use this for initialization
-	void Start ()
+    //Equipment Details
+    public Quality quality;
+
+    // Use this for initialization
+    void Start ()
     {
         itemAbility = GetComponent<ItemAbility>();
 	}

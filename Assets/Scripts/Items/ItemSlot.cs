@@ -6,24 +6,27 @@ using UnityEngine;
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     //Item Descriptors
-    private string itemName;
-    private string itemDescription;
-    private int itemPrice;
+    protected string itemName = "";
+    protected string itemDescription = "";
+    protected int itemPrice = 0;
+    protected Quality quality;
 
     //Item Sprite
+    [HideInInspector]
     public Image itemIcon;
 
-    private void Start()
+    protected void Start()
     {
         itemIcon = GetComponentsInChildren<Image>()[1];
     }
 
-    public void useItem(int index)
+    public virtual void useItem(int index)
     {
         if (itemIcon.sprite != null)
         {
             Player.instance.useItem(index);
             itemIcon.sprite = null;
+            itemName = "";
             itemIcon.enabled = false;
             UIManager.instance.closeTooltip();
         }
@@ -39,15 +42,16 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             itemName = item.itemName;
             itemDescription = item.itemDescription;
             itemPrice = item.itemPrice;
+            quality = item.quality;
         }
         else
             itemIcon.enabled = false;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        if(itemIcon.enabled == true)
-            UIManager.instance.newTooltip(itemName, itemDescription, itemPrice);
+        if(itemIcon.enabled == true && itemName != "")
+            UIManager.instance.newTooltip(itemName, itemDescription, itemPrice, quality.ToString());
     }
 
     public void OnPointerExit(PointerEventData eventData)

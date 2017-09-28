@@ -5,9 +5,9 @@ using UnityEngine;
 public class Ring : Equipment {
 
 	// Use this for initialization
-	void Start () 
+	new void Start () 
 	{
-		
+        base.Start();
 	}
 	
 	// Update is called once per frame

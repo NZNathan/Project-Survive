@@ -6,6 +6,7 @@ public class Tooltip : MonoBehaviour {
 
     [Header("UI Elements")]
     public GameObject tooltip;
+    public Text qualityType;
     public Text itemName;
     public Text itemDescription;
     public Text sellPrice;
@@ -25,12 +26,13 @@ public class Tooltip : MonoBehaviour {
     /// <summary>
     /// Create a new tooltip with the title string, body string and price passed in
     /// </summary>
-    public void newTooltip(string itemName, string itemDesc, int price)
+    public void newTooltip(string itemName, string itemDesc, int price, string quality)
     {
         tooltip.SetActive(true);
         this.itemName.text = itemName;
         itemDescription.text = itemDesc;
         sellPrice.text = "Sell: " + price + "G";
+        qualityType.text = quality;
 
         tooltipOn = true;
     }

@@ -35,6 +35,12 @@ public class HealthBar : MonoBehaviour {
         whiteBar.fillAmount = 1;
     }
 
+    public void updateFill(float fill)
+    {
+        healthBar.fillAmount = fill;
+        whiteBar.fillAmount = fill;
+    }
+
     public void setTarget(Transform target)
     {
         this.target = target;

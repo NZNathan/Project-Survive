@@ -143,9 +143,9 @@ public class CameraFollow : MonoBehaviour
             Vector3 desiredPos = target.position + offest;
 
             //Clamp Y value if out of bounds
-            if(desiredPos.y > yUpperClamp)
+            if(desiredPos.y > yUpperClamp && !zooming)
                 desiredPos = new Vector3(desiredPos.x, yUpperClamp, 0);
-            else if (desiredPos.y < yLowerClamp)
+            else if (desiredPos.y < yLowerClamp && !zooming)
                 desiredPos = new Vector3(desiredPos.x, yLowerClamp, 0);
 
             Vector3 smoothPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothSpeed);

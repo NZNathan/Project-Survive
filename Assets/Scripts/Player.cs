@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : CMoveCombatable
 {
+    //Static Variables
     public static Player instance;
     public static string familyName = "";
     public static Vector3 spawmPos = new Vector3(-10,0,0);
@@ -19,7 +20,7 @@ public class Player : CMoveCombatable
     private int xp = 0;
 
     //Equipment Variables
-    private Equipment[] equipment = new Equipment[2];
+    private Equipment[] equipment = new Equipment[3];
 
     //Input Variables
     private bool chargingAttack = false;
@@ -371,6 +372,70 @@ public class Player : CMoveCombatable
         int[] stats = { strength, agility, endurance };
         return stats;
     }
+
+    /// <summary>
+    /// Equips passed in item to an empty equipment slot or replaces the item in equipment slot 1
+    /// </summary>
+    /// <param name="item"></param>
+    public void equipItem(Equipment item)
+    {
+        int i = 2;
+
+        if (equipment[0] == null)
+        {
+            i = 0;
+        }
+        else if (equipment[2] != null)
+        {
+            unequipItem(0);
+            i = 0;
+        }
+
+        equipment[i] = item;
+        UIManager.instance.equipItem(i, item);
+
+        //Update Stats
+        strength += item.strMod;
+        agility += item.aglMod;
+        endurance += item.endMod;
+
+        //Update health
+        maxHealth += equipment[i].endMod * endMod;
+
+        healthBar.updateFill((float)currentHealth / (float)maxHealth);
+    }
+    
+    /// <summary>
+    /// Unequips the item at index i and adds it to the bag if there is room, returns true if operation was successful
+    /// </summary>
+    /// <param name="i"></param>
+    /// <returns></returns>
+    public bool unequipItem(int i)
+    {
+        //If room in the bag
+        if (bag.addItem(equipment[i]))
+        {
+            //Update Stats
+            strength -= equipment[i].strMod;
+            agility -= equipment[i].aglMod;
+            endurance -= equipment[i].endMod;
+
+            //Update health
+            maxHealth -= equipment[i].endMod * endMod;
+
+            if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
+
+            healthBar.updateFill((float)currentHealth / (float)maxHealth);
+
+            UIManager.instance.updateLevelUpWindow();
+            equipment[i] = null;
+            return true;
+        }
+
+        return false;
+    }
+
     // Update is called once per frame
     new void Update()
     {

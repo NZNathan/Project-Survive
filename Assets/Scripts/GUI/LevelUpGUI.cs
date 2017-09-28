@@ -10,13 +10,11 @@ public class LevelUpGUI : MonoBehaviour {
     public Text[] statTexts;
     public Text[] statValues;
 
-    private CharacterUI playerImage;
     private int points = 5;
     private int[] statPoints;
 
     private void Start()
     {
-        playerImage = GetComponentInChildren<CharacterUI>();
         levelUpWindow.gameObject.SetActive(false);
     }
 
@@ -31,12 +29,16 @@ public class LevelUpGUI : MonoBehaviour {
 
         levelUpWindow.gameObject.SetActive(true);
 
-        //Set up player image to look like player
-        playerImage.setSprites(Player.instance.getSprites());
+        //Set up character
 
         //Set up points value text
         pointsText.text = "" + this.points;
 
+        updateStats();
+    }
+
+    public void updateStats()
+    {
         //Set up player stat text values on level up window
         int[] stats = Player.instance.getStats();
         for (int i = 0; i < statValues.Length; i++)
@@ -83,6 +85,7 @@ public class LevelUpGUI : MonoBehaviour {
     public void closeWindow()
     {
         Player.instance.closeLevelupMenu();
+        UIManager.instance.closeTooltip();
 
         for (int i = 0; i < statPoints.Length; i++)
         {
