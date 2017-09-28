@@ -8,7 +8,7 @@ public class Interactable : MonoBehaviour {
 
 	public void use()
 	{
-        WorldManager.mapLevel++;
+        WorldManager.instance.increaseLevel();
         UIManager.instance.newLoadScreen();
 
         this.enabled = false;
@@ -37,7 +37,7 @@ public class Interactable : MonoBehaviour {
 	{
 		bool eKeyDown = Input.GetKeyDown(KeyCode.E);
 
-		if(eKeyDown)
+		if(eKeyDown && withinRange)
 			use();
 	}
 }

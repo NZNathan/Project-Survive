@@ -23,6 +23,9 @@ public class Parry : Ability
     private float cooldownTime = 5f;
     private bool cooldown = false;
 
+    //Ability Icon
+    public Sprite icon;
+
     //Sound Variables
     private AudioClip parrySound;
 
@@ -73,9 +76,9 @@ public class Parry : Ability
         return animation;
     }
 
-    public string getName()
+    public Sprite getIcon()
     {
-        return abilityName;
+        return icon;
     }
 
     public IEnumerator getAction()

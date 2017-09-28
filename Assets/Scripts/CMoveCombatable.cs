@@ -6,14 +6,11 @@ public enum CharacterStat {STR, AGL, END };
 
 public abstract class CMoveCombatable : CMoveable {
 
-    [Header("Combat Variables")]
-    public GameObject weapon;
-
-    //Character Stats
-    protected int level = 1;
-    protected int strength = 1;
-    protected int agility = 1;
-    protected int endurance = 1;
+    [Header("Character Stats")]
+    public int level = 1;
+    public int strength = 1;
+    public int agility = 1;
+    public int endurance = 1;
     protected int endMod = 10;
 
     //Character Class
@@ -29,6 +26,9 @@ public abstract class CMoveCombatable : CMoveable {
     //Raycast Variables
     public static LayerMask attackMask; //Layer that all attackable objects are on
     protected IEnumerator attackAction;
+
+    [Header("Combat Variables")]
+    public GameObject weapon;
 
     //Attack Variables
     [HideInInspector]

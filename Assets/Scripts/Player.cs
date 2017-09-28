@@ -18,6 +18,9 @@ public class Player : CMoveCombatable
     private int xpPerLevel = 5; //Reach this to level up
     private int xp = 0;
 
+    //Equipment Variables
+    private Equipment[] equipment = new Equipment[2];
+
     //Input Variables
     private bool chargingAttack = false;
 

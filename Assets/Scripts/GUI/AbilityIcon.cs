@@ -7,7 +7,6 @@ public class AbilityIcon : MonoBehaviour {
 
     public Image icon;
     public Image cooldown;
-    public Text abilityName;
 
     private Ability ability;
     private float animationPause = 0.05f; //Time between calls in the cooldown animation coroutine
@@ -21,8 +20,8 @@ public class AbilityIcon : MonoBehaviour {
             ability.setCooldown(false);
             cooldown.gameObject.SetActive(false);
         }
-
-        abilityName.text = ability.getName();
+        icon.sprite = ability.getIcon();
+        //abilityName.text = ability.getName();
 
         this.ability = ability;
     }

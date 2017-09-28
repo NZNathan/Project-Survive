@@ -26,6 +26,9 @@ public class BasicAttackCombo : Ability
     private float lastAttack = -1f;
     private float comboChainTime = 0.3f;
 
+    //Ability Icon
+    public Sprite icon;
+
     //Directional Variables
     private Vector2 pos;
     private Vector2 direction;
@@ -72,9 +75,9 @@ public class BasicAttackCombo : Ability
         return animation;
     }
 
-    public string getName()
+    public Sprite getIcon()
     {
-        return abilityName;
+        return icon;
     }
 
     public IEnumerator getAction()

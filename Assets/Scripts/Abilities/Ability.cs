@@ -18,7 +18,7 @@ public interface Ability {
 
     string getAnimation();
 
-    string getName();
+    Sprite getIcon();
 
     IEnumerator getAction();
 }

@@ -21,6 +21,9 @@ public class BasicAttackFinisher : Ability
     //Raycast Variables
     private float abilityRange = 0.4f;
 
+    //Ability Icon
+    public Sprite icon;
+
     //Directional Variables
     private Vector2 pos;
     private Vector2 direction;
@@ -67,9 +70,9 @@ public class BasicAttackFinisher : Ability
         return animation;
     }
 
-    public string getName()
+    public Sprite getIcon()
     {
-        return abilityName;
+        return icon;
     }
 
     public IEnumerator getAction()

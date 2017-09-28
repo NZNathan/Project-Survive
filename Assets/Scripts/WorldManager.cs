@@ -149,6 +149,12 @@ public class WorldManager : MonoBehaviour {
         UIManager.instance.enableUI();
     }
 
+    public void increaseLevel()
+    {
+        mapLevel++;
+        landscapeGen.nextLevel(mapLevel);
+    }
+
     private void deathScreen()
     {
         landscapeGen.gameObject.SetActive(false);

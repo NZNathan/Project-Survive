@@ -19,6 +19,9 @@ public class DodgeRoll : Ability
     //Animation name in animator
     private string animation = "dodgeroll";
 
+    //Ability Icon
+    public Sprite icon;
+
     //Cooldown Variables
     private float cooldownTime = 5f;
     private bool cooldown = false;
@@ -73,9 +76,9 @@ public class DodgeRoll : Ability
         return animation;
     }
 
-    public string getName()
+    public Sprite getIcon()
     {
-        return abilityName;
+        return icon;
     }
 
     public IEnumerator getAction()

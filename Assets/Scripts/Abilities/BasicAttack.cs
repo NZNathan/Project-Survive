@@ -29,6 +29,9 @@ public class BasicAttack : Ability
     //How far the ray will be cast
     private float abilityRange = 0.4f;
 
+    //Ability Icon
+    public Sprite icon;
+
     //Combo Variables
     private Ability comboAttack = new BasicAttackCombo();
     private float lastAttack = -1f;
@@ -81,9 +84,9 @@ public class BasicAttack : Ability
         return animation;
     }
 
-    public string getName()
+    public Sprite getIcon()
     {
-        return abilityName;
+        return icon;
     }
 
     public IEnumerator getAction()

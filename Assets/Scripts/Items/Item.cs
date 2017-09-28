@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ItemAbility))]
 public class Item : MonoBehaviour {
 
     public string itemName;

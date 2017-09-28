@@ -26,6 +26,9 @@ public class BasicShoot : Ability
     //Cooldown of the ability
     private float cooldownTime = 0f;
 
+    //Ability Icon
+    public Sprite icon;
+
 
     //Combo Variables
     private Ability comboAttack = new BasicAttackCombo();
@@ -79,9 +82,9 @@ public class BasicShoot : Ability
         return animation;
     }
 
-    public string getName()
+    public Sprite getIcon()
     {
-        return abilityName;
+        return icon;
     }
 
     public IEnumerator getAction()

@@ -32,8 +32,11 @@ public class LandscapeGen : MonoBehaviour {
     private int activeRange = 2;
 
     //Background Variables
-    public GameObject fieldBG;
-    public GameObject forestBG;
+    public GameObject[] levelBGs;
+    private int levelStyle = 0;
+    //The amount of levels to be completed before changed to a new level area 
+    private int levelChange = 2;
+    private bool changeBG = false;
 
     // Use this for initialization
     void Start()
@@ -49,6 +52,14 @@ public class LandscapeGen : MonoBehaviour {
 
         rightEdge = (levelSize-2) * areaWidth - (areaWidth/2);
         leftEdge = -areaWidth; //Need to change if town size is changed
+    }
+
+    public void nextLevel(int currentLevel)
+    {
+        if(currentLevel % levelChange == 0)
+        {
+            changeBG = true;
+        }
     }
 
     public Area getFirstArea()
@@ -87,6 +98,16 @@ public class LandscapeGen : MonoBehaviour {
 
     void generateNewAreas()
     {
+        //Set up BG
+        if(changeBG)
+        {
+            levelChange *= 2;
+            levelBGs[levelStyle].SetActive(false);
+            levelStyle++;
+            levelBGs[levelStyle].SetActive(true);
+            changeBG = false;
+        }
+
         float areaPos = -areaWidth;
 
         bossAreaLocation = -3;//Random.Range(3, levelSize - 1);

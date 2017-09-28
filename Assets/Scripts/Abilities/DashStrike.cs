@@ -20,6 +20,9 @@ public class DashStrike : Ability {
     //Sound Variables
     private AudioClip abilitySound;
 
+    //Ability Icon
+    public Sprite icon;
+
     //Raycast Variables
     private float abilityRange = 3.1f;
     private float timeBeforeRay = 0.35f;
@@ -70,9 +73,9 @@ public class DashStrike : Ability {
         return animation;
     }
 
-    public string getName()
+    public Sprite getIcon()
     {
-        return abilityName;
+        return icon;
     }
 
     public IEnumerator getAction()
