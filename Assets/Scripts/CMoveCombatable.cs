@@ -11,9 +11,10 @@ public abstract class CMoveCombatable : CMoveable {
 
     //Character Stats
     protected int level = 1;
-    protected int strength;
-    protected int agility;
-    protected int endurance;
+    protected int strength = 1;
+    protected int agility = 1;
+    protected int endurance = 1;
+    protected int endMod = 10;
 
     //Character Class
     protected CClass characterClass;
@@ -80,6 +81,10 @@ public abstract class CMoveCombatable : CMoveable {
         //Alter attack speed in the animator
         float atkspd = 1f;
         animator.SetFloat("attackSpeed", atkspd);
+
+        //Set up stats
+        maxHealth = endurance * endMod;
+        currentHealth = maxHealth;
     }
 
     /// <summary>
@@ -203,6 +208,7 @@ public abstract class CMoveCombatable : CMoveable {
         {
             if(attackAction != null)
                 StopCoroutine(attackAction);
+
             //Stop movement and call attack animataion
             canMove = false;
             attacking = true;
@@ -261,6 +267,11 @@ public abstract class CMoveCombatable : CMoveable {
 
         attackTrigger.resetTrigger();
         stunned = false;
+    }
+
+    public int getBaseDamage()
+    {
+        return (int) (strength * 1.2);
     }
 
     public bool isStunned()

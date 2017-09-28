@@ -7,7 +7,7 @@ public class Player : CMoveCombatable
 {
     public static Player instance;
     public static string familyName = "";
-    public static Vector3 spawmPos = new Vector3(-5,0,0);
+    public static Vector3 spawmPos = new Vector3(-10,0,0);
 
     public new static HealthBar healthBar;
 
@@ -128,6 +128,10 @@ public class Player : CMoveCombatable
         strength += stats[0];
         agility += stats[1];
         endurance += stats[2];
+
+        //Update health
+        currentHealth += stats[2] * endMod;
+        maxHealth += stats[2] * endMod;
     }
 
     internal int getLevelUpPoints()
