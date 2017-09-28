@@ -31,6 +31,10 @@ public class LandscapeGen : MonoBehaviour {
     public float areaWidth = 21.4f;
     private int activeRange = 2;
 
+    //Background Variables
+    public GameObject fieldBG;
+    public GameObject forestBG;
+
     // Use this for initialization
     void Start()
     {
