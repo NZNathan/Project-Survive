@@ -8,7 +8,7 @@ public class Player : CMoveCombatable
     //Static Variables
     public static Player instance;
     public static string familyName = "";
-    public static Vector3 spawmPos = new Vector3(-10,0,0);
+    public static Vector3 spawmPos = new Vector3(-10, 0, 0);
 
     public new static HealthBar healthBar;
 
@@ -186,7 +186,7 @@ public class Player : CMoveCombatable
             movement.x += movementSpeed;
         }
 
-        
+
 
         if (movement == Vector3.zero)
         {
@@ -229,7 +229,7 @@ public class Player : CMoveCombatable
         WorldManager.instance.playerDied(this);
     }
 
-     protected override void removeDeadBody()
+    protected override void removeDeadBody()
     {
         return;
     }
@@ -304,7 +304,7 @@ public class Player : CMoveCombatable
         else if (leftClickUp && !attacking && weaponDrawn && chargingAttack)
         {
             if (startedHolding + chargeTime < Time.time)
-                attack(characterClass.heavyAttack); 
+                attack(characterClass.heavyAttack);
             else
                 attack(characterClass.basicAttack);
 
@@ -346,7 +346,7 @@ public class Player : CMoveCombatable
     {
         xp += xpGained;
 
-        if(xp >= xpPerLevel)
+        if (xp >= xpPerLevel)
         {
             levelUpPoints += pointsOnLevelUp;
             xp -= xpPerLevel;
@@ -387,7 +387,10 @@ public class Player : CMoveCombatable
         }
         else if (equipment[2] != null)
         {
-            unequipItem(0);
+            Equipment eq = unequipItem(0);
+            
+            int index = bag.findIndex(item);
+            StartCoroutine(setItem(eq, index));
             i = 0;
         }
 
@@ -404,36 +407,41 @@ public class Player : CMoveCombatable
 
         healthBar.updateFill((float)currentHealth / (float)maxHealth);
     }
-    
+
+
+    private IEnumerator setItem(Item item, int i)
+    {
+        yield return new WaitForEndOfFrame();
+
+        bag.addItem(item, i);
+    }
+
     /// <summary>
     /// Unequips the item at index i and adds it to the bag if there is room, returns true if operation was successful
     /// </summary>
     /// <param name="i"></param>
     /// <returns></returns>
-    public bool unequipItem(int i)
+    public Equipment unequipItem(int i)
     {
-        //If room in the bag
-        if (bag.addItem(equipment[i]))
-        {
-            //Update Stats
-            strength -= equipment[i].strMod;
-            agility -= equipment[i].aglMod;
-            endurance -= equipment[i].endMod;
+        Equipment eq = equipment[i];
 
-            //Update health
-            maxHealth -= equipment[i].endMod * endMod;
+        //Update Stats
+        strength -= equipment[i].strMod;
+        agility -= equipment[i].aglMod;
+        endurance -= equipment[i].endMod;
 
-            if (currentHealth > maxHealth)
-                currentHealth = maxHealth;
+        //Update health
+        maxHealth -= equipment[i].endMod * endMod;
 
-            healthBar.updateFill((float)currentHealth / (float)maxHealth);
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
 
-            UIManager.instance.updateLevelUpWindow();
-            equipment[i] = null;
-            return true;
-        }
+        healthBar.updateFill((float)currentHealth / (float)maxHealth);
 
-        return false;
+        UIManager.instance.updateLevelUpWindow();
+        equipment[i] = null;
+
+        return eq;
     }
 
     // Update is called once per frame

@@ -16,8 +16,10 @@ public class EquipmentSlot : ItemSlot {
     {
         if (itemIcon.sprite != defualtIcon)
         {
-            if (Player.instance.unequipItem(i))
+            if (Player.instance.bag.hasRoom())
             {
+                Equipment eq = Player.instance.unequipItem(i);
+                Player.instance.bag.addItem(eq);
                 itemName = "";
                 itemIcon.sprite = defualtIcon;
                 UIManager.instance.closeTooltip();

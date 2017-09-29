@@ -17,7 +17,6 @@ public class BagGUI : MonoBehaviour {
 
     public void addItem(int i, Item item)
 	{
-        Debug.Log(item + " sprite: " + item.GetComponent<SpriteRenderer>().sprite);
         slots[i].setIcon(item.GetComponent<SpriteRenderer>().sprite, item);
 
 	}
