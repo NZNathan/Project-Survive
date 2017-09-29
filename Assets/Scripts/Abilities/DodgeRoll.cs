@@ -20,7 +20,7 @@ public class DodgeRoll : Ability
     private string animation = "dodgeroll";
 
     //Ability Icon
-    public Sprite icon;
+    public AbilitySprite icon = AbilitySprite.DODGEROLL;
 
     //Cooldown Variables
     private float cooldownTime = 5f;
@@ -78,7 +78,7 @@ public class DodgeRoll : Ability
 
     public Sprite getIcon()
     {
-        return icon;
+        return AbilityIconList.instance.getAbilitSprite(icon);
     }
 
     public IEnumerator getAction()

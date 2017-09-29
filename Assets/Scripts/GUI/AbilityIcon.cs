@@ -11,6 +11,11 @@ public class AbilityIcon : MonoBehaviour {
     private Ability ability;
     private float animationPause = 0.05f; //Time between calls in the cooldown animation coroutine
 
+
+    /// <summary>
+    /// Set the ability icon to match that of the new ability passed in
+    /// </summary>
+    /// <param name="ability"></param>
 	public void setAbility(Ability ability)
     {
         //Reset the cooldown if the ability haad been used and then the player died
@@ -21,7 +26,6 @@ public class AbilityIcon : MonoBehaviour {
             cooldown.gameObject.SetActive(false);
         }
         icon.sprite = ability.getIcon();
-        //abilityName.text = ability.getName();
 
         this.ability = ability;
     }

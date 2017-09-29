@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour {
         timeShot = Time.time;
 
         Vector3 spawnPos = new Vector3(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2, caster.transform.position.z);
-        transform.position = spawnPos + (dir * 0.5f) ;
+        transform.position = spawnPos + (dir * 0.4f) ;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

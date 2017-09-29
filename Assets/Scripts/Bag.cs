@@ -67,11 +67,9 @@ public class Bag
         //If the item hasn't been replace by another item due to the items effect
         if (items[i] == it)
         {
-            Debug.Log("Delete Item!");
             items[i] = null;
             itemsInBag--;
         }
-        Debug.Log("old Item: " + it + " new Item: " + items[i]);
     }
 
     public void input()

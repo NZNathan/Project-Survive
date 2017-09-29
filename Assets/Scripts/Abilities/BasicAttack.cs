@@ -13,7 +13,7 @@ public class BasicAttack : Ability
     private int abilityDamage; //Scale to player damage?
 
     //The force to be applied to the caster in the attack direction
-    private float abilityVelocity = 0;
+    private float abilityVelocity = 45;
 
     //Animation name in animator
     private string animation = "attack";
@@ -101,6 +101,7 @@ public class BasicAttack : Ability
         while (!caster.getAttackTrigger().hasAttackTriggered())
             yield return null;
 
+        caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
         caster.getAttackTrigger().resetTrigger();
 
         //Check if attack can go through

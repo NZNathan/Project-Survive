@@ -21,7 +21,7 @@ public class DashStrike : Ability {
     private AudioClip abilitySound;
 
     //Ability Icon
-    public Sprite icon;
+    public AbilitySprite icon = AbilitySprite.DASHSTRIKE;
 
     //Raycast Variables
     private float abilityRange = 3.1f;
@@ -75,7 +75,7 @@ public class DashStrike : Ability {
 
     public Sprite getIcon()
     {
-        return icon;
+        return AbilityIconList.instance.getAbilitSprite(icon);
     }
 
     public IEnumerator getAction()
