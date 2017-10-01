@@ -8,6 +8,9 @@ public class SpriteObject : MonoBehaviour {
     //Components
     private SpriteRenderer spriteRenderer;
 
+    //Optional children objects
+    public SpriteObject[] children;
+
     // Use this for initialization
     void Start()
     {
@@ -21,7 +24,11 @@ public class SpriteObject : MonoBehaviour {
         
         spriteRenderer.color = newColor;
 
-        
+        //Update children
+        foreach(SpriteObject so in children)
+        {
+            so.setTransparency(alpha);
+        }
     }
 
     // Update is called once per frame

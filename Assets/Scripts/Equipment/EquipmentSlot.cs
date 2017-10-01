@@ -27,4 +27,9 @@ public class EquipmentSlot : ItemSlot {
         }
     }
 
+    public void resetSlot()
+    {
+        itemIcon.sprite = defualtIcon;
+    }
+
 }

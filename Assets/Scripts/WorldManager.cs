@@ -125,16 +125,16 @@ public class WorldManager : MonoBehaviour {
         if (headAncestor == null)
             headAncestor = tailAncestor;
 
-        Ancestor an = headAncestor;
-        while (an != null)
-        {
-            if(an.revengeTarget != null)
-                Debug.Log("Ancestor: " + an.getName() + ", killed by " + an.revengeTarget.firstName + " " + an.revengeTarget.lastName);
-            else
-                Debug.Log("Ancestor: " + an.getName() + ", killed by null");
+        //Ancestor an = headAncestor;
+        //while (an != null)
+        //{
+        //    if(an.revengeTarget != null)
+        //        Debug.Log("Ancestor: " + an.getName() + ", killed by " + an.revengeTarget.firstName + " " + an.revengeTarget.lastName);
+        //    else
+        //        Debug.Log("Ancestor: " + an.getName() + ", killed by null");
 
-            an = an.getChild();
-        }
+        //    an = an.getChild();
+        //}
 
         Invoke("deathScreen", respawnTime/2 * Time.timeScale);
     }
@@ -167,6 +167,10 @@ public class WorldManager : MonoBehaviour {
     public void resetPlayer(Player newPlayer)
     {
         landscapeGen.gameObject.SetActive(true);
+
+        //Reset the equipment slot icons
+        UIManager.instance.resetEquipmentSlots();
+        UIManager.instance.resetXPBar();
 
         currentPlayer = newPlayer;
 

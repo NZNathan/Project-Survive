@@ -52,6 +52,11 @@ public class UIManager : MonoBehaviour
         playerGUI.addXp(xp, xpCap);
     }
 
+    public void resetXPBar()
+    {
+        playerGUI.resetBar();
+    }
+
     public void usedAbility(int ability)
     {
         playerGUI.usedAbility(ability);
@@ -67,6 +72,14 @@ public class UIManager : MonoBehaviour
     public void equipItem(int i, Equipment eq)
     {
         equipmentGUI.equipItem(i, eq);
+    }
+
+    /// <summary>
+    /// Resets the equipment slot icons to be the defualt icons again. Does not unequip any items.
+    /// </summary>
+    public void resetEquipmentSlots()
+    {
+        equipmentGUI.resetSlots();
     }
     #endregion
 

@@ -1,10 +1,14 @@
 fileFormatVersion: 2
-guid: f435d5b9cb35c2c47b9b1d96ed76470e
-timeCreated: 1506843126
+guid: 2bb9d17a3225ae3478fbb6ce1a6c7839
+timeCreated: 1506842930
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: cabinet_0
+    21300000: shack_wall_window
+    21300002: shack_window
+    21300004: shack_wall
+    21300006: shack_back_wall
+    21300008: shack_floor
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -52,7 +56,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -60,7 +64,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -68,7 +72,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: iPhone
-    maxTextureSize: 512
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -76,7 +80,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -84,7 +88,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: WebGL
-    maxTextureSize: 512
+    maxTextureSize: 1024
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -95,16 +99,68 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cabinet_0
+      name: shack_wall_window
       rect:
         serializedVersion: 2
-        x: 67
-        y: 15
-        width: 11
-        height: 29
+        x: 49
+        y: 112
+        width: 71
+        height: 50
       alignment: 7
       pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 16, y: 0, z: 15, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: shack_window
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 91
+        width: 41
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 0, z: 16, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: shack_wall
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 38
+        width: 70
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 8, y: 0, z: 6, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: shack_back_wall
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 16
+        width: 27
+        height: 73
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 2, y: 0, z: 6, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: shack_floor
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 4
+        width: 91
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 23, y: 0, z: 23, w: 0}
       outline: []
       tessellationDetail: 0
     outline: []

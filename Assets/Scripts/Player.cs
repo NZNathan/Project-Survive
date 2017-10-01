@@ -136,6 +136,9 @@ public class Player : CMoveCombatable
         //Update health
         currentHealth += stats[2] * endMod;
         maxHealth += stats[2] * endMod;
+
+        //Update Health bar
+        healthBar.updateFill((float)currentHealth / (float)maxHealth);
     }
 
     internal int getLevelUpPoints()

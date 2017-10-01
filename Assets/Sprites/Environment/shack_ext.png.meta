@@ -1,10 +1,12 @@
 fileFormatVersion: 2
-guid: f435d5b9cb35c2c47b9b1d96ed76470e
-timeCreated: 1506843126
+guid: 165d00d4b1f96fd4ab0bb84ade277ab8
+timeCreated: 1506843846
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: cabinet_0
+    21300000: shack_ext_frontL
+    21300002: shack_ext_back
+    21300004: shack_ext_frontR
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -38,9 +40,9 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  alignment: 7
+  spritePivot: {x: 0.5, y: 0}
+  spriteBorder: {x: 36, y: 0, z: 22, w: 0}
   spritePixelsToUnits: 33
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -52,7 +54,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -60,7 +62,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -68,7 +70,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: iPhone
-    maxTextureSize: 512
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -76,7 +78,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -84,7 +86,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: WebGL
-    maxTextureSize: 512
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -95,15 +97,41 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cabinet_0
+      name: shack_ext_frontL
       rect:
         serializedVersion: 2
-        x: 67
-        y: 15
-        width: 11
-        height: 29
+        x: 0
+        y: 0
+        width: 16
+        height: 71
+      alignment: 9
+      pivot: {x: 0.33792293, y: 0.31910807}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: shack_ext_back
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 0
+        width: 75
+        height: 71
       alignment: 7
       pivot: {x: 0.5, y: 0}
+      border: {x: 4, y: 0, z: 22, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: shack_ext_frontR
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 11
+        height: 71
+      alignment: 9
+      pivot: {x: 0.47518453, y: 0.08861981}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

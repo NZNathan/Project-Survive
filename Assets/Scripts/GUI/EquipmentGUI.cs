@@ -11,4 +11,12 @@ public class EquipmentGUI : MonoBehaviour {
         slots[i].setIcon(eq.GetComponent<SpriteRenderer>().sprite, eq);
     }
 
+    public void resetSlots()
+    {
+        foreach(EquipmentSlot slot in slots)
+        {
+            slot.resetSlot();
+        }
+    }
+
 }

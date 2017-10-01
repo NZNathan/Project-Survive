@@ -24,6 +24,11 @@ public class PlayerGUI : MonoBehaviour {
         StartCoroutine(animateFill(xp, xpCap));
     }
 
+    public void resetBar()
+    {
+        xpBar.fillAmount = 0;
+    }
+
     public void setAbilities(Ability[] abilities)
     {
         for(int i = 0; i < abilities.Length; i++)

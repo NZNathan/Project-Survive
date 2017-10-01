@@ -35,7 +35,7 @@ public class LandscapeGen : MonoBehaviour {
     public GameObject[] levelBGs;
     private int levelStyle = 0;
     //The amount of levels to be completed before changed to a new level area 
-    private int levelChange = 2;
+    public int levelLength = 3;
     private bool changeBG = false;
 
     // Use this for initialization
@@ -56,7 +56,7 @@ public class LandscapeGen : MonoBehaviour {
 
     public void nextLevel(int currentLevel)
     {
-        if(currentLevel % levelChange == 0)
+        if((currentLevel-1) % levelLength == 0)
         {
             changeBG = true;
         }
@@ -99,9 +99,9 @@ public class LandscapeGen : MonoBehaviour {
     void generateNewAreas()
     {
         //Set up BG
-        if(changeBG)
+        if(changeBG && levelStyle < levelBGs.Length-1)
         {
-            levelChange *= 2;
+            levelLength *= 2;
             levelBGs[levelStyle].SetActive(false);
             levelStyle++;
             levelBGs[levelStyle].SetActive(true);
