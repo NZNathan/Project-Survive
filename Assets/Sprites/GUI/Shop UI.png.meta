@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7ad4f292079f5445d9cb0199935d0966
-timeCreated: 1506500491
+timeCreated: 1506931791
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,7 @@ TextureImporter:
     21300006: slot_UI
     21300008: slotInbetween
     21300010: square_UI
+    21300012: Shop UI_slider
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -199,6 +200,19 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shop UI_slider
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 62
+        width: 3
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 1, z: 1, w: 1}
       outline: []
       tessellationDetail: 0
     outline: []
