@@ -16,6 +16,7 @@ public class RicochetBullet : MonoBehaviour {
 
 	//Target Variables
 	private CMoveCombatable target;
+    private List<CMoveCombatable> targetsHit;
 
 	//Lifetime Variables
     private float lifespan = 3.1f;
@@ -42,7 +43,11 @@ public class RicochetBullet : MonoBehaviour {
         this.stunTime = stunTime;
         this.dir = dir;
 
-		target = null;
+        durability = 3;
+
+        target = null;
+        targetsHit = new List<CMoveCombatable>();
+
         timeShot = Time.time;
 
         Vector3 spawnPos = new Vector3(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2, caster.transform.position.z);
@@ -63,21 +68,18 @@ public class RicochetBullet : MonoBehaviour {
         }
 
         CHitable targetHit = collider.GetComponentInParent<CHitable>();
+        CMoveCombatable enemy = collider.GetComponentInParent<CMoveCombatable>();
 
-        //If object hit is hitable, and this bullet hasn't hit anything else this life
-        if (targetHit != null && !hitTarget)
+        //If object hit is hitable, and this bullet hasn't already hit the target
+        if (targetHit != null && !targetsHit.Contains(enemy))
         {
 
             if (targetHit.isInvuln() || targetHit.isKnockedback())
                 return;
 
-            CMoveCombatable enemy = collider.GetComponentInParent<CMoveCombatable>();
             if(enemy != null && enemy.parrying){
-                dir *= -1;
-                rebounded = Time.time;
-                return;
+                this.gameObject.SetActive(false);
             }
-            hitTarget = true;
 
             //Apply damage and knockback
             targetHit.setAttacker(caster);
@@ -91,10 +93,11 @@ public class RicochetBullet : MonoBehaviour {
             caster.attackHit();
 			durability--;
 
-			if(durability == 0)
+			if(durability <= 0)
             	this.gameObject.SetActive(false);
 			else
 			{
+                targetsHit.Add(enemy);
 				findNewTarget();
 				if(target == null)
             		this.gameObject.SetActive(false);
@@ -105,17 +108,17 @@ public class RicochetBullet : MonoBehaviour {
 	private void findNewTarget()
 	{
 		target = null;
-		Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f);
+		Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 5f, CMoveCombatable.attackMask);
 
 		int i = 0;
         while (i < hitColliders.Length && target == null)
         {
             CMoveCombatable character = hitColliders[i].GetComponentInParent<CMoveCombatable>();
-			if(character != null && FactionManager.instance.isHostile(caster.faction, character.faction))
+            if (character != null && FactionManager.instance.isHostile(character.faction, caster.faction) && !targetsHit.Contains(character))
 				target = character;
             i++;
         }
-		Debug.Log(hitColliders.Length);
+		Debug.Log(target);
 	}
 
     private void Update()
@@ -126,8 +129,12 @@ public class RicochetBullet : MonoBehaviour {
 
     private void LateUpdate()
     {
-		if(target != null)
-			dir = target.getDirection(target.transform.position, target.objectHeight);
+        if (target != null)
+        {
+            dir = target.getDirection(transform.position, target.objectHeight) * -1;
+            Vector3 look = target.transform.position - transform.position;
+            transform.LookAt(transform.position + new Vector3(0, 0, 1), target.transform.position);
+        }
 
         rb2D.MovePosition(transform.position + (dir * velocity));
     }

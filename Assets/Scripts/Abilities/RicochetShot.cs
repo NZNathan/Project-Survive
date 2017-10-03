@@ -24,7 +24,7 @@ public class RicochetShot : Ability
     private float stunTime = 0.1f;
 
     //Cooldown of the ability
-    private float cooldownTime = 0f;
+    private float cooldownTime = 5f;
 
     //Ability Icon
     public Sprite icon;
