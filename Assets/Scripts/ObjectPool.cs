@@ -9,6 +9,8 @@ public class ObjectPool : MonoBehaviour {
     //Objects
     public Bullet[] bullets;
 
+    public RicochetBullet[] rbullets;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -16,7 +18,7 @@ public class ObjectPool : MonoBehaviour {
 
         //Get all objects in pool
         bullets = GetComponentsInChildren<Bullet>(true);
-
+        rbullets = GetComponentsInChildren<RicochetBullet>(true);
     }
 	
 	public Bullet getBullet()
@@ -28,6 +30,18 @@ public class ObjectPool : MonoBehaviour {
         }
 
         Debug.LogError("No available bullet objects");
+        return null;
+    }
+
+    public RicochetBullet getRicochetBullet()
+    {
+        foreach(RicochetBullet rbullet in rbullets)
+        {
+            if (!rbullet.gameObject.activeInHierarchy)
+                return rbullet;
+        }
+
+        Debug.LogError("No available rbullet objects");
         return null;
     }
 }

@@ -22,11 +22,11 @@ public class DT : MonoBehaviour {
         //Depth = 1
         //Yes it is safe
         DTNode people = (DTNode)DTNode.CreateInstance("DTNode");
-        people.setUpDTNode("People", 0.5f);
+        people.setUpDTNode("People", 0.4f);
 
         //No it isn't safe
         DTNode faction = (DTNode)DTNode.CreateInstance("DTNode");
-        faction.setUpDTNode("Faction", 0.5f);
+        faction.setUpDTNode("Faction", 0.6f);
 
         root.add(people, faction);
 

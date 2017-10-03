@@ -35,7 +35,7 @@ public class shopSystem : MonoBehaviour {
 
     public void UpdateUI()
     {
-        moneyText.text = "$ " + Player.instance.getGoldAmount().ToString("N1");
+        moneyText.text = "Coins: " + Player.instance.getCoinsAmount();
     }
 
     void FillList(){

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BagGUI : MonoBehaviour {
 
 	public GameObject bagWindow;
-
+    public Text coinText;
 	private ItemSlot[] slots;
 
     private void Start()
@@ -45,6 +45,7 @@ public class BagGUI : MonoBehaviour {
     public void openBag()
 	{
 		bagWindow.SetActive(true);
+        coinText.text = "Coins: " + Player.instance.getCoinsAmount();
 		WorldManager.instance.slowTime();
 	}
 

@@ -34,7 +34,7 @@ public class Player : CMoveCombatable
     [HideInInspector]
     public Bag bag;
     public ItemsInRange itemsInRange;
-    private int gold = 900;
+    private int coins = 900;
 
     public new void Start()
     {
@@ -110,19 +110,19 @@ public class Player : CMoveCombatable
         inMenu = false;
     }
 
-    public int getGoldAmount()
+    public int getCoinsAmount()
     {
-        return gold;
+        return coins;
     }
 
-    public void addGold(int goldAmount)
+    public void addCoins(int coinsAmount)
     {
-        gold += goldAmount;
+        coins += coinsAmount;
     }
 
-    public void removeGold(int goldAmount)
+    public void removeCoins(int coinsAmount)
     {
-        gold -= goldAmount;
+        coins -= coinsAmount;
     }
 
     public void levelup(int pointsLeft, int[] stats)

@@ -7,6 +7,7 @@ using UnityEngine;
 public class MoveState : AIState
 {
     //Hold a movement field to determine how to move?
+    private float yRange = 0.01f;
 
     public MoveState(Enemy character)
     {
@@ -30,7 +31,7 @@ public class MoveState : AIState
 
         
         //Transition to Attack State or converse state if target gets within range
-        if ((character.getTargetPositon() - character.transform.position).magnitude < character.attackRange)
+        if ((character.getTargetPositon() - character.transform.position).magnitude < character.attackRange && Mathf.Abs(character.getTargetPositon().y - character.transform.position.y) < yRange)
         {
             if (FactionManager.instance.isHostile(character.faction, character.target.GetComponent<CMoveCombatable>().faction))
             {
@@ -48,7 +49,7 @@ public class MoveState : AIState
         }
 
         //Leave till last so don't move if switching states
-        character.rb2D.AddForce(character.movement());
+        character.rb2D.AddForce(gunnerMovement());
     }
 
     private Vector2 movement()
@@ -62,6 +63,33 @@ public class MoveState : AIState
             character.faceRight();
 
         Vector3 dir = character.getDirection(character.getTargetPositon(), character.target.gameObject.GetComponent<CHitable>().objectHeight);
+
+        if(movementSpeed == character.walkSpeed)
+            character.animator.SetFloat("movementSpeed", 2.5f);
+        else
+            character.animator.SetFloat("movementSpeed", 5f);
+
+        return (dir * movementSpeed);
+
+    }
+
+    private Vector2 gunnerMovement()
+    {
+
+        float movementSpeed = character.walkSpeed;
+
+        if (character.target.transform.position.x < character.transform.position.x && character.transform.localScale.x != -1)
+            character.faceLeft();
+        else if (character.target.transform.position.x > character.transform.position.x && character.transform.localScale.x != 1)
+            character.faceRight();
+
+        Vector3 dir;
+
+        //If within attack range, but not on the same y
+        if ((character.getTargetPositon() - character.transform.position).magnitude < character.attackRange && Mathf.Abs(character.getTargetPositon().y - character.transform.position.y) > yRange)
+            dir = character.getDirection(new Vector3(character.transform.position.x, character.getTargetPositon().y, 0), character.target.gameObject.GetComponent<CHitable>().objectHeight);
+        else
+            dir = character.getDirection(character.getTargetPositon(), character.target.gameObject.GetComponent<CHitable>().objectHeight);
 
         if(movementSpeed == character.walkSpeed)
             character.animator.SetFloat("movementSpeed", 2.5f);

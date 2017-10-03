@@ -16,8 +16,12 @@ public class Parry : Ability
     private float abilityVelocity = 150;
     private float stepAmount = 0.1f;
 
+    //Enemy Affects
+    private float stunTime = 2f;
+    private int abilityKnockback = 200;
+
     //Animation name in animator
-    private string animation = "parry";
+    private string animation = "attack";
 
     //Cooldown Variables
     private float cooldownTime = 5f;
@@ -86,14 +90,29 @@ public class Parry : Ability
         return abilityActionSequence();
     }
 
+    public void parriedEnemy(CMoveCombatable enemy)
+    {
+        //Apply stun to the target
+        enemy.applyStun(stunTime);
+
+        enemy.knockback(pos, abilityKnockback, enemy.objectHeight);
+    }
+
     public IEnumerator abilityActionSequence()
     {
-        caster.setInvulnerable(abilityDuration);
+        //Set up immunities
+        bool stunImmunity = caster.stunImmunity;
+        bool knockbackImmunity = caster.knockbackImmunity;
+        caster.stunImmunity = true;
+        caster.knockbackImmunity = true;
 
-        float duration = 0;
+        caster.parrying = true;
 
 		yield return new WaitForSeconds(1f);
 
+        caster.parrying = false;
+        caster.stunImmunity = stunImmunity;
+        caster.knockbackImmunity = knockbackImmunity;
         caster.canMove = true;
         caster.attacking = false;
     }

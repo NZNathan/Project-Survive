@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class RicochetBullet : MonoBehaviour {
 
     //Components
     private Rigidbody2D rb2D;
@@ -14,9 +14,13 @@ public class Bullet : MonoBehaviour {
     private float stunTime;
     private bool hitTarget;
 
-    //Lifetime Variables
-    private float lifespan = 1.1f;
+	//Target Variables
+	private CMoveCombatable target;
+
+	//Lifetime Variables
+    private float lifespan = 3.1f;
     private float timeShot = 0f;
+    private float durability = 3;
 
     //Rebound Variables
     private float rebounded = 0;
@@ -38,6 +42,7 @@ public class Bullet : MonoBehaviour {
         this.stunTime = stunTime;
         this.dir = dir;
 
+		target = null;
         timeShot = Time.time;
 
         Vector3 spawnPos = new Vector3(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2, caster.transform.position.z);
@@ -84,10 +89,34 @@ public class Bullet : MonoBehaviour {
 
             //TODO: Play audio sound
             caster.attackHit();
+			durability--;
 
-            this.gameObject.SetActive(false);
+			if(durability == 0)
+            	this.gameObject.SetActive(false);
+			else
+			{
+				findNewTarget();
+				if(target == null)
+            		this.gameObject.SetActive(false);
+			}
         }
     }
+
+	private void findNewTarget()
+	{
+		target = null;
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5f);
+
+		int i = 0;
+        while (i < hitColliders.Length && target == null)
+        {
+            CMoveCombatable character = hitColliders[i].GetComponentInParent<CMoveCombatable>();
+			if(character != null && FactionManager.instance.isHostile(caster.faction, character.faction))
+				target = character;
+            i++;
+        }
+		Debug.Log(hitColliders.Length);
+	}
 
     private void Update()
     {
@@ -97,6 +126,9 @@ public class Bullet : MonoBehaviour {
 
     private void LateUpdate()
     {
+		if(target != null)
+			dir = target.getDirection(target.transform.position, target.objectHeight);
+
         rb2D.MovePosition(transform.position + (dir * velocity));
     }
 }

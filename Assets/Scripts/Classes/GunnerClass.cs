@@ -17,7 +17,7 @@ public class GunnerClass : CClass {
 		//Set up offensive Abilities
 		offensiveAbilityPool = new Ability[1];
 
-		offensiveAbilityPool[0] = new DashStrike();
+		offensiveAbilityPool[0] = new RicochetShot();
 
 		//Set up defensive Abilities
 		defensiveAbilityPool = new Ability[1];

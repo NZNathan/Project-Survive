@@ -41,6 +41,7 @@ public abstract class CMoveCombatable : CMoveable {
     public float pauseAfterAttack = 0.7f;
     public int attackDamage = 5;
     protected bool lastAttackHit = false;
+    public bool parrying = false;
 
     //Heavy Attack Variables
     protected float chargeTime = 0.5f;
@@ -255,6 +256,19 @@ public abstract class CMoveCombatable : CMoveable {
             StopCoroutine("stun");
             if (!falling)
                 StartCoroutine("stun");
+        }
+    }
+
+    //
+    public override void loseHealth(int damage)
+    {
+        if(!parrying)
+        {
+            base.loseHealth(damage);
+        }
+        else
+        {
+            ((Parry) characterClass.abilities[1]).parriedEnemy(lastAttacker);
         }
     }
 

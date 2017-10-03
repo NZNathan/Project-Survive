@@ -39,6 +39,10 @@ public class Enemy : CMoveCombatable {
         animator = GetComponentInChildren<Animator>();
         renderer = GetComponentInChildren<SpriteRenderer>();
 
+
+        if(characterClass.name == "Gunner")
+            attackRange = 4f;
+
         //Manage State
         state = new Stack<AIState>();
         state.Push(new IdleState(this));
