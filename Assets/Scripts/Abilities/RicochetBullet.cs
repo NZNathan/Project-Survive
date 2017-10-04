@@ -45,6 +45,7 @@ public class RicochetBullet : MonoBehaviour {
 
         durability = 3;
 
+        transform.rotation = Quaternion.Euler(0,0,0);
         target = null;
         targetsHit = new List<CMoveCombatable>();
 
@@ -131,9 +132,11 @@ public class RicochetBullet : MonoBehaviour {
     {
         if (target != null)
         {
+            //Get new direction to target
             dir = target.getDirection(transform.position, target.objectHeight) * -1;
-            Vector3 look = target.transform.position - transform.position;
-            transform.LookAt(transform.position + new Vector3(0, 0, 1), target.transform.position);
+
+            //Angle toward new target
+            transform.right = target.transform.position - transform.position;
         }
 
         rb2D.MovePosition(transform.position + (dir * velocity));

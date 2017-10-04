@@ -176,9 +176,12 @@ public class Enemy : CMoveCombatable {
         if(lastAttacker.tag == "Player")
             ((Player) lastAttacker).addXp(xpWorth);
 
-        //If enemy was a boss, then turn off boss GUI
-        if(isBoss)
+        //If enemy was a boss, then turn off boss GUI and change music
+        if (isBoss)
+        {
             UIManager.instance.closeBossGUI();
+            MusicManager.instance.stopBossMusic();
+        }
 
         //Item drops
         foreach(DropableItem dropableItem in dropableItems)
@@ -205,13 +208,14 @@ public class Enemy : CMoveCombatable {
             return;
         }
 
+        //Boss has entered the screen
         if (renderer.isVisible)
         {
             UIManager.instance.newBossGUI(this);
             WorldManager.instance.zoomIn(transform);
 
             hasBeenSeen = true;
-            Debug.Log("Bos has been seen");
+            MusicManager.instance.playBossMusic();
         }
 
         tick = 0;

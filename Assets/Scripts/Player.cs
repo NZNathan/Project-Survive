@@ -189,8 +189,7 @@ public class Player : CMoveCombatable
             movement.x += movementSpeed;
         }
 
-
-
+        //If movement amount is zero
         if (movement == Vector3.zero)
         {
             moving = false;
@@ -230,6 +229,62 @@ public class Player : CMoveCombatable
         base.death();
 
         WorldManager.instance.playerDied(this);
+    }
+
+    private Vector3 checkBounds(Vector3 movement)
+    {
+        //If trying to move off screen to the left
+        if ((atLeftEdgeOfScreen() && rb2D.velocity.x <= 0))
+        {
+            moving = false;
+            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+            
+            if (movement.x <= 0)
+                movement = new Vector2(0, movement.y);
+        }
+        //If trying to move screen to the right
+        else if ((atRightEdgeOfScreen() && rb2D.velocity.x >= 0))
+        {
+            moving = false;
+            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+
+            if (movement.x >= 0)
+                movement = new Vector2(0, movement.y);
+        }
+
+        return movement;
+    }
+
+    /// <summary>
+    /// If player is at the edge of the screen and the screen is locked return true
+    /// </summary>
+    /// <returns></returns>
+    private bool atLeftEdgeOfScreen()
+    {
+        CameraFollow cam = Camera.main.GetComponentInParent<CameraFollow>();
+
+        if (cam == null || !cam.screenLocked)
+            return false;
+
+        var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
+        var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+        var dist = rightBorder - leftBorder;
+
+        return transform.position.x <= cam.transform.position.x - dist / 2 + .2;
+    }
+
+    private bool atRightEdgeOfScreen()
+    {
+        CameraFollow cam = Camera.main.GetComponentInParent<CameraFollow>();
+
+        if (cam == null || !cam.screenLocked)
+            return false;
+
+        var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
+        var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+        var dist = rightBorder - leftBorder;
+
+        return transform.position.x >= cam.transform.position.x + dist / 2 - .2;
     }
 
     protected override void removeDeadBody()
@@ -289,6 +344,8 @@ public class Player : CMoveCombatable
 
         if (!attacking)
             movementVector = movement();
+
+        movementVector = checkBounds(movementVector);
 
         yield return new WaitForFixedUpdate(); //For rigidbody interactions
 

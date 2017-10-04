@@ -25,6 +25,7 @@ public class RicochetShot : Ability
 
     //Cooldown of the ability
     private float cooldownTime = 5f;
+    private bool cooldown = false;
 
     //Ability Icon
     public Sprite icon;
@@ -58,12 +59,12 @@ public class RicochetShot : Ability
 
     public void setCooldown(bool cooldown)
     {
-        return;
+        this.cooldown = cooldown;
     }
 
     public bool onCooldown()
     {
-        return false;
+        return cooldown;
     }
 
     public float getCooldown()

@@ -34,6 +34,8 @@ public class CameraFollow : MonoBehaviour
     //Y values to stop camera moving to high or low
     public float yUpperClamp = 0.27f;
     public float yLowerClamp = 0.26f;
+    //Is the screen locked in place
+    public bool screenLocked = false;
 
     private Vector3 velocity = Vector3.zero;
 
@@ -150,7 +152,7 @@ public class CameraFollow : MonoBehaviour
 
             Vector3 smoothPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothSpeed);
 
-            if (!cameraAtMapEdge(smoothPos))
+            if (!cameraAtMapEdge(smoothPos) && !screenLocked)
             {
                 transform.position = smoothPos;
             }
