@@ -31,7 +31,7 @@ public class IdleState : AIState
         }
         
         //Only run convo call check every 50 ticks to save computation
-        if (tick >= tickUntillConvoCall)
+        if (tick >= tickUntillConvoCall && character.faction != Faction.Feral)
         {
             //Transition to Move State If friendly target is within range
             if (friendlyNearby())

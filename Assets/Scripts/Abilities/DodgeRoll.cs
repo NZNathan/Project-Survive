@@ -8,10 +8,24 @@ public class DodgeRoll : Ability
     //How long the roll is for
     private float abilityDuration = 0.7f;
 
-    protected string animation = "dodgeroll";
-
     //The time between adding force to the dodgeroll
     private float stepAmount = 0.1f;
+
+    public DodgeRoll()
+    {
+        //---- Setup ability stats ----
+        
+        //Setup looks
+        icon = AbilitySprite.DODGEROLL;
+        name = "Dodge Roll";
+        animation = "dodgeroll";
+
+        //Setup cooldown
+        cooldownTime = 5f;
+
+        //Setup force
+        abilityVelocity = 150;
+    }
 
     public override void setTarget(CMoveCombatable caster, Vector2 pos)
     {
@@ -23,21 +37,6 @@ public class DodgeRoll : Ability
         else
             direction = caster.rb2D.velocity.normalized;
 
-        //---- Setup ability stats ----
-        //Setup looks
-        icon = AbilitySprite.DODGEROLL;
-        name = "Dodge Roll";
-
-        //Setup cooldown
-        cooldownTime = 5f;
-
-        //Setup force
-        abilityVelocity = 150;
-    }
-
-    public override string getAnimation()
-    {
-        return animation;
     }
 
     protected override IEnumerator abilityActionSequence()

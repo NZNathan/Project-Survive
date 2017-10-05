@@ -25,7 +25,8 @@ public abstract class Ability {
 
     //Ability Names
     protected string name;
-
+    protected string animation;
+    
     //Cooldown Variables
     protected float cooldownTime = 5f;
     protected bool cooldown = false;
@@ -52,9 +53,6 @@ public abstract class Ability {
         caster.canCombo = false;
 
         abilityDamage = getDamage(caster.strength);
-
-        //GDebug
-        abilitySound = caster.attackSound;
     }
 
     ///
@@ -90,7 +88,10 @@ public abstract class Ability {
         return abilityVelocity;
     }
 
-    public abstract string getAnimation();
+    public virtual string getAnimation()
+    {
+        return animation;
+    }
 
     public Sprite getIcon()
     {
