@@ -1,1 +1,1 @@
-﻿using System.Collections; using System.Collections.Generic; using UnityEngine; using UnityEngine.UI;  public class itemHolder : MonoBehaviour {  	public Text itemName; 	public Text itemPrice; 	public Image itemImage; 	public int itemID; 	public GameObject buyButton;   } 
+﻿using System.Collections; using System.Collections.Generic; using UnityEngine; using UnityEngine.UI;  public class itemHolder : MonoBehaviour {  	//public Text itemName; 	//public Text itemPrice; 	public Image itemImage;   	public Item item;  	public int itemID; 	public GameObject buyButton;   } 

@@ -55,9 +55,10 @@ public abstract class Ability {
         abilityDamage = getDamage(caster.strength);
     }
 
-    ///
+    /// <summary>
     /// The formula to determine the damage of this ability
-    ///
+    /// </summary>
+    /// <returns></returns>
     protected virtual int getDamage(int casterStrength)
     {
         return casterStrength * 2;

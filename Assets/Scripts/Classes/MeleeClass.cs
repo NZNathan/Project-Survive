@@ -20,12 +20,15 @@ public class MeleeClass : CClass {
         offensiveAbilityPool[0] = new DashStrike();
 
 		//Set up defensive Abilities
-		defensiveAbilityPool = new Ability[1];
+		defensiveAbilityPool = new Ability[2];
 
 		defensiveAbilityPool[0] = new DodgeRoll();
+		defensiveAbilityPool[1] = new Parry();
 
 		//Set up special Abilities
 		specialAbilityPool = new Ability[1];
+
+		specialAbilityPool[0] = new Parry();
 
 		//Set up basic and heavy attacks
 		basicAttack = new BasicAttack();

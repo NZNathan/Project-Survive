@@ -21,6 +21,7 @@ public class DeathScreen : MonoBehaviour {
 	public CharacterUI[] childrenUI = new CharacterUI[3];
 	public Text[] namesText = new Text[3];
 	public Text[] classText= new Text[3];
+	public Image[] abilities = new Image[9];
 	private Player[] children = new Player[3];
 
 	//Animation Variables
@@ -90,6 +91,13 @@ public class DeathScreen : MonoBehaviour {
 			namesText[i].text = children[i].getName();
 			classText[i].text = children[i].getClass().name;
 			children[i].gameObject.name = "child_" + i;
+
+			for(int j = 0; j < 3; j++){
+
+				abilities[j + (3 * i)].sprite = children[i].getClass().abilities[j].getIcon();
+
+			}
+				
 
 			children[i].gameObject.SetActive(false);
 		}

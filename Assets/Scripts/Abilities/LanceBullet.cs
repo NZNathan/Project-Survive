@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class LanceBullet : MonoBehaviour {
 
     //Components
     private Rigidbody2D rb2D;
@@ -12,19 +12,15 @@ public class Bullet : MonoBehaviour {
     private CMoveCombatable caster;
     public int damage;
     private float stunTime;
-    private bool hitTarget;
+    private List<CHitable> targetsHit;
     private Faction faction;
 
     //Lifetime Variables
-    private float lifespan = 0.5f;
+    private float lifespan = 0.3f;
     private float timeShot = 0f;
 
-    //Rebound Variables
-    private float rebounded = 0;
-    private float reboundTime = 0.1f;
-
     //Speed Variables
-    private float velocity = .25f;
+    private float velocity = .8f;
     private Vector3 dir;
 
 	// Use this for initialization
@@ -32,7 +28,6 @@ public class Bullet : MonoBehaviour {
     {
         rb2D = GetComponent<Rigidbody2D>();
         renderer = GetComponent<SpriteRenderer>();
-        hitTarget = false;
 
         this.caster = caster;
         this.damage = damage;
@@ -40,6 +35,7 @@ public class Bullet : MonoBehaviour {
         this.dir = dir;
         faction = caster.faction;
 
+		targetsHit = new List<CHitable>();
         timeShot = Time.time;
 
         Vector3 spawnPos = new Vector3(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2, caster.transform.position.z);
@@ -48,9 +44,6 @@ public class Bullet : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        //If bullet is rebounding then don't detect collisions
-        if(rebounded + reboundTime > Time.time)
-            return;
         //If an object has been hit first, destroy the bullet
         if (collider.transform.gameObject.tag == "Object")
         {
@@ -62,7 +55,7 @@ public class Bullet : MonoBehaviour {
         CHitable targetHit = collider.GetComponentInParent<CHitable>();
 
         //If object hit is hitable, and this bullet hasn't hit anything else this life
-        if (targetHit != null && !hitTarget)
+        if (targetHit != null && !targetsHit.Contains(targetHit))
         {
 
             if (targetHit.isInvuln() || targetHit.isKnockedback())
@@ -74,17 +67,8 @@ public class Bullet : MonoBehaviour {
             {
                 return;
             }
-            else if(enemy != null && enemy.parrying){
-                dir *= -1;
-                rebounded = Time.time;
 
-                //Change the bullets caster and faction so the ricochet bullet can hit enemies of the parrying target
-                faction = enemy.faction;
-                caster = enemy;
-                return;
-            }
-
-            hitTarget = true;
+            targetsHit.Add(targetHit);
 
             //Apply damage and knockback
             targetHit.setAttacker(caster);
@@ -96,8 +80,6 @@ public class Bullet : MonoBehaviour {
 
             //TODO: Play audio sound
             caster.attackHit();
-
-            this.gameObject.SetActive(false);
         }
     }
 

@@ -27,10 +27,6 @@ public class RicochetShot : Ability
     private float cooldownTime = 5f;
     private bool cooldown = false;
 
-    //Ability Icon
-    public Sprite icon;
-
-
     //Combo Variables
     private float lastAttack = -1f;
     private float comboChainTime = 0.35f;
@@ -38,6 +34,12 @@ public class RicochetShot : Ability
     //Directional Variables
     private Vector2 pos;
     private Vector2 direction;
+
+    public RicochetShot()
+    {
+        icon = AbilitySprite.RICOCHET;
+        animation = "attack";
+    }
 
     //Initialise here
     public override void setTarget(CMoveCombatable caster, Vector2 pos)
@@ -50,41 +52,6 @@ public class RicochetShot : Ability
 
         caster.canCombo = false;
         abilityDamage = caster.attackDamage;
-    }
-
-    public bool canComboAttack()
-    {
-        return false;
-    }
-
-    public void setCooldown(bool cooldown)
-    {
-        this.cooldown = cooldown;
-    }
-
-    public bool onCooldown()
-    {
-        return cooldown;
-    }
-
-    public float getCooldown()
-    {
-        return cooldownTime;
-    }
-
-    public float getAbilityVelocity()
-    {
-        return abilityVelocity;
-    }
-
-    public override string getAnimation()
-    {
-        return animation;
-    }
-
-    public Sprite getIcon()
-    {
-        return icon;
     }
 
     protected override IEnumerator abilityActionSequence()

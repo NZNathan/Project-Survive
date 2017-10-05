@@ -15,9 +15,10 @@ public class GunnerClass : CClass {
 	protected override void setupClass()
 	{
 		//Set up offensive Abilities
-		offensiveAbilityPool = new Ability[1];
+		offensiveAbilityPool = new Ability[2];
 
-		offensiveAbilityPool[0] = new RicochetShot();
+		offensiveAbilityPool[0] = new LanceShot();
+		offensiveAbilityPool[1] = new RicochetShot();
 
 		//Set up defensive Abilities
 		defensiveAbilityPool = new Ability[1];
@@ -26,6 +27,8 @@ public class GunnerClass : CClass {
 
 		//Set up special Abilities
 		specialAbilityPool = new Ability[1];
+
+		specialAbilityPool[0] = new Parry();
 
 		//Set up basic and heavy attacks
 		basicAttack = new BasicShoot();

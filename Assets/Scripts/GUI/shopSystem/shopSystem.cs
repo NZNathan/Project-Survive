@@ -9,8 +9,12 @@ public class shopSystem : MonoBehaviour {
 
 	public static shopSystem shopsystem;
 
+	//public shopItem[] shoplist;
+
 	public List<shopItem> shoplist = new List<shopItem>();
+	//public List<Item> shoplist = new List<Item>();
 	private List<GameObject> itemHolderlist = new List<GameObject> ();
+
 
 	public List<GameObject> buybutton = new List<GameObject> ();
 
@@ -18,14 +22,43 @@ public class shopSystem : MonoBehaviour {
     public  GameObject itemHolderPrefab;
     public Text moneyText;
     public Transform grid;
+	public bool ShopActive = false;
+	public bool FirstOpenShop = true;
 
 	// Use this for initialization
 	public void openShopWindow() {
 
-        shopWindow.SetActive(true);
-        shopsystem = this;
-		FillList ();
-        UpdateUI();
+		if( FirstOpenShop==true ){
+			if (ShopActive == false) {
+				shopWindow.SetActive (true);
+				shopsystem = this;
+				FillList ();
+				UpdateUI ();
+				ShopActive = true;
+				FirstOpenShop = false;
+
+			} 
+
+			else {
+				ShopActive = false;
+				FirstOpenShop= false;
+
+			}
+
+
+		}
+
+		if(FirstOpenShop == false){
+			if(ShopActive == false){
+				
+				shopWindow.SetActive (true);
+
+			}
+			ShopActive = false;
+
+
+		}
+
 	}
 
     public void closeShopWindow()
@@ -46,9 +79,10 @@ public class shopSystem : MonoBehaviour {
 			itemHolder holderScript = holder.GetComponent<itemHolder> ();
 
 
-			holderScript.itemName.text = shoplist [i].itemName;
-			holderScript.itemPrice.text = "$"+ shoplist [i].itemPrice.ToString();
+			//holderScript.item.itemName = shoplist [i].item.itemName;
+			//holderScript.item.itemPrice = shoplist [i].item.itemPrice;
 			holderScript.itemID = shoplist [i].itemID;
+			holderScript.item = shoplist[i].item;
 
 			//buy button
 			holderScript.buyButton.GetComponent<BuyButton>().itemID =shoplist [i].itemID ;
@@ -85,7 +119,7 @@ public class shopSystem : MonoBehaviour {
 
 							if (shoplist [j].bought) {
 								holderscript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [j].boughtSpriteName);
-								holderscript.itemPrice.text = "SOLD OUT";
+								holderscript.item.itemDescription = "SOLD OUT";
 							}
 
 							else {

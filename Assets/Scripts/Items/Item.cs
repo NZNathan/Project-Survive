@@ -15,7 +15,7 @@ public class Item : MonoBehaviour {
     public Quality quality;
 
     // Use this for initialization
-    void Start ()
+    public void Start ()
     {
         itemAbility = GetComponent<ItemAbility>();
 	}

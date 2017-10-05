@@ -7,12 +7,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public class saveload : MonoBehaviour {
+	public GameObject shopWindow;
 
 	// Use this for initialization
 	[System.Serializable]
 	public class SaveData{
 
-	public List <shopItem> ShopList = new List<shopItem>();
+	//public List <shopItem> ShopList = new List<shopItem>();
+		public List <Item> ShopList = new List<Item>();
+
+
 		public float money;
 		public int currentItemID;
 	}
@@ -25,21 +29,23 @@ public class saveload : MonoBehaviour {
 		//data.currentItemID = WorldManager.instance.currentitemId;
 		for (int i = 0; i < shopSystem.shopsystem.shoplist.Count; i++) {
 
-			data.ShopList.Add (shopSystem.shopsystem.shoplist[i]);
+			data.ShopList.Add (shopSystem.shopsystem.shoplist[i].item);
 		}
 
-		BinaryFormatter BF = new BinaryFormatter ();
+	/*	BinaryFormatter BF = new BinaryFormatter ();
 		FileStream stream = new FileStream (Application.persistentDataPath+"/shop.data",FileMode.Create);
 
 		BF.Serialize (stream,data);
-		stream.Close ();
-
-		print (" shopping saved");
+		stream.Close ();*/
+	//	print (" shopping saved");
+		Debug.Log ("saved");
+        shopWindow.SetActive(false);
+		
 
 
 	}
 
-	public void loaddata(){
+	/*public void loaddata(){
 
 		if(File.Exists(Application.persistentDataPath+"/shop.data")){
 
@@ -70,5 +76,5 @@ public class saveload : MonoBehaviour {
 		}
 
 
-	}
+	}*/
 }

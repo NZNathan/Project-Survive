@@ -22,23 +22,27 @@ public class BuyButton : MonoBehaviour {
 
 		for( int i =0;i<shopSystem.shopsystem.shoplist.Count;i++){
 
-			if(shopSystem.shopsystem.shoplist[i].itemID ==itemID&&shopSystem.shopsystem.shoplist [i].bought == false && Player.instance.getCoinsAmount() >= shopSystem.shopsystem.shoplist[i].itemPrice){
+			if(shopSystem.shopsystem.shoplist[i].itemID ==itemID&&shopSystem.shopsystem.shoplist [i].bought == false && Player.instance.getCoinsAmount() >= shopSystem.shopsystem.shoplist[i].item.itemPrice){
 
 				shopSystem.shopsystem.shoplist [i].bought = true;
-				Player.instance.removeCoins (shopSystem.shopsystem.shoplist [i].itemPrice);
+				Player.instance.removeCoins (shopSystem.shopsystem.shoplist [i].item.itemPrice);
 				updateBuyToUse ();
 				//WorldManager.instance.currentitemId = itemID;
 
 			}
 
-			else if(shopSystem.shopsystem.shoplist[i].itemID ==itemID&&shopSystem.shopsystem.shoplist [i].bought == false && !(Player.instance.getCoinsAmount() >= shopSystem.shopsystem.shoplist[i].itemPrice)){
+			else if(shopSystem.shopsystem.shoplist[i].itemID ==itemID&&shopSystem.shopsystem.shoplist [i].bought == false && !(Player.instance.getCoinsAmount() >= shopSystem.shopsystem.shoplist[i].item.itemPrice)){
 
 				Debug.Log ("DONT HAVE ENOUGH MONEY");
 			}
 
-			else if(shopSystem.shopsystem.shoplist[i].itemID ==itemID&&shopSystem.shopsystem.shoplist [i].bought){
+			else if(shopSystem.shopsystem.shoplist[i].itemID ==itemID&&shopSystem.shopsystem.shoplist [i].bought&&Player.instance.bag.hasRoom()){
 
 				// needs to add to bag
+				Item item = (Item) Instantiate(shopSystem.shopsystem.shoplist [i].item);
+				item.gameObject.SetActive(false);
+				item.Start();
+				Player.instance.bag.addItem(item);
 				Debug.Log ("HAS BOUGHT ALREADY");
 				updateBuyToUse ();
 				//WorldManager.instance.currentitemId = itemID;

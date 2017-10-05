@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AbilitySprite { DASHSTRIKE, DODGEROLL }
+public enum AbilitySprite { DASHSTRIKE, DODGEROLL, RICOCHET, LANCE, PARRY}
 
 public class AbilityIconList : MonoBehaviour {
 
