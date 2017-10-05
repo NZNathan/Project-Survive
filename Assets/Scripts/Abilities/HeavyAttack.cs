@@ -5,89 +5,37 @@ using UnityEngine;
 
 public class HeavyAttack : Ability {
 
-    private CMoveCombatable caster;
-
-    string abilityName = "Heavy Attack";
-
-    //Ability Variables
-    private int abilityDamage; //Scale to player damage?
-    private float abilityVelocity = 640;
     private string animation = "attack";
-    private int abilityKnockback = 1000;
-    private int abilityKnockUp = 300;
-    private float cooldownTime = 0f;
 
     //Raycast Variables
     private float abilityRange = 0.65f;
 
-    //Ability Icon
-    public Sprite icon;
-
-    //Directional Variables
-    private Vector2 pos;
-    private Vector2 direction;
-
-
-    public void setTarget(CMoveCombatable caster, Vector2 pos)
+    //Initialise here
+    public override void setTarget(CMoveCombatable caster, Vector2 pos)
     {
-        this.caster = caster;
-        this.pos = pos;
+        base.setTarget(caster, pos);
 
-        //Get direction based on caster facing direction
-        direction = new Vector2(caster.transform.localScale.x, 0);
+        //---- Setup ability stats ----
+        //Setup looks
+        icon = AbilitySprite.DASHSTRIKE;
+        name = "Heavy Strike";
 
-        abilityDamage = caster.attackDamage * 2;
+        //Setup cooldown
+        cooldownTime = 0f;
+
+        //Setup force
+        abilityKnockback = 1000;
+        abilityKnockUp = 300;
+        abilityVelocity = 640;
+
     }
 
-    /// <summary>
-    /// Returns itself, as heavy attack cannot combo
-    /// </summary>
-    public Ability getComboAttack()
-    {
-        return this;
-    }
-
-    public bool canComboAttack()
-    {
-        return false;
-    }
-
-    public void setCooldown(bool cooldown)
-    {
-        return; //No cooldown
-    }
-
-    public bool onCooldown()
-    {
-        return false;
-    }
-
-    public float getCooldown()
-    {
-        return cooldownTime;
-    }
-
-    public float getAbilityVelocity()
-    {
-        return abilityVelocity;
-    }
-
-    public string getAnimation()
+    public override string getAnimation()
     {
         return animation;
     }
 
-    public Sprite getIcon()
-    {
-        return icon;
-    }
-
-    public IEnumerator getAction()
-    {
-        return abilityActionSequence();
-    }
-
-    public IEnumerator abilityActionSequence()
+    protected override IEnumerator abilityActionSequence()
     {
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 

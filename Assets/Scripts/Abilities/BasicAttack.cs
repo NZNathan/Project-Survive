@@ -5,96 +5,52 @@ using UnityEngine;
 
 public class BasicAttack : Ability
 {
-
-    private CMoveCombatable caster;
-
-    string abilityName = "Attack";
-
-    private int abilityDamage; //Scale to player damage?
-
-    //The force to be applied to the caster in the attack direction
-    private float abilityVelocity = 45;
-
-    //Animation name in animator
-    private string animation = "attack";
-
-    //Knockback applied to target that is hit by attack
-    private int abilityKnockback = 0;
-    //Stunned time applied to the target
-    private float stunTime = 0.1f;
-
-    //Cooldown of the ability
-    private float cooldownTime = 0f;
-
     //How far the ray will be cast
     private float abilityRange = 0.4f;
 
-    //Ability Icon
-    public Sprite icon;
+    protected string animation = "attack";
 
     //Combo Variables
     private Ability comboAttack = new BasicAttackCombo();
     private float lastAttack = -1f;
     private float comboChainTime = 0.35f;
 
-    //Directional Variables
-    private Vector2 pos;
-    private Vector2 direction;
-
     //Initialise here
-    public void setTarget(CMoveCombatable caster, Vector2 pos)
+    public override void setTarget(CMoveCombatable caster, Vector2 pos)
     {
-        this.caster = caster;
-        this.pos = pos;
+        base.setTarget(caster, pos);
 
-        //Get direction based on caster facing direction
-        direction = new Vector2(caster.transform.localScale.x, 0);
+        //---- Setup ability stats ----
+        //Setup looks
+        icon = AbilitySprite.DASHSTRIKE;
+        name = "Basic Strike";
 
-        caster.canCombo = false;
-        abilityDamage = caster.attackDamage;
+        //Setup cooldown
+        cooldownTime = 0f;
+
+        //Setup force
+        abilityVelocity = 45;
+
+        //Setup stun
+        stunTime = 0.1f;
     }
 
-    public bool canComboAttack()
+    protected override int getDamage(int casterStrength)
+    {
+        return casterStrength;
+    }
+
+    public override bool canComboAttack()
     {
         return lastAttack + comboChainTime > Time.time || comboAttack.canComboAttack();
     }
 
-    public void setCooldown(bool cooldown)
-    {
-        return;
-    }
-
-    public bool onCooldown()
-    {
-        return false;
-    }
-
-    public float getCooldown()
-    {
-        return cooldownTime;
-    }
-
-    public float getAbilityVelocity()
-    {
-        return abilityVelocity;
-    }
-
-    public string getAnimation()
+    public override string getAnimation()
     {
         return animation;
     }
 
-    public Sprite getIcon()
-    {
-        return icon;
-    }
-
-    public IEnumerator getAction()
-    {
-        return abilityActionSequence();
-    }
-
-    public IEnumerator abilityActionSequence()
+    protected override IEnumerator abilityActionSequence()
     {
 
         //Wait until the attack frame in the animation has been reached

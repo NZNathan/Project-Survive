@@ -22,7 +22,7 @@ public class MeleeClass : CClass {
 		//Set up defensive Abilities
 		defensiveAbilityPool = new Ability[1];
 
-		defensiveAbilityPool[0] = new Parry();
+		defensiveAbilityPool[0] = new DodgeRoll();
 
 		//Set up special Abilities
 		specialAbilityPool = new Ability[1];

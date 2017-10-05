@@ -11,7 +11,7 @@ public class ItemSpawner : MonoBehaviour {
         
         foreach(DropableItem i in spawnableItems)
         {
-            float itemSpawn = Random.Range(0, 1);
+            float itemSpawn = Random.Range(0f, 1f);
             if (itemSpawn <= i.dropRate)
             {
                 i.item.instantiate(transform.position, transform.parent);

@@ -34,7 +34,7 @@ public class BasicAttackCombo : Ability
     private Vector2 direction;
 
 
-    public void setTarget(CMoveCombatable caster, Vector2 pos)
+    public override void setTarget(CMoveCombatable caster, Vector2 pos)
     {
         this.caster = caster;
         this.pos = pos;
@@ -70,7 +70,7 @@ public class BasicAttackCombo : Ability
         return abilityVelocity;
     }
 
-    public string getAnimation()
+    public override string getAnimation()
     {
         return animation;
     }
@@ -80,12 +80,7 @@ public class BasicAttackCombo : Ability
         return icon;
     }
 
-    public IEnumerator getAction()
-    {
-        return abilityActionSequence();
-    }
-
-    public IEnumerator abilityActionSequence()
+    protected override IEnumerator abilityActionSequence()
     {
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 

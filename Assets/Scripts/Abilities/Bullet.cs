@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour {
     public int damage;
     private float stunTime;
     private bool hitTarget;
+    private Faction faction;
 
     //Lifetime Variables
     private float lifespan = 1.1f;
@@ -37,6 +38,7 @@ public class Bullet : MonoBehaviour {
         this.damage = damage;
         this.stunTime = stunTime;
         this.dir = dir;
+        faction = caster.faction;
 
         timeShot = Time.time;
 
@@ -67,11 +69,21 @@ public class Bullet : MonoBehaviour {
                 return;
 
             CMoveCombatable enemy = collider.GetComponentInParent<CMoveCombatable>();
-            if(enemy != null && enemy.parrying){
-                dir *= -1;
-                rebounded = Time.time;
+
+            if(enemy != null && !FactionManager.instance.isHostile(enemy.faction, faction))
+            {
                 return;
             }
+            else if(enemy != null && enemy.parrying){
+                dir *= -1;
+                rebounded = Time.time;
+
+                //Change the bullets caster and faction so the ricochet bullet can hit enemies of the parrying target
+                faction = enemy.faction;
+                caster = enemy;
+                return;
+            }
+
             hitTarget = true;
 
             //Apply damage and knockback

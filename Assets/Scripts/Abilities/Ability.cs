@@ -2,23 +2,106 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Ability {
+public abstract class Ability {
 
-    void setTarget(CMoveCombatable caster, Vector2 pos);
+    protected CMoveCombatable caster;
 
-    void setCooldown(bool cooldown); 
+    //Ability Variables
 
-    bool canComboAttack();
+    //Damage to be applied
+    protected int abilityDamage; 
 
-    bool onCooldown();
+    //Amount of force applied to the caster
+    protected int abilityVelocity = 0;
 
-    float getCooldown();
+    //Amount of force applied to the target
+    protected int abilityKnockback = 0;
 
-    float getAbilityVelocity();
+    //Amount of force applied in an upward direction on the target
+    protected int abilityKnockUp = 0;
 
-    string getAnimation();
+    //Stunned time applied to the target
+    protected float stunTime = 0f;
 
-    Sprite getIcon();
+    //Ability Names
+    protected string name;
 
-    IEnumerator getAction();
+    //Cooldown Variables
+    protected float cooldownTime = 5f;
+    protected bool cooldown = false;
+
+    //Icon 
+    public AbilitySprite icon;
+
+    //Sound Variables
+    protected AudioClip abilitySound;
+
+    //Directional Variables
+    protected Vector2 pos;
+    protected Vector2 direction;
+
+    public virtual void setTarget(CMoveCombatable caster, Vector2 pos)
+    {
+        this.caster = caster;
+        this.pos = pos;
+
+        //Get direction based on caster facing direction
+        direction = new Vector2(caster.transform.localScale.x, 0);
+
+        //Reset combo on caster
+        caster.canCombo = false;
+
+        abilityDamage = getDamage(caster.strength);
+
+        //GDebug
+        abilitySound = caster.attackSound;
+    }
+
+    ///
+    /// The formula to determine the damage of this ability
+    ///
+    protected virtual int getDamage(int casterStrength)
+    {
+        return casterStrength * 2;
+    }
+
+    public virtual bool canComboAttack()
+    {
+        return false;
+    }
+
+    public void setCooldown(bool cooldown)
+    {
+        this.cooldown = cooldown;
+    }
+
+    public bool onCooldown()
+    {
+        return cooldown;
+    }
+
+    public float getCooldown()
+    {
+        return cooldownTime;
+    }
+
+    public float getAbilityVelocity()
+    {
+        return abilityVelocity;
+    }
+
+    public abstract string getAnimation();
+
+    public Sprite getIcon()
+    {
+        return AbilityIconList.instance.getAbilitSprite(icon);
+    }
+
+    public IEnumerator getAction()
+    {
+        return abilityActionSequence();
+    }
+
+    protected abstract IEnumerator abilityActionSequence();
+    
 }

@@ -7,6 +7,7 @@ public class FactionManager : MonoBehaviour {
     public static FactionManager instance;
 
     [Header("Faction Relations")]
+    public FactionRelations playerFaction;
     public FactionRelations noFaction;
     public FactionRelations banditFaction;
     public FactionRelations feralFaction;
@@ -51,6 +52,9 @@ public class FactionManager : MonoBehaviour {
         if (faction1 == faction2)
             return false;
 
+        if (faction1 == Faction.Player)
+            return playerFaction.getRelation((int) faction2);
+
         if (faction1 == Faction.None)
             return noFaction.getRelation((int) faction2);
 
@@ -61,9 +65,6 @@ public class FactionManager : MonoBehaviour {
             return feralFaction.getRelation((int) faction2);
 
         //Errors
-        if (faction1 == Faction.Player)
-            throw new System.Exception("Can't check player faction relations");
-
         throw new System.Exception("Unknown faction");
     }
     

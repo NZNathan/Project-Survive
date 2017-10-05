@@ -8,7 +8,7 @@ public class BasicShoot : Ability
 
     private CMoveCombatable caster;
 
-    string abilityName = "Shoot";
+    string abilityName = "Basic Shot";
 
     private int abilityDamage; //Scale to player damage?
 
@@ -24,7 +24,8 @@ public class BasicShoot : Ability
     private float stunTime = 0.1f;
 
     //Cooldown of the ability
-    private float cooldownTime = 0f;
+    private float cooldownTime = 3.5f;
+    private bool cooldown = false;
 
     //Ability Icon
     public Sprite icon;
@@ -40,7 +41,7 @@ public class BasicShoot : Ability
     private Vector2 direction;
 
     //Initialise here
-    public void setTarget(CMoveCombatable caster, Vector2 pos)
+    public override void setTarget(CMoveCombatable caster, Vector2 pos)
     {
         this.caster = caster;
         this.pos = pos;
@@ -59,12 +60,12 @@ public class BasicShoot : Ability
 
     public void setCooldown(bool cooldown)
     {
-        return;
+        this.cooldown = cooldown;
     }
 
     public bool onCooldown()
     {
-        return false;
+        return cooldown;
     }
 
     public float getCooldown()
@@ -77,7 +78,7 @@ public class BasicShoot : Ability
         return abilityVelocity;
     }
 
-    public string getAnimation()
+    public override string getAnimation()
     {
         return animation;
     }
@@ -87,12 +88,7 @@ public class BasicShoot : Ability
         return icon;
     }
 
-    public IEnumerator getAction()
-    {
-        return abilityActionSequence();
-    }
-
-    public IEnumerator abilityActionSequence()
+    protected override IEnumerator abilityActionSequence()
     {
 
         //Wait until the attack frame in the animation has been reached

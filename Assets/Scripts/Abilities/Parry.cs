@@ -38,7 +38,7 @@ public class Parry : Ability
     private Vector2 direction;
 
 
-    public void setTarget(CMoveCombatable caster, Vector2 pos)
+    public override void setTarget(CMoveCombatable caster, Vector2 pos)
     {
         this.caster = caster;
         this.pos = pos;
@@ -75,7 +75,7 @@ public class Parry : Ability
         return abilityVelocity;
     }
 
-    public string getAnimation()
+    public override string getAnimation()
     {
         return animation;
     }
@@ -83,11 +83,6 @@ public class Parry : Ability
     public Sprite getIcon()
     {
         return icon;
-    }
-
-    public IEnumerator getAction()
-    {
-        return abilityActionSequence();
     }
 
     public void parriedEnemy(CMoveCombatable enemy)
@@ -98,7 +93,7 @@ public class Parry : Ability
         enemy.knockback(pos, abilityKnockback, enemy.objectHeight);
     }
 
-    public IEnumerator abilityActionSequence()
+    protected override IEnumerator abilityActionSequence()
     {
         //Set up immunities
         bool stunImmunity = caster.stunImmunity;
