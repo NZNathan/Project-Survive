@@ -96,12 +96,9 @@ public class Enemy : CMoveCombatable {
 
         traits = self.traits;
 
-        //Set Sprites
-        setSpriteSet(self.sprites);
-
         //Set animator
         animator = GetComponentInChildren<Animator>();
-        animator.runtimeAnimatorController = self.animatorController;
+        animator.runtimeAnimatorController = self.spriteController;
     }
 
     public Vector3 getTargetPositon()

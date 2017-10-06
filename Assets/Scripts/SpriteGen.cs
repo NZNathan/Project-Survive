@@ -6,13 +6,16 @@ using System.Text;
 
 public class SpriteGen : MonoBehaviour {
 
+    //Singleton
+    public static SpriteGen instance;
+
     //Base Prefabs
     public Player playerBase;
     public Enemy enemyBase;
     public C npcBase;
 
     //Sprites
-    public static SpriteSet[] spriteSets;
+    public RuntimeAnimatorController[] spriteControllers;
 
     //Details
     public static string[] firstNames;
@@ -24,25 +27,6 @@ public class SpriteGen : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        //Load in Sprites
-        Object[] sprites;
-
-        sprites = Resources.LoadAll<Texture2D>("Characters");
-
-         //Set size of array to the amount of characters that are in the characters folder
-        spriteSets = new SpriteSet[sprites.Length];
-
-        //Load in all sprites that will be used to generate all characters
-        int i = 0;
-        foreach (Object s in sprites)
-        {
-            Sprite[] characterSprites = Resources.LoadAll<Sprite>("Characters/" + s.name);
-
-            SpriteSet spriteSet = new SpriteSet(characterSprites);
-            spriteSets[i] = spriteSet;
-            i++;
-        }
-
         //Generate Traits
         Trait.generateTraits();
 
@@ -51,11 +35,11 @@ public class SpriteGen : MonoBehaviour {
     }
 
     //Returns a random sprite[] 
-    public static Sprite[] getNewSprites()
+    public RuntimeAnimatorController getNewSpriteController()
     {
-        int spriteSet = Random.Range(0, spriteSets.Length); //Will never be 2
+        int spriteSet = Random.Range(0, spriteControllers.Length); //Will never be 2
 
-        return spriteSets[spriteSet].getSprites();
+        return spriteControllers[spriteSet];
     }
 
     public static string getFirstName()
@@ -85,7 +69,7 @@ public class SpriteGen : MonoBehaviour {
                 C character = spawner.spawnCharacter();
 
                 //Change the new NPCs look
-                character.setSpriteSet(getNewSprites());
+                character.setSpriteController(getNewSpriteController());
 
                 //Set NPC stats and details
                 character.firstName = getFirstName();
@@ -105,7 +89,7 @@ public class SpriteGen : MonoBehaviour {
 
         p.chooseRandomClass();
 
-        p.setSpriteSet(getNewSprites());
+        p.setSpriteController(getNewSpriteController());
 
         //Set Player stats and details
         p.firstName = getFirstName();
@@ -133,7 +117,7 @@ public class SpriteGen : MonoBehaviour {
     void generateNPC(C npc)
     {
         //Change the new NPCs look
-        npc.setSpriteSet(getNewSprites());
+        npc.setSpriteController(getNewSpriteController());
 
         //Set NPC stats and details
         npc.firstName = getFirstName();
@@ -151,10 +135,10 @@ public class SpriteGen : MonoBehaviour {
         generateEnemy(enemy);
     }
 
-    public static void generateEnemy(Enemy enemy)
+    public void generateEnemy(Enemy enemy)
     {
         //Change the new NPCs look
-        enemy.setSpriteSet(getNewSprites());
+        enemy.setSpriteController(getNewSpriteController());
 
         //Set NPC stats and details
         enemy.firstName = getFirstName();

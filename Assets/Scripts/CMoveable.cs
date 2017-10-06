@@ -14,11 +14,6 @@ public abstract class CMoveable : C {
     [Header("Movement Variables")]
     public float walkSpeed = 1f;
     public float sprintSpeed = 2f;
-    public float jumpForce = 600;
-    protected bool jumping = false;
-
-    //Jump Variables
-    private float jumpStartY = 0;
 
     [HideInInspector]
     public bool canMove = true;
@@ -56,53 +51,6 @@ public abstract class CMoveable : C {
     public override void applyStun(float stunTime)
     {
         return;
-    }
-
-    public void jump()
-    {
-        jumping = true;
-        rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
-
-        rb2D.AddForce(Vector2.up * jumpForce);
-
-        jumpStartY = transform.position.y; //What if hit vertically
-
-        StartCoroutine("jumpDown");
-    }
-
-    IEnumerator jumpDown()
-    {
-        //gameObject.layer = LayerMask.NameToLayer("NoCharacterCollisions");
-        col2D.isTrigger = true;
-
-        yield return new WaitForSeconds(.1f);
-
-        float fallVelocity = 35;
-
-        while (transform.position.y > jumpStartY + 0.03f && transform.position.y > WorldManager.lowerBoundary)
-        {
-            rb2D.AddForce(Vector2.down * fallVelocity);
-            yield return new WaitForFixedUpdate();
-        }
-
-        rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
-
-        col2D.isTrigger = false;
-
-        jumping = false;
-    }
-
-    // Update is called once per frame
-    protected new void Update()
-    {
-        if (!jumping)
-        {
-            //Optimise so only runs while moving?
-            foreach (var sr in spriteRenderers)
-            {
-                sr.sortingOrder = (int)(transform.position.y * 10 * -1);
-            }
-        }
     }
 
 }

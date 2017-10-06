@@ -5,20 +5,17 @@ using UnityEngine;
 
 public class DashStrike : Ability {
 
-    protected string animation = "dash";
-
     //Raycast Variables
     private float abilityRange = 3.1f;
     private float timeBeforeRay = 0.35f;
 
-    public override void setTarget(CMoveCombatable caster, Vector2 pos)
+    public DashStrike()
     {
-        base.setTarget(caster, pos);
-
         //---- Setup ability stats ----
         //Setup looks
         icon = AbilitySprite.DASHSTRIKE;
         name = "Dash Strike";
+        animation = "attack";
 
         //Setup cooldown
         cooldownTime = 5f;
@@ -27,6 +24,11 @@ public class DashStrike : Ability {
         abilityKnockback = 50;
         abilityKnockUp = 300;
         abilityVelocity = 1600;
+    }
+
+    public override void setTarget(CMoveCombatable caster, Vector2 pos)
+    {
+        base.setTarget(caster, pos);
     }
 
     public override string getAnimation()

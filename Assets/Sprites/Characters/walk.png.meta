@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 86bd7055795814d8192c4f028c4db2e9
-timeCreated: 1505980130
+timeCreated: 1507278959
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -128,9 +128,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 41
-        height: 26
+        y: 200
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,10 +140,10 @@ TextureImporter:
       name: walk_1
       rect:
         serializedVersion: 2
-        x: 41
-        y: 0
-        width: 41
-        height: 26
+        x: 0
+        y: 160
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,10 +153,10 @@ TextureImporter:
       name: walk_2
       rect:
         serializedVersion: 2
-        x: 82
-        y: 0
-        width: 41
-        height: 26
+        x: 0
+        y: 120
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +166,10 @@ TextureImporter:
       name: walk_3
       rect:
         serializedVersion: 2
-        x: 123
-        y: 0
-        width: 41
-        height: 26
+        x: 0
+        y: 80
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,10 +179,10 @@ TextureImporter:
       name: walk_4
       rect:
         serializedVersion: 2
-        x: 164
-        y: 0
-        width: 41
-        height: 26
+        x: 0
+        y: 40
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: walk_5
       rect:
         serializedVersion: 2
-        x: 205
+        x: 0
         y: 0
-        width: 41
-        height: 26
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

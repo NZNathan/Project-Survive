@@ -15,7 +15,7 @@ public abstract class CClass {
 
 	//Abilities the character actually has
 	public Ability[] abilities;
-	private int abilityAmount = 2;
+	private int abilityAmount = 3;
 
 	//Class basic Attacks
 	public Ability basicAttack;
@@ -41,7 +41,7 @@ public abstract class CClass {
         abilities[1] =  defensiveAbilityPool[i];
 
 		//Get Special Ability
-		//i = Random.Range(0, specialAbilityPool.Length);
-        //classAbilities[2] =  specialAbilityPool[i];
+		i = Random.Range(0, specialAbilityPool.Length);
+        abilities[2] =  specialAbilityPool[i];
 	}
 }

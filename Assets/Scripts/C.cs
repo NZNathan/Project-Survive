@@ -6,7 +6,7 @@ using UnityEngine;
 public class C : CHitable {
 
     //Components
-    protected SpriteRenderer[] spriteRenderers;
+    protected SpriteRenderer spriteRenderer;
     [HideInInspector]
     public Animator animator;
 
@@ -49,7 +49,7 @@ public class C : CHitable {
     // Runs as soon as Instantiate
     void Awake ()
     {
-        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         defaultMat = Resources.Load<Material>("Materials/Light_Shader");
         whiteMat = Resources.Load<Material>("Materials/SolidWhite");
     }
@@ -69,36 +69,15 @@ public class C : CHitable {
         return falling;
     }
 
-    public void faceBack()
+    public void setSpriteController(RuntimeAnimatorController controller)
     {
-        spriteRenderers[(int) SpriteSet.Part.HEAD].sprite = sprites[(int)SpriteSet.Part.HEADBACKWARDS];
+        animator = GetComponentInChildren<Animator>();
+        animator.runtimeAnimatorController = controller;
     }
 
-    public void faceFront()
+    public RuntimeAnimatorController getSpriteController()
     {
-        spriteRenderers[(int)SpriteSet.Part.HEAD].sprite = sprites[(int)SpriteSet.Part.HEAD];
-    }
-
-    public void setSpriteSet(Sprite[] spriteSet)
-    {
-        sprites = spriteSet;
-
-        setSprites();
-    }
-
-    public Sprite[] getSprites()
-    {
-        return sprites;
-    }
-
-    void setSprites()
-    {
-        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-
-        for (int i = 0; i < spriteRenderers.Length; i++)
-        {
-            spriteRenderers[i].sprite = sprites[i];
-        }
+        return animator.runtimeAnimatorController;
     }
 
     public override void applyStun(float stunTime)
@@ -173,28 +152,17 @@ public class C : CHitable {
 
     protected override IEnumerator flash()
     {
-        for (int i = 0; i < spriteRenderers.Length; i++)
-        {
-            spriteRenderers[i].material = whiteMat;
-        }
+        spriteRenderer.material = whiteMat;
 
         yield return new WaitForSeconds(flashDuration);
 
-        for (int i = 0; i < spriteRenderers.Length; i++)
-        {
-            spriteRenderers[i].material = defaultMat;
-        }
+        spriteRenderer.material = defaultMat;
     }
 	
 	// Update is called once per frame
 	protected void Update ()
     {
-        //Optimise so only runs while moving?
-		foreach(var sr in spriteRenderers)
-        {
-            sr.sortingOrder = (int) (transform.position.y*10 *-1);
-        }
-        
+        spriteRenderer.sortingOrder = (int) (transform.position.y*10 *-1);   
 	}
 
 }

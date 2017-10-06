@@ -6,10 +6,6 @@ using UnityEngine;
 public class Parry : Ability
 {
 
-    private CMoveCombatable caster;
-
-    string abilityName = "Parry";
-
     private float abilityDuration = 0.7f; //Scale to player damage?
 
     //The force to be applied to the caster in the attack direction
@@ -19,14 +15,11 @@ public class Parry : Ability
     //Sound Variables
     private AudioClip parrySound;
 
-    //Directional Variables
-    private Vector2 pos;
-    private Vector2 direction;
-
     public Parry()
     {
         icon = AbilitySprite.PARRY;
-        animation = "attack";
+        animation = "parry";
+        name = "Parry";
 
         cooldownTime = 5f;
 

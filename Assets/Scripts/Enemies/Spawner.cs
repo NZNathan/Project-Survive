@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour {
         boss.transform.SetParent(transform.parent);
 
         if (revengeTarget == null)
-            SpriteGen.generateEnemy(boss);
+            SpriteGen.instance.generateEnemy(boss);
         else
             boss.setupRevengeTarget(revengeTarget);
 

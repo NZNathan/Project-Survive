@@ -20,6 +20,11 @@ public class AttackRayTrigger : MonoBehaviour {
         Invoke("resetTrigger", 1f);
     }
 
+    public void chargedTrigger()
+    {
+        character.chargedForHeavy();
+    }
+
     public bool hasAttackTriggered()
     {
         return attackTriggered;

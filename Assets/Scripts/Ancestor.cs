@@ -16,7 +16,7 @@ public class Ancestor {
     public string firstName;
     private string lastName;
     private string title;
-    private Sprite[] sprite; 
+    private RuntimeAnimatorController spriteController; 
 
 	public Ancestor(Ancestor parent, Player player)
     {
@@ -29,7 +29,7 @@ public class Ancestor {
 
         firstName = player.firstName;
         lastName = player.lastName;
-        sprite = player.getSprites();
+        spriteController = player.getSpriteController();
 
         revengeTarget = new RevengeTarget((Enemy) player.getAttacker());
     }
@@ -53,9 +53,4 @@ public class Ancestor {
     {
         return child;
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

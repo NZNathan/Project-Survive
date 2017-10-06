@@ -10,7 +10,7 @@ public class RevengeTarget {
     public string lastName;
 
     //Animator
-    public RuntimeAnimatorController animatorController;
+    public RuntimeAnimatorController spriteController;
 
     //Traits
     public Trait[] traits;
@@ -21,9 +21,6 @@ public class RevengeTarget {
     public int agility;
     public int endurance;
     public int attackDamage;
-
-    //Sprite
-    public Sprite[] sprites;
 
     //Equipment
     public GameObject weapon;
@@ -48,9 +45,6 @@ public class RevengeTarget {
 
         traits = target.getTraits();
 
-        //Save Sprites
-        sprites = target.getSprites();
-
-        animatorController = target.animator.runtimeAnimatorController;
+        spriteController = target.animator.runtimeAnimatorController;
     }
 }

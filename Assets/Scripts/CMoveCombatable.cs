@@ -28,11 +28,10 @@ public abstract class CMoveCombatable : CMoveable {
     protected IEnumerator attackAction;
 
     [Header("Combat Variables")]
-    public GameObject weapon;
-
     //Attack Variables
     [HideInInspector]
     public bool attacking = false;
+    public bool chargedHeavy = false;
     //[HideInInspector]
     public bool canCombo = false; //So player can get inputs for combos in while attacking
     protected AttackRayTrigger attackTrigger;
@@ -88,6 +87,12 @@ public abstract class CMoveCombatable : CMoveable {
         currentHealth = maxHealth;
     }
 
+    public void chargedForHeavy()
+    {
+        chargedHeavy = true;
+        animator.SetBool("charged", true);
+    }
+
     /// <summary>
     /// Method to be run when the Character takes a hit
     /// </summary>
@@ -128,12 +133,6 @@ public abstract class CMoveCombatable : CMoveable {
     public Trait[] getTraits()
     {
         return traits;
-    }
-
-    protected void drawWeapon()
-    {
-        weaponDrawn = !weaponDrawn;
-        weapon.SetActive(weaponDrawn);
     }
 
     public void startCollisionsOff(float collisionlessTime)

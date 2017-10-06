@@ -63,11 +63,6 @@ public class Player : CMoveCombatable
 
         animator = GetComponentInChildren<Animator>();
 
-        //Set up sprites to include weapon
-        weapon.SetActive(true);
-        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-        weapon.SetActive(false);
-
         UIManager.instance.setAbilities(characterClass.abilities); //REmove when player is generated
     }
 
@@ -172,11 +167,11 @@ public class Player : CMoveCombatable
         if (shiftKeyDown && !weaponDrawn)
             movementSpeed = sprintSpeed;
 
-        if (wKeyDown && !sKeyDown && !jumping)
+        if (wKeyDown && !sKeyDown)
         {
             movement.y += movementSpeed;
         }
-        if (sKeyDown && !wKeyDown && !jumping)
+        if (sKeyDown && !wKeyDown)
         {
             movement.y -= movementSpeed;
         }
@@ -263,7 +258,7 @@ public class Player : CMoveCombatable
     {
         CameraFollow cam = Camera.main.GetComponentInParent<CameraFollow>();
 
-        if (cam == null || !cam.screenLocked)
+        if (cam == null)
             return false;
 
         var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
@@ -277,7 +272,7 @@ public class Player : CMoveCombatable
     {
         CameraFollow cam = Camera.main.GetComponentInParent<CameraFollow>();
 
-        if (cam == null || !cam.screenLocked)
+        if (cam == null)
             return false;
 
         var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
@@ -330,9 +325,6 @@ public class Player : CMoveCombatable
         //Pickup Item
         bool eKeyDown = Input.GetKeyDown(KeyCode.E);
 
-        if (qKeyDown && !attacking && !chargingAttack)
-            drawWeapon();
-
         if (eKeyDown && !attacking)
             itemsInRange.pickupItem();
 
@@ -350,35 +342,35 @@ public class Player : CMoveCombatable
         yield return new WaitForFixedUpdate(); //For rigidbody interactions
 
         //If left click with weapon out and not already attacking, then start charging
-        if (((leftClickHeld && !chargingAttack && !stunned) || leftClickDown) && !attacking && weaponDrawn)
+        if (((leftClickHeld && !chargingAttack && !stunned) || leftClickDown) && !attacking)
         {
             startedHolding = Time.time;
+            animator.SetTrigger("charging");
             chargingAttack = true;
         }
-        //If left click with no weapon out and not attacking or charging, then draw weapon
-        else if (leftClickUp && !attacking && !chargingAttack && !weaponDrawn)
-        {
-            drawWeapon();
-        }
         //If releasing left click after charging up and not already attacking then execute either a heavy or light attack based on charge time
-        else if (leftClickUp && !attacking && weaponDrawn && chargingAttack)
+        else if (leftClickUp && !attacking && chargingAttack)
         {
-            if (startedHolding + chargeTime < Time.time)
+            if (chargedHeavy)
                 attack(characterClass.heavyAttack);
             else
+            {
+                Debug.Log("basic");
+                animator.SetTrigger("stopCharge");
                 attack(characterClass.basicAttack);
+            }
 
             chargingAttack = false;
         }
         //If you are attacking and can combo then attack with basic attack
-        else if (leftClickUp && attacking && weaponDrawn)
+        else if (leftClickUp && attacking)
         {
             canCombo = true;
             chargingAttack = false;
         }
 
 
-        else if (rightClick && !attacking && weaponDrawn)
+        else if (rightClick && !attacking)
         {
             if (attack(characterClass.abilities[0]))
                 UIManager.instance.usedAbility(0);
@@ -514,8 +506,11 @@ public class Player : CMoveCombatable
             if (!dead && !stunned)
                 StartCoroutine("inputHandler"); //Alternte than coroutine??
 
-            if (startedHolding + chargeTime < Time.time)
-                animator.SetBool("charged", true);
+            if (!chargingAttack && chargedHeavy)
+            {
+                chargedHeavy = false;
+                animator.SetBool("charged", false);
+            }
 
             if (inMenu)
                 animator.SetFloat("movementSpeed", 0);
