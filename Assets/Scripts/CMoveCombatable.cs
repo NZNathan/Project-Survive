@@ -111,10 +111,19 @@ public abstract class CMoveCombatable : CMoveable {
     {
         float r = Random.Range(0f, 1f);
 
-        if(r > 0.5f)
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+
+        if (r > 0.5f)
+        {
             characterClass = new MeleeClass();
+            animator.SetBool("melee", true);
+        }
         else
+        {
             characterClass = new GunnerClass();
+            animator.SetBool("gunner", true);
+        }
     }
 
     /// <summary>
@@ -251,7 +260,8 @@ public abstract class CMoveCombatable : CMoveable {
 
             attacking = false;
             animator.SetTrigger("stopAttack");
-            
+            animator.SetTrigger("stopCharge");
+
             StopCoroutine("stun");
             if (!falling)
                 StartCoroutine("stun");
@@ -300,6 +310,12 @@ public abstract class CMoveCombatable : CMoveable {
     public void setComboAnimation(bool value)
     {
         animator.SetBool("combo", value);
+    }
+
+    public void resetTriggers()
+    {
+        animator.ResetTrigger("stopCharge");
+        animator.ResetTrigger("stopAttack");
     }
 
     public CClass getClass()

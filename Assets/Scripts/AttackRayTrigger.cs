@@ -54,5 +54,7 @@ public class AttackRayTrigger : MonoBehaviour {
     public void idleState()
     {
         character.canCombo = false;
+        character.setComboAnimation(false);
+        character.resetTriggers();
     }
 }
