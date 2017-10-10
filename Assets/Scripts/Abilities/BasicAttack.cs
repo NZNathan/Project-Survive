@@ -6,7 +6,7 @@ using UnityEngine;
 public class BasicAttack : Ability
 {
     //How far the ray will be cast
-    private float abilityRange = 0.4f;
+    private float abilityRange = 0.8f;
 
     protected string animation = "attack";
 

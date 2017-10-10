@@ -9,11 +9,18 @@ public class CharacterUI : MonoBehaviour {
 
     private Image image;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     private void Start()
     {
         image = GetComponent<Image>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    public void setSpriteController(RuntimeAnimatorController spriteController)
+    {
+        animator = GetComponent<Animator>();
+        animator.runtimeAnimatorController = spriteController;
     }
 
     private void Update()

@@ -6,7 +6,8 @@ public class Interactable : MonoBehaviour {
 
 	private bool withinRange = false;
 
-	public void use()
+
+	public virtual void use()
 	{
         WorldManager.instance.increaseLevel();
         UIManager.instance.newLoadScreen();

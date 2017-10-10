@@ -19,6 +19,7 @@ public class DeathScreen : MonoBehaviour {
 
 	//Inheritance Screen
 	public CharacterUI[] childrenUI = new CharacterUI[3];
+	public Animator[] animators = new Animator[3];
 	public Text[] namesText = new Text[3];
 	public Text[] classText= new Text[3];
 	public Image[] abilities = new Image[9];
@@ -76,9 +77,9 @@ public class DeathScreen : MonoBehaviour {
     {
         //Set up text
         characterName.text = Player.instance.firstName + " " + Player.instance.lastName;
-        //revengeTarget.setSprites(Player.instance.getAttacker().getSprites());
+        revengeTarget.setSpriteController(Player.instance.getAttacker().getSpriteController());
         revengeName.text = Player.instance.getAttacker().getName();
-        //player.setSprites(Player.instance.getSprites());
+        player.setSpriteController(Player.instance.getSpriteController());
     }
 
 	private void setupInheritance()
@@ -91,6 +92,7 @@ public class DeathScreen : MonoBehaviour {
 			namesText[i].text = children[i].getName();
 			classText[i].text = children[i].getClass().name;
 			children[i].gameObject.name = "child_" + i;
+			animators[i].runtimeAnimatorController = children[i].getSpriteController();
 
 			for(int j = 0; j < 3; j++){
 

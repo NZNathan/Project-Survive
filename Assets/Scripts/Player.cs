@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,8 +53,8 @@ public class Player : CMoveCombatable
 
         itemsInRange = new ItemsInRange(this);
 
-        traits[0] = Trait.getTrait();
-        traits[0].applyTrait(this);
+        //traits[0] = Trait.getTrait();
+        //traits[0].applyTrait(this);
 
         //Singleton
         if (instance == null)
@@ -326,10 +325,7 @@ public class Player : CMoveCombatable
         bool eKeyDown = Input.GetKeyDown(KeyCode.E);
 
         if (eKeyDown && !attacking)
-            itemsInRange.pickupItem();
-
-        if (Input.GetKeyDown(KeyCode.Y))
-            UIManager.instance.newShopWindow();
+            itemsInRange.pickupItem();     
 
         //Call movement function to handle movements
         Vector3 movementVector = Vector3.zero;

@@ -16,7 +16,7 @@ public class Enemy : CMoveCombatable {
 
     [Header("AI Variables")]
     public float aggroRange = 5f;
-    public float attackRange = 0.65f;
+    public float attackRange = 1.45f;
     private Stack<AIState> state;
 
     [Header("Drop On Death Variables")]
@@ -29,7 +29,7 @@ public class Enemy : CMoveCombatable {
     //Movement Variables
     //[HideInInspector]
     public Transform target;
-    private float stopDistance = .2f; //Distance to stop away from target by defualt
+    private float stopDistance = 0.5f; //Distance to stop away from target by defualt
 
     // Use this for initialization
     new void Start()

@@ -7,7 +7,7 @@ using UnityEngine;
 public class MoveState : AIState
 {
     //Hold a movement field to determine how to move?
-    private float yRange = 0.01f;
+    private float yRange = 0.04f;
 
     public MoveState(Enemy character)
     {
@@ -87,7 +87,9 @@ public class MoveState : AIState
 
         //If within attack range, but not on the same y
         if ((character.getTargetPositon() - character.transform.position).magnitude < character.attackRange && Mathf.Abs(character.getTargetPositon().y - character.transform.position.y) > yRange)
-            dir = character.getDirection(new Vector3(character.transform.position.x, character.getTargetPositon().y, 0), character.target.gameObject.GetComponent<CHitable>().objectHeight);
+        {
+                dir = character.getDirection(new Vector3(character.transform.position.x, character.getTargetPositon().y, 0), character.target.gameObject.GetComponent<CHitable>().objectHeight);
+        } 
         else
             dir = character.getDirection(character.getTargetPositon(), character.target.gameObject.GetComponent<CHitable>().objectHeight);
 

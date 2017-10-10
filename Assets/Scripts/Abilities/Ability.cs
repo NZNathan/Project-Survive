@@ -29,6 +29,8 @@ public abstract class Ability {
     
     //Cooldown Variables
     protected float cooldownTime = 5f;
+    protected float newCooldownTime = 5f;
+    private float agilityMod = 0.1f;
     protected bool cooldown = false;
 
     //Icon 
@@ -51,6 +53,8 @@ public abstract class Ability {
 
         //Reset combo on caster
         caster.canCombo = false;
+
+        newCooldownTime = cooldownTime - (caster.agility * agilityMod);
 
         abilityDamage = getDamage(caster.strength);
     }
@@ -81,7 +85,10 @@ public abstract class Ability {
 
     public float getCooldown()
     {
-        return cooldownTime;
+        if(newCooldownTime > 0)
+            return newCooldownTime;
+        else
+            return 0.01f;
     }
 
     public float getAbilityVelocity()
