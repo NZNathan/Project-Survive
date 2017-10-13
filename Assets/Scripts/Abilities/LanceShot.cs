@@ -6,10 +6,13 @@ using UnityEngine;
 public class LanceShot : Ability
 {
 
+    //Raycast Variables
+    private float abilityRange = 9.1f;
+
     public LanceShot()
     {
         //---- Setup ability stats ----
-        
+
         //Setup looks
         icon = AbilitySprite.LANCE;
         name = "Lance Shot";
@@ -53,7 +56,37 @@ public class LanceShot : Ability
 
         //Setup and turn on bullet
         b.gameObject.SetActive(true);
-        b.Setup(caster, abilityDamage, stunTime, direction);
+        b.Setup(caster, direction);
+
+        RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
+        Debug.DrawRay(pos, direction * abilityRange, Color.blue, 3f);
+
+        //If the Raycast hits an object on the layer Enemy
+        foreach (RaycastHit2D r in hitObject)
+        {
+            if (r && r.transform.gameObject != caster.gameObject && caster.attacking)
+            {
+                //If an object has been hit first
+                if (r.transform.gameObject.tag == "Object")
+                    continue;
+
+                //Hit attack
+                CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
+
+                if (objectHit.isInvuln())
+                    continue;
+
+                //Apply damage and knockback
+                objectHit.setAttacker(caster);
+                objectHit.loseHealth(abilityDamage);
+                objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
+                objectHit.knockUp(pos, abilityKnockback, abilityKnockUp, objectHit.objectHeight);
+
+                //caster.audioSource.clip = abilitySound;
+                //caster.audioSource.Play();
+            }
+        }
+
 
         caster.canCombo = false;
         caster.canMove = true;

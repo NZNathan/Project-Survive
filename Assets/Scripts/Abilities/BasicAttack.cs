@@ -97,7 +97,7 @@ public class BasicAttack : Ability
                     objectHit.loseHealth(abilityDamage);
 
                     //Apply stun to the target
-                    objectHit.applyStun(stunTime);
+                    //objectHit.applyStun(stunTime);
 
                     caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();

@@ -21,6 +21,9 @@ public class BasicShoot : Ability
         //Setup force
         abilityVelocity = -20;
 
+        //Setup sound
+        abilitySound = MusicManager.instance.gunShot;
+
     }
 
     //Initialise here
@@ -52,6 +55,10 @@ public class BasicShoot : Ability
         //Setup and turn on bullet
         b.gameObject.SetActive(true);
         b.Setup(caster, abilityDamage, stunTime, direction);
+
+        //Play sound
+        caster.audioSource.clip = abilitySound;
+        caster.audioSource.Play();
 
         caster.canCombo = false;
         caster.canMove = true;

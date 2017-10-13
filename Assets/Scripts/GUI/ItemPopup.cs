@@ -18,7 +18,9 @@ public class ItemPopup : MonoBehaviour {
         textbox.text = target.name;
 
         Sprite sp = target.GetComponent<SpriteRenderer>().sprite;
-        popupOffset = sp.bounds.size.y + yPadding;
+
+        if(sp != null)
+            popupOffset = sp.bounds.size.y + yPadding;
 
         this.target = target.transform;
     }

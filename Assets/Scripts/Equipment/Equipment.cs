@@ -11,6 +11,8 @@ public class Equipment : Item {
 	public int aglMod = 0;
 	public int endMod = 0;
 
+    public bool isWeapon = false;
+
     protected void Start()
     {
         itemAbility = GetComponent<EquipmentAbility>();

@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour {
 
     public C characterSpawnType;
     public bool bossSpawn = false;
+    public BossArea bossArea;
 
 	// Use this for initialization
 	void Start ()
@@ -35,7 +36,7 @@ public class Spawner : MonoBehaviour {
         else
             boss.setupRevengeTarget(revengeTarget);
 
-        boss.hasBeenSeen = false;
+        bossArea.boss = boss;
         boss.isBoss = true;
         boss.gameObject.name = "BOSS:_" + boss.firstName;
 

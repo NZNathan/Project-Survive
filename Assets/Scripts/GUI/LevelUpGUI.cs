@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelUpGUI : MonoBehaviour {
 
     public GameObject levelUpWindow;
+    public Text nameText;
     public Text pointsText;
     public Text[] statTexts;
     public Text[] statValues;
@@ -30,6 +31,7 @@ public class LevelUpGUI : MonoBehaviour {
         levelUpWindow.gameObject.SetActive(true);
 
         //Set up character
+        nameText.text = Player.instance.getName();
 
         //Set up points value text
         pointsText.text = "" + this.points;

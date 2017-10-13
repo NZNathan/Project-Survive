@@ -110,7 +110,7 @@ public class LandscapeGen : MonoBehaviour {
 
         float areaPos = -areaWidth;
 
-        bossAreaLocation = -3;//Random.Range(3, levelSize - 1);
+        bossAreaLocation = levelSize - 2;
 
         for (int i = 0; i < areas.Length; i++)
         {

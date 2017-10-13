@@ -9,31 +9,6 @@ public class Area : MonoBehaviour {
 
     private GameObject[] trees;
 
-	// Use this for initialization
-	void Start ()
-    {
-        /*
-         * Node root = new Node("Safe")
-         * Node people = new Node("People", 0.5);
-         * Node faction = new Node("Faction", 0.5);
-         * 
-         * root.add(people)
-         * root.add(faction)
-         * 
-         * Node monving = new Node("monving", 0.9);
-         * Node type = new Node("type", 0.1);
-         * 
-         * ...
-         * 
-         * if(random < leftChild.probability)
-         *     return leftChild.recursive
-         * else
-         *     return rightChild.recursive
-         *     
-         * leaf(gameobject[] listOfPrefabs that match the leaf's type (e.g list of safe camps or forests)
-        */
-    }
-
     public void setUpArea()
     {
         //Set Up Trees

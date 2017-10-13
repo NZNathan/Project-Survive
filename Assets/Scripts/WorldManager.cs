@@ -26,7 +26,7 @@ public class WorldManager : MonoBehaviour {
     //Spawn
     public LandscapeGen landscapeGen;
     public SpriteGen spriteGenerator;
-    private float respawnTime = 4f;
+    public float respawnTime = 4f;
     public static int mapLevel = 1;
 
     //Dialogue

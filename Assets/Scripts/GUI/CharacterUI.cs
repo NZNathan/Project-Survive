@@ -11,6 +11,8 @@ public class CharacterUI : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
+    public bool isDead = false;
+
     private void Start()
     {
         image = GetComponent<Image>();
@@ -21,10 +23,16 @@ public class CharacterUI : MonoBehaviour {
     {
         animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = spriteController;
+
+        
     }
 
     private void Update()
     {
         image.sprite = spriteRenderer.sprite;
+
+        if (isDead)
+            animator.SetBool("DEAD", true);
+
     }
 }

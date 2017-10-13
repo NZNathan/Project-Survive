@@ -92,7 +92,7 @@ public class Bullet : MonoBehaviour {
             targetHit.loseHealth(damage);
 
             //Apply stun to the target
-            targetHit.applyStun(stunTime);
+            //targetHit.applyStun(stunTime);
 
             //TODO: Play audio sound
             caster.attackHit();

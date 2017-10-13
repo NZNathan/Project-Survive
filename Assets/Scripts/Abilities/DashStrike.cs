@@ -41,6 +41,8 @@ public class DashStrike : Ability {
         string oldLayer = LayerMask.LayerToName(caster.gameObject.layer);
         caster.gameObject.layer = C.noCollisionLayer;
 
+        caster.setInvulnerable(timeBeforeRay);
+
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
 
         yield return new WaitForSeconds(timeBeforeRay);

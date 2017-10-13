@@ -54,6 +54,10 @@ public class C : CHitable {
         whiteMat = Resources.Load<Material>("Materials/SolidWhite");
     }
 
+    /// <summary>
+    /// Returns the full name of the character (first and last) with a space between them
+    /// </summary>
+    /// <returns></returns>
     public string getName()
     {
         return firstName + " " + lastName;
@@ -136,12 +140,12 @@ public class C : CHitable {
         //StopAllCoroutines();
         gameObject.layer = noCollisionLayer;
         GetComponentInChildren<BoxCollider2D>().gameObject.layer = noCollisionLayer; //Make sure object with collider on it can no longer be hit 
-        StopCoroutine("showHealth");
+        //StopCoroutine("showHealth");
 
         animator.ResetTrigger("attack");
         animator.SetBool("combo", false);
-        animator.SetBool("dead", true);
-        Invoke("removeDeadBody", 1);
+        animator.SetTrigger("dead");
+        Invoke("removeDeadBody", 12);
         dead = true;
     }
 

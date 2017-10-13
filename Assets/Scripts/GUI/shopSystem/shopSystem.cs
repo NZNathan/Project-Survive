@@ -9,8 +9,6 @@ public class shopSystem : MonoBehaviour {
 
 	public static shopSystem shopsystem;
 
-	//public shopItem[] shoplist;
-
 	public List<shopItem> shoplist = new List<shopItem>();
 	//public List<Item> shoplist = new List<Item>();
 	private List<GameObject> itemHolderlist = new List<GameObject> ();
@@ -26,7 +24,10 @@ public class shopSystem : MonoBehaviour {
 	public bool FirstOpenShop = true;
 
 	// Use this for initialization
-	public void openShopWindow() {
+	public void openShopWindow()
+    {
+
+        Player.instance.setInMenu(true);
 
 		if( FirstOpenShop==true ){
 			if (ShopActive == false) {
@@ -63,6 +64,7 @@ public class shopSystem : MonoBehaviour {
 
     public void closeShopWindow()
     {
+        Player.instance.setInMenu(false);
         shopWindow.SetActive(false);
     }
 
@@ -81,8 +83,12 @@ public class shopSystem : MonoBehaviour {
 
 			//holderScript.item.itemName = shoplist [i].item.itemName;
 			//holderScript.item.itemPrice = shoplist [i].item.itemPrice;
+			//holderScript.itemName = shoplist [i].itemName;
+			//holderScript.itemPrice = shoplist [i].itemPrice;
 			holderScript.itemID = shoplist [i].itemID;
 			holderScript.item = shoplist[i].item;
+			holderScript.itemName.text = shoplist [i].item.itemName;
+		//	holderScript.itemPrice.text = shoplist [i].item.itemPrice;
 
 			//buy button
 			holderScript.buyButton.GetComponent<BuyButton>().itemID =shoplist [i].itemID ;
@@ -94,6 +100,7 @@ public class shopSystem : MonoBehaviour {
 
 			if (shoplist [i].bought) {
 				holderScript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [i].boughtSpriteName);
+
 			}
 
 			else {
@@ -119,7 +126,7 @@ public class shopSystem : MonoBehaviour {
 
 							if (shoplist [j].bought) {
 								holderscript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [j].boughtSpriteName);
-								holderscript.item.itemDescription = "SOLD OUT";
+								//holderscript.item.itemName = "SOLD OUT";
 							}
 
 							else {

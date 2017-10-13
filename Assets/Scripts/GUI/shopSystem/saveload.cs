@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public class saveload : MonoBehaviour {
-	public GameObject shopWindow;
+	public shopSystem shopWindow;
 
 	// Use this for initialization
 	[System.Serializable]
@@ -39,7 +39,7 @@ public class saveload : MonoBehaviour {
 		stream.Close ();*/
 	//	print (" shopping saved");
 		Debug.Log ("saved");
-        shopWindow.SetActive(false);
+        shopWindow.closeShopWindow();
 		
 
 

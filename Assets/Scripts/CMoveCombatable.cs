@@ -43,8 +43,9 @@ public abstract class CMoveCombatable : CMoveable {
     public bool parrying = false;
 
     //Heavy Attack Variables
-    protected float chargeTime = 0.5f;
-    protected float startedHolding = float.MaxValue;
+    //protected float chargeTime = 0.5f;
+    //protected float startedHolding = float.MaxValue;
+    protected bool chargingAttack = false;
 
     //Stun Variables
     protected bool stunned = false;
@@ -257,10 +258,13 @@ public abstract class CMoveCombatable : CMoveable {
             if (attackAction != null)
                 StopCoroutine(attackAction);
 
+            if(attacking)
+                animator.SetTrigger("stopAttack");
+
+            if(chargingAttack && animator.GetBool("charged") == false)
+                animator.SetTrigger("stopCharge");
 
             attacking = false;
-            animator.SetTrigger("stopAttack");
-            animator.SetTrigger("stopCharge");
 
             StopCoroutine("stun");
             if (!falling)

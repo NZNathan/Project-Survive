@@ -6,8 +6,6 @@ using UnityEngine;
 public class BasicAttackCombo : Ability
 {
 
-    private CMoveCombatable caster;
-
     string abilityName = "Basic Attack Combo";
 
     //Ability Variables

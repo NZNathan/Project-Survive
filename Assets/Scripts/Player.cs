@@ -21,9 +21,6 @@ public class Player : CMoveCombatable
     //Equipment Variables
     private Equipment[] equipment = new Equipment[3];
 
-    //Input Variables
-    private bool chargingAttack = false;
-
     //Menu Variables
     private bool inMenu = false;
     private bool inBagMenu = false;
@@ -207,7 +204,6 @@ public class Player : CMoveCombatable
     public override bool attack(Ability action)
     {
         //Reset charge attack time, so players can't hold it while using an ability and come straight out for a follow up heavy attack
-        startedHolding = float.MaxValue;
         animator.SetBool("charged", false);
 
         //Get mouse position in relation to the world
@@ -340,7 +336,6 @@ public class Player : CMoveCombatable
         //If left click with weapon out and not already attacking, then start charging
         if (((leftClickHeld && !chargingAttack && !stunned) || leftClickDown) && !attacking)
         {
-            startedHolding = Time.time;
             animator.SetTrigger("charging");
             chargingAttack = true;
         }
@@ -351,8 +346,7 @@ public class Player : CMoveCombatable
                 attack(characterClass.heavyAttack);
             else
             {
-                Debug.Log("basic");
-                animator.SetTrigger("stopCharge");
+                //animator.SetTrigger("stopCharge");
                 attack(characterClass.basicAttack);
             }
 
@@ -380,11 +374,13 @@ public class Player : CMoveCombatable
         rb2D.AddForce(movementVector);
     }
 
-    //Set Active
+
     public override void loseHealth(int damage)
     {
         base.loseHealth(damage);
         StopCoroutine("showHealth");
+        animator.ResetTrigger("charging");
+        //attackTrigger.idleState();
 
         if (!dead)
             CameraFollow.cam.GetComponentInParent<CameraShake>().shake = .5f;
@@ -410,7 +406,6 @@ public class Player : CMoveCombatable
     {
         base.applyStun(stunTime);
 
-        startedHolding = Mathf.Infinity;
         animator.SetBool("charged", false);
         chargingAttack = false;
     }
@@ -428,8 +423,19 @@ public class Player : CMoveCombatable
     public void equipItem(Equipment item)
     {
         int i = 2;
+        if (item.isWeapon)
+        {
+            i = 1;
 
-        if (equipment[0] == null)
+            //If already have a weapon equipped
+            if (equipment[1] != null)
+            {
+                Equipment eq = unequipItem(1);
+                int index = bag.findIndex(item);
+                StartCoroutine(setItem(eq, index));
+            }
+        }
+        else if (equipment[0] == null)
         {
             i = 0;
         }
@@ -505,7 +511,7 @@ public class Player : CMoveCombatable
             if (!chargingAttack && chargedHeavy)
             {
                 chargedHeavy = false;
-                animator.SetBool("charged", false);
+                animator.SetBool("charged", false);           
             }
 
             if (inMenu)

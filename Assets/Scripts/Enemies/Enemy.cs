@@ -11,8 +11,6 @@ public class Enemy : CMoveCombatable {
     //Revenge Target Variables
     public bool isBoss = false;
     public bool revengeTarget = false;
-    public bool hasBeenSeen = false;
-    private int tick = 0;
 
     [Header("AI Variables")]
     public float aggroRange = 5f;
@@ -178,6 +176,7 @@ public class Enemy : CMoveCombatable {
         {
             UIManager.instance.closeBossGUI();
             MusicManager.instance.stopBossMusic();
+            CameraFollow.screenLocked = false;
         }
 
         //Item drops
@@ -195,39 +194,11 @@ public class Enemy : CMoveCombatable {
         startCollisionsOff(collisionOffTime);
     }
 
-    //If the enemy is a revenge target, or a boss, when they first appear on camera, zoom into them
-    private void onBecameVisible()
-    {
-        //If not a boos or revenge target, then stop calling this method
-        if (!isBoss && !revengeTarget)
-        {
-            hasBeenSeen = true;
-            return;
-        }
-
-        //Boss has entered the screen
-        if (renderer.isVisible)
-        {
-            UIManager.instance.newBossGUI(this);
-            WorldManager.instance.zoomIn(transform);
-
-            hasBeenSeen = true;
-            MusicManager.instance.playBossMusic();
-        }
-
-        tick = 0;
-    }
-
     private new void Update()
     {
         if (!WorldManager.isPaused)
         {
             base.Update();
-
-            if (!hasBeenSeen && tick >= 4)
-                onBecameVisible();
-
-            tick++;
         }
     }
 

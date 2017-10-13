@@ -27,6 +27,7 @@ public class SpriteGen : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        instance = this;
         //Generate Traits
         Trait.generateTraits();
 

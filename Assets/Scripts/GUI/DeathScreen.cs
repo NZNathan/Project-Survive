@@ -23,6 +23,7 @@ public class DeathScreen : MonoBehaviour {
 	public Text[] namesText = new Text[3];
 	public Text[] classText= new Text[3];
 	public Image[] abilities = new Image[9];
+    public Text[] statTexts = new Text[9];
 	private Player[] children = new Player[3];
 
 	//Animation Variables
@@ -97,7 +98,7 @@ public class DeathScreen : MonoBehaviour {
 			for(int j = 0; j < 3; j++){
 
 				abilities[j + (3 * i)].sprite = children[i].getClass().abilities[j].getIcon();
-
+                statTexts[j + (3 * i)].text = children[i].getStats()[j].ToString();
 			}
 				
 

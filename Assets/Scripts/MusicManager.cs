@@ -9,10 +9,15 @@ public class MusicManager : MonoBehaviour {
     //Components
     private AudioSource audioSource;
 
+    [Header("Music Tracks")]
     //Music Tracks
     public AudioClip fieldTheme;
     public AudioClip battleTheme;
     public AudioClip bossTheme;
+
+    [Header("Sounds Effects")]
+    //Sound Effects
+    public AudioClip gunShot;
 
     // Use this for initialization
     void Start ()

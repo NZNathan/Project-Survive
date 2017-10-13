@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,7 +36,7 @@ public class CameraFollow : MonoBehaviour
     public float yUpperClamp = 0.27f;
     public float yLowerClamp = 0.26f;
     //Is the screen locked in place
-    public bool screenLocked = false;
+    public static bool screenLocked = false;
 
     private Vector3 velocity = Vector3.zero;
 
@@ -47,6 +48,12 @@ public class CameraFollow : MonoBehaviour
         currentZoom = defaultZoom;
 
         InvokeRepeating("checkPlayerObscured", 1, 0.1f);
+    }
+
+    public void setLockScreen(Transform target)
+    {
+        screenLocked = true;
+        transform.position = new Vector2(target.position.x, transform.position.y);
     }
 
     void checkPlayerObscured()
@@ -117,6 +124,9 @@ public class CameraFollow : MonoBehaviour
 
     bool cameraAtMapEdge(Vector2 nextPos)
     {
+        if (screenLocked)
+            return false;
+
         //At Right edge of map
         if (nextPos.x > LandscapeGen.rightEdge)
         {
@@ -150,12 +160,12 @@ public class CameraFollow : MonoBehaviour
             else if (desiredPos.y < yLowerClamp && !zooming)
                 desiredPos = new Vector3(desiredPos.x, yLowerClamp, 0);
 
+            if (cameraAtMapEdge(desiredPos) || screenLocked)
+                desiredPos = new Vector2(transform.position.x, desiredPos.y);
+
             Vector3 smoothPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothSpeed);
 
-            if (!cameraAtMapEdge(smoothPos) && !screenLocked)
-            {
-                transform.position = smoothPos;
-            }
+            transform.position = smoothPos;
         }
     }
 }
