@@ -11,7 +11,7 @@ public class FloatingText : MonoBehaviour {
     private Transform target;
 
     [Header("Floating Text Variables")]
-    public static float textOffset = 0.35f;
+    public static float textOffset = 0.55f;
     public float textDuration { get; private set; }
 
     public void Start()

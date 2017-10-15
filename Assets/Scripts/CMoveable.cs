@@ -28,6 +28,8 @@ public abstract class CMoveable : C {
         //Get Components
         col2D = GetComponent<CircleCollider2D>();
         audioSource = GetComponent<AudioSource>();
+
+        audioSource.volume = MusicManager.instance.soundEffectsVolume;
     }
 
     public void facePoint(Vector3 point)
@@ -36,16 +38,6 @@ public abstract class CMoveable : C {
             faceLeft();
         else
             faceRight();
-    }
-
-    public void faceLeft()
-    {
-        transform.localScale = new Vector3(-1 * facingFront, 1, 1);
-    }
-
-    public void faceRight()
-    {
-        transform.localScale = new Vector3(1 * facingFront, 1, 1);
     }
 
     public override void applyStun(float stunTime)

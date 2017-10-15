@@ -98,7 +98,7 @@ public class CameraFollow : MonoBehaviour
         cam.orthographicSize = defaultZoom;
         this.target = target;
 
-        transform.position = target.position + offest;
+        transform.position = target.position + offest + new Vector3(0, 1, 0); //Add the extra vector at the end or it resets camera too low on the y axis
 
         cutsceneBars.SetActive(false);
     }

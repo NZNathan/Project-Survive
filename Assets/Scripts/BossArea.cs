@@ -25,7 +25,7 @@ public class BossArea : MonoBehaviour {
 
             //Wait till the zoom in is complete them call to lock the screen
             Invoke("lockScreen", WorldManager.instance.respawnTime * Time.timeScale);
-
+            boss.invulnerable = false;
 
             MusicManager.instance.playBossMusic();
         }

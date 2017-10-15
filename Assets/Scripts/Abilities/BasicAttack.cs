@@ -8,22 +8,19 @@ public class BasicAttack : Ability
     //How far the ray will be cast
     private float abilityRange = 0.8f;
 
-    protected string animation = "attack";
-
     //Combo Variables
     private Ability comboAttack = new BasicAttackCombo();
     private float lastAttack = -1f;
     private float comboChainTime = 0.35f;
 
     //Initialise here
-    public override void setTarget(CMoveCombatable caster, Vector2 pos)
+    public BasicAttack()
     {
-        base.setTarget(caster, pos);
-
         //---- Setup ability stats ----
         //Setup looks
         icon = AbilitySprite.DASHSTRIKE;
         name = "Basic Strike";
+        animation = "attack";
 
         //Setup cooldown
         cooldownTime = 0f;
@@ -33,6 +30,11 @@ public class BasicAttack : Ability
 
         //Setup stun
         stunTime = 0.1f;
+    }
+
+    public override void setTarget(CMoveCombatable caster, Vector2 pos)
+    {
+        base.setTarget(caster, pos);
     }
 
     protected override int getDamage(int casterStrength)

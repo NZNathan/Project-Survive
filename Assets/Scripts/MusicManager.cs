@@ -9,6 +9,12 @@ public class MusicManager : MonoBehaviour {
     //Components
     private AudioSource audioSource;
 
+    //Volume 
+    [Range(0f, 1.0f)]
+    public float musicVolume = 1f;
+    [Range(0f, 1.0f)]
+    public float soundEffectsVolume = 1f;
+
     [Header("Music Tracks")]
     //Music Tracks
     public AudioClip fieldTheme;
@@ -25,6 +31,8 @@ public class MusicManager : MonoBehaviour {
         instance = this;
 
         audioSource = GetComponent<AudioSource>();
+
+        
         audioSource.clip = fieldTheme;
         audioSource.Play();
     }
@@ -47,8 +55,9 @@ public class MusicManager : MonoBehaviour {
         audioSource.Play();
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    private void Update()
+    {
+        audioSource.volume = musicVolume;
+    }
+
 }

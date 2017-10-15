@@ -8,6 +8,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour {
 
     public C characterSpawnType;
+    public bool turnRight = false;
     public bool bossSpawn = false;
     public BossArea bossArea;
 
@@ -21,6 +22,10 @@ public class Spawner : MonoBehaviour {
     {
         C character = Instantiate(characterSpawnType, transform.position, Quaternion.identity);
         character.transform.SetParent(transform.parent);
+
+        if (turnRight)
+            character.faceRight();
+
         return character;
     }
 
@@ -30,11 +35,15 @@ public class Spawner : MonoBehaviour {
 
         Enemy boss = (Enemy) Instantiate(characterSpawnType, transform.position, Quaternion.identity);
         boss.transform.SetParent(transform.parent);
+        boss.invulnerable = true;
 
         if (revengeTarget == null)
             SpriteGen.instance.generateEnemy(boss);
         else
             boss.setupRevengeTarget(revengeTarget);
+
+        if (turnRight)
+            boss.faceRight();
 
         bossArea.boss = boss;
         boss.isBoss = true;

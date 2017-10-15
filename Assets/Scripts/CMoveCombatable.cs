@@ -202,8 +202,11 @@ public abstract class CMoveCombatable : CMoveable {
 
         yield return new WaitForSeconds(.6f);
 
-        animator.SetTrigger("getUp");
-        gameObject.layer = originalLayer;
+        if (!dead)
+        {
+            animator.SetTrigger("getUp");
+            gameObject.layer = originalLayer;
+        }
 
         //yield return new WaitForSeconds(.2f); //Wait till up
 

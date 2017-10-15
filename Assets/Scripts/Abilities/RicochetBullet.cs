@@ -19,8 +19,6 @@ public class RicochetBullet : MonoBehaviour {
     private List<CMoveCombatable> targetsHit;
 
 	//Lifetime Variables
-    private float lifespan = 3.1f;
-    private float timeShot = 0f;
     private float durability = 3;
 
     //Rebound Variables
@@ -48,8 +46,6 @@ public class RicochetBullet : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0,0,0);
         target = null;
         targetsHit = new List<CMoveCombatable>();
-
-        timeShot = Time.time;
 
         Vector3 spawnPos = new Vector3(caster.transform.position.x, caster.transform.position.y + caster.objectHeight / 2, caster.transform.position.z);
         transform.position = spawnPos + (dir * 0.4f) ;
@@ -124,7 +120,7 @@ public class RicochetBullet : MonoBehaviour {
 
     private void Update()
     {
-        if(Time.time - lifespan > timeShot)
+        if(!renderer.isVisible)
             this.gameObject.SetActive(false);
     }
 

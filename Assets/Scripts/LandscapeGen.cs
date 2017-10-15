@@ -168,12 +168,6 @@ public class LandscapeGen : MonoBehaviour {
                 GameObject scenario = Instantiate(scenarioTree.getScenario(), new Vector3(areaPos, 0, 0), Quaternion.identity);
                 scenario.transform.SetParent(areas[i].transform);
 
-                //Generate Item
-                ItemSpawner[] items = scenario.GetComponentsInChildren<ItemSpawner>();
-
-                foreach (ItemSpawner it in items)
-                    it.spawnItem();
-
                 //Generation all Characters in scenario
                 Spawner[] characters = scenario.GetComponentsInChildren<Spawner>();
                 spriteGenerator.generateCharacters(characters);

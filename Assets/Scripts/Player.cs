@@ -7,7 +7,7 @@ public class Player : CMoveCombatable
     //Static Variables
     public static Player instance;
     public static string familyName = "";
-    public static Vector3 spawmPos = new Vector3(-10, 0, 0);
+    public static Vector3 spawmPos = new Vector3(-13f, -0.2f, 0);
 
     public new static HealthBar healthBar;
 

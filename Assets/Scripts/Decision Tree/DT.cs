@@ -51,12 +51,17 @@ public class DT : MonoBehaviour {
         feralGroups.setUpDTNode("Feral Groups", 0.4f);
         feralGroups.setPrefab(LandscapeGen.prefabs.feralCrowds);
 
+        //It isn't safe -> Bandit Faction
+        DTLeaf banditGroup = (DTLeaf)DTLeaf.CreateInstance("DTLeaf");
+        banditGroup.setUpDTNode("Bandit Faction", 0.4f);
+        banditGroup.setPrefab(LandscapeGen.prefabs.hostileCamps);
+
         //It isn't safe -> Feral & Bandit Fight
         DTLeaf banditFeralFight = (DTLeaf)DTLeaf.CreateInstance("DTLeaf");
-        banditFeralFight.setUpDTNode("Bandit & Feral Fight", 0.6f);
+        banditFeralFight.setUpDTNode("Bandit & Feral Fight", 0.2f);
         banditFeralFight.setPrefab(LandscapeGen.prefabs.fightCrowds);
 
-        faction.add(feralGroups, banditFeralFight);
+        faction.add(feralGroups, banditGroup, banditFeralFight);
     }
 	
 }

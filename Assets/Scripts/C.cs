@@ -154,6 +154,16 @@ public class C : CHitable {
         Destroy(this.gameObject);
     }
 
+    public void faceLeft()
+    {
+        transform.localScale = new Vector3(-1 * facingFront, 1, 1);
+    }
+
+    public void faceRight()
+    {
+        transform.localScale = new Vector3(1 * facingFront, 1, 1);
+    }
+
     protected override IEnumerator flash()
     {
         spriteRenderer.material = whiteMat;

@@ -6,6 +6,11 @@ public class ItemSpawner : MonoBehaviour {
 
     public DropableItem[] spawnableItems;
 
+    private void Start()
+    {
+        spawnItem();
+    }
+
     public void spawnItem()
     {
         
