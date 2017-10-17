@@ -81,8 +81,9 @@ public class LanceShot : Ability
 
                 //Hit attack
                 CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
+                CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
 
-                if (objectHit.isInvuln())
+                if (objectHit.isInvuln() || targetHit.faction == caster.faction)
                     continue;
 
                 //Apply damage and knockback
@@ -91,7 +92,7 @@ public class LanceShot : Ability
                 objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
                 objectHit.knockUp(pos, abilityKnockback, abilityKnockUp, objectHit.objectHeight);
 
-                CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
+                
 
                 if (targetHit != null)
                 {

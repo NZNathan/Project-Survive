@@ -12,6 +12,9 @@ public class RevengeTarget {
     //Animator
     public RuntimeAnimatorController spriteController;
 
+    //Class
+    public CClass characterClass;
+
     //Traits
     public Trait[] traits;
 
@@ -42,6 +45,8 @@ public class RevengeTarget {
         strength = stats[0];
         agility = stats[1];
         endurance = stats[2];
+
+        characterClass = target.getClass();
 
         traits = target.getTraits();
 

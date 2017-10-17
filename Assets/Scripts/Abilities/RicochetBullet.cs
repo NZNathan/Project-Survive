@@ -72,7 +72,7 @@ public class RicochetBullet : MonoBehaviour {
         if (targetHit != null && !targetsHit.Contains(enemy))
         {
 
-            if (targetHit.isInvuln() || targetHit.isKnockedback())
+            if (targetHit.isInvuln() || targetHit.isKnockedback() || enemy.faction == caster.faction)
                 return;
 
             if(enemy != null && enemy.parrying){

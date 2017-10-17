@@ -31,7 +31,12 @@ public class Ancestor {
         lastName = player.lastName;
         spriteController = player.getSpriteController();
 
-        revengeTarget = new RevengeTarget((Enemy) player.getAttacker());
+        Enemy killer = (Enemy)player.getAttacker();
+
+        killer.levelup();
+        killer.levelup();
+
+        revengeTarget = new RevengeTarget(killer);
     }
 
     public string getName()

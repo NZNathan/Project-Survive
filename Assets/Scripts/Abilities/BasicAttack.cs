@@ -89,8 +89,9 @@ public class BasicAttack : Ability
 
                     //Hit attack
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
+                    CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
 
-                    if (objectHit.isInvuln() || objectHit.tag == caster.tag || objectHit.isKnockedback()) //Add faction to hitables to use here instead of tags
+                    if (objectHit.isInvuln() || targetHit.faction == caster.faction || objectHit.isKnockedback()) //Add faction to hitables to use here instead of tags
                         continue;
 
                     //Set attacker and info on hit 
@@ -106,7 +107,7 @@ public class BasicAttack : Ability
                     caster.audioSource.Play();
                     caster.attackHit();
 
-                    CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
+                   
 
                     if(targetHit != null)
                     {

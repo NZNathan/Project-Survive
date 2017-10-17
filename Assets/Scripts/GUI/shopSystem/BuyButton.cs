@@ -32,7 +32,7 @@ public class BuyButton : MonoBehaviour {
 				//updateBuyToUse ();
 				//WorldManager.instance.currentitemId = itemID;
 
-			if(!(Player.instance.bag.addItem( shopSystem.shopsystem.shoplist[i].item,i))){
+			if(Player.instance.bag.hasRoom()){
 
 					// needs to add to bag
 					Item item = (Item) Instantiate(shopSystem.shopsystem.shoplist [i].item);

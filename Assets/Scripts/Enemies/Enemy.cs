@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,6 +86,13 @@ public class Enemy : CMoveCombatable {
         agility = self.agility;
         endurance = self.endurance;
 
+        //Set Class
+        characterClass = self.characterClass;
+        Debug.Log(self.characterClass);
+
+        if (characterClass.name == "Gunner")
+            attackRange = 4f;
+
         traits = self.traits;
 
         //Set animator
@@ -128,7 +135,6 @@ public class Enemy : CMoveCombatable {
             if (!characterClass.abilities[0].onCooldown())
             {
                 attack(characterClass.abilities[0]);
-                Debug.Log(characterClass.abilities[0].name);
             }
             else
                 attack(characterClass.basicAttack);
@@ -197,6 +203,21 @@ public class Enemy : CMoveCombatable {
         base.knockback(target, force, targetHeight);
 
         startCollisionsOff(collisionOffTime);
+    }
+
+    public void levelup()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            float ran = Random.Range(0f, 1f);
+
+            if (ran < 0.33f)
+                strength++;
+            else if (ran < 0.66f)
+                agility++;
+           else
+                endurance++;
+        }
     }
 
     private new void Update()

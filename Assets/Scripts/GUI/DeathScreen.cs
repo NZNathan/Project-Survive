@@ -11,20 +11,24 @@ public class DeathScreen : MonoBehaviour {
 	public SpriteGen spriteGen;
 
     [Header("Death Screen")]
+    //Parent Variables
     public Text characterName;
-	public Text causeOfDeath;
+    public Text causeOfDeath;
+    public CharacterUI player;
+    //Revenge Target Variables
+    public Text revengeClass;
 	public Text revengeName;
-	public CharacterUI player;
 	public CharacterUI revengeTarget;
     public Text revengeFaction;
-    public Text[] revengeStats = new Text[3];
+    public Text[] revengeStats = new Text[4];
+    public Image[] revengeAbilities = new Image[2];
 
-	[Header("Inheritance Screen")]
+    [Header("Inheritance Screen")]
 	public CharacterUI[] childrenUI = new CharacterUI[3];
 	public Animator[] animators = new Animator[3];
 	public Text[] namesText = new Text[3];
 	public Text[] classText= new Text[3];
-	public Image[] abilities = new Image[9];
+	public Image[] abilities = new Image[6];
     public Text[] statTexts = new Text[9];
 	private Player[] children = new Player[3];
 
@@ -86,12 +90,23 @@ public class DeathScreen : MonoBehaviour {
         //Set up revenge Target
         CMoveCombatable newRevengeTarget = Player.instance.getAttacker();
         revengeTarget.setSpriteController(newRevengeTarget.getSpriteController());
+
+        //Set up name
         revengeName.text = Player.instance.getAttacker().getName();
+
+        //Setup class
+        revengeClass.text = newRevengeTarget.getClass().name;
+
+        //set up faction
         revengeFaction.text = newRevengeTarget.faction.ToString();
 
         revengeStats[0].text = "Strength: " + newRevengeTarget.getStats()[0];
         revengeStats[1].text = "Agility: " + newRevengeTarget.getStats()[1];
         revengeStats[2].text = "Endurance: " + newRevengeTarget.getStats()[2];
+        revengeStats[3].text = "Level: " + newRevengeTarget.level;
+
+        revengeAbilities[0].sprite = newRevengeTarget.getClass().abilities[0].getIcon();
+        revengeAbilities[1 ].sprite = newRevengeTarget.getClass().abilities[1].getIcon();
     }
 
 	private void setupInheritance()
@@ -110,8 +125,8 @@ public class DeathScreen : MonoBehaviour {
                 statTexts[j + (3 * i)].text = children[i].getStats()[j].ToString();
 			}
 
-            abilities[0].sprite = children[i].getClass().abilities[0].getIcon();
-            abilities[1].sprite = children[i].getClass().abilities[1].getIcon();
+            abilities[0 + (2 * i)].sprite = children[i].getClass().abilities[0].getIcon();
+            abilities[1 + (2 * i)].sprite = children[i].getClass().abilities[1].getIcon();
 
             children[i].gameObject.SetActive(false);
 		}
