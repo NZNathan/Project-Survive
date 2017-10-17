@@ -50,16 +50,13 @@ public class Player : CMoveCombatable
 
         itemsInRange = new ItemsInRange(this);
 
-        //traits[0] = Trait.getTrait();
-        //traits[0].applyTrait(this);
-
         //Singleton
         if (instance == null)
             instance = this;
 
         animator = GetComponentInChildren<Animator>();
 
-        UIManager.instance.setAbilities(characterClass.abilities); //REmove when player is generated
+        UIManager.instance.setAbilities(characterClass.abilities);
     }
 
     public void setSingleton()
@@ -410,12 +407,6 @@ public class Player : CMoveCombatable
         chargingAttack = false;
     }
 
-    public int[] getStats()
-    {
-        int[] stats = { strength, agility, endurance };
-        return stats;
-    }
-
     /// <summary>
     /// Equips passed in item to an empty equipment slot or replaces the item in equipment slot 1
     /// </summary>
@@ -511,7 +502,7 @@ public class Player : CMoveCombatable
             if (!chargingAttack && chargedHeavy)
             {
                 chargedHeavy = false;
-                animator.SetBool("charged", false);           
+                animator.SetBool("charged", false);         
             }
 
             if (inMenu)

@@ -6,7 +6,6 @@ public class LanceBullet : MonoBehaviour {
 
     //Components
     private Rigidbody2D rb2D;
-    new private SpriteRenderer renderer;
 
     //Information Variables
     private CMoveCombatable caster;
@@ -23,7 +22,6 @@ public class LanceBullet : MonoBehaviour {
 	public void Setup(CMoveCombatable caster, Vector3 dir)
     {
         rb2D = GetComponent<Rigidbody2D>();
-        renderer = GetComponent<SpriteRenderer>();
 
         this.caster = caster;
         this.dir = dir;

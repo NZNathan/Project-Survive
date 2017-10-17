@@ -42,6 +42,7 @@ public class WorldManager : MonoBehaviour {
         banterGen = new BanterGenerator();
         currentPlayer = spriteGenerator.createNewPlayer();
         cam = Camera.main.GetComponentInParent<CameraFollow>();
+        Cursor.visible = false;
     }
 
     public void zoomIn(Transform t)
@@ -117,6 +118,10 @@ public class WorldManager : MonoBehaviour {
         //Turn off Boss UI in case its on
         UIManager.instance.closeBossGUI();
 
+        CameraFollow.screenLocked = false;
+
+        MusicManager.instance.stopBossMusic();
+
         zoomIn(player.getAttacker().transform);
 
         //Craete a new Ancestor
@@ -124,17 +129,6 @@ public class WorldManager : MonoBehaviour {
 
         if (headAncestor == null)
             headAncestor = tailAncestor;
-
-        //Ancestor an = headAncestor;
-        //while (an != null)
-        //{
-        //    if(an.revengeTarget != null)
-        //        Debug.Log("Ancestor: " + an.getName() + ", killed by " + an.revengeTarget.firstName + " " + an.revengeTarget.lastName);
-        //    else
-        //        Debug.Log("Ancestor: " + an.getName() + ", killed by null");
-
-        //    an = an.getChild();
-        //}
 
         Invoke("deathScreen", respawnTime/2 * Time.timeScale);
     }
@@ -180,6 +174,14 @@ public class WorldManager : MonoBehaviour {
         newPlayer.gameObject.SetActive(true);
         
         newMap();
+    }
+
+    private void Update()
+    {
+        if (Player.instance.isInMenu() || Player.instance.isDead())
+            Cursor.visible = true;
+        else
+            Cursor.visible = false;
     }
 
 }

@@ -10,14 +10,16 @@ public class DeathScreen : MonoBehaviour {
 
 	public SpriteGen spriteGen;
 
-	//Dead parent Screen
-	public Text characterName;
+    [Header("Death Screen")]
+    public Text characterName;
 	public Text causeOfDeath;
 	public Text revengeName;
 	public CharacterUI player;
 	public CharacterUI revengeTarget;
+    public Text revengeFaction;
+    public Text[] revengeStats = new Text[3];
 
-	//Inheritance Screen
+	[Header("Inheritance Screen")]
 	public CharacterUI[] childrenUI = new CharacterUI[3];
 	public Animator[] animators = new Animator[3];
 	public Text[] namesText = new Text[3];
@@ -78,9 +80,17 @@ public class DeathScreen : MonoBehaviour {
     {
         //Set up text
         characterName.text = Player.instance.firstName + " " + Player.instance.lastName;
-        revengeTarget.setSpriteController(Player.instance.getAttacker().getSpriteController());
-        revengeName.text = Player.instance.getAttacker().getName();
         player.setSpriteController(Player.instance.getSpriteController());
+
+        //Set up revenge Target
+        CMoveCombatable newRevengeTarget = Player.instance.getAttacker();
+        revengeTarget.setSpriteController(newRevengeTarget.getSpriteController());
+        revengeName.text = Player.instance.getAttacker().getName();
+        revengeFaction.text = newRevengeTarget.faction.ToString();
+
+        revengeStats[0].text = "Strength: " + newRevengeTarget.getStats()[0];
+        revengeStats[1].text = "Agility: " + newRevengeTarget.getStats()[1];
+        revengeStats[2].text = "Endurance: " + newRevengeTarget.getStats()[2];
     }
 
 	private void setupInheritance()

@@ -140,6 +140,12 @@ public abstract class CMoveCombatable : CMoveable {
             endurance += amount;
     }
 
+    public int[] getStats()
+    {
+        int[] stats = { strength, agility, endurance };
+        return stats;
+    }
+
     public Trait[] getTraits()
     {
         return traits;

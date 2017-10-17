@@ -5,71 +5,44 @@ using UnityEngine;
 
 public class BasicAttackFinisher : Ability
 {
-
-    private CMoveCombatable caster;
-
-    string abilityName = "Basic Attack Finisher";
-
-    //Ability Variables
-    private int abilityDamage; //Scale to player damage?
-    private float abilityVelocity = 5;
-    private string animation = "attack";
-    private int abilityKnockback = 500;
-    private int abilityKnockUp = 500;
-    private float cooldownTime = 0f;
-
+    
     //Raycast Variables
-    private float abilityRange = 0.4f;
+    private float abilityRange = 0.8f;
 
-    //Directional Variables
-    private Vector2 pos;
-    private Vector2 direction;
+    //Initialise here
+    public BasicAttackFinisher()
+    {
+        //---- Setup ability stats ----
+        //Setup looks
+        icon = AbilitySprite.DASHSTRIKE;
+        name = "Basic Attack Finisher";
+        animation = "attack";
 
+        //Setup cooldown
+        cooldownTime = 0f;
+
+        //Setup force
+        abilityVelocity = 5;
+        abilityKnockback = 500;
+        abilityKnockUp = 500;
+
+        //Setup stun
+        stunTime = 0.1f;
+    }
 
     public override void setTarget(CMoveCombatable caster, Vector2 pos)
     {
-        this.caster = caster;
-        this.pos = pos;
-
-        //Get direction based on caster facing direction
-        direction = new Vector2(caster.transform.localScale.x, 0);
-
-        abilityDamage = (int)(caster.attackDamage * 1.2f);
+        base.setTarget(caster, pos);
     }
 
-    public bool canComboAttack()
+    protected override int getDamage(int casterStrength)
     {
-        return false;
-    }
-
-    public void setCooldown(bool cooldown)
-    {
-        return; //No cooldown
-    }
-
-    public bool onCooldown()
-    {
-        return false;
-    }
-
-    public float getCooldown()
-    {
-        return cooldownTime;
-    }
-
-    public float getAbilityVelocity()
-    {
-        return abilityVelocity;
+        return casterStrength + 4;
     }
 
     public override string getAnimation()
     {
         return animation;
-    }
-
-    public Sprite getIcon()
-    {
-        return null;
     }
 
     protected override IEnumerator abilityActionSequence()

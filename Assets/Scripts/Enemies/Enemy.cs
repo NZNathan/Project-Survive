@@ -68,15 +68,9 @@ public class Enemy : CMoveCombatable {
 
     #endregion
 
-    public int[] getStats()
+    public int getLevel()
     {
-        int[] stats = new int[4];
-        stats[0] = level;
-        stats[1] = strength;
-        stats[2] = agility;
-        stats[3] = endurance;
-
-        return stats;
+        return level;
     }
 
     public void setupRevengeTarget(RevengeTarget self)
@@ -129,7 +123,18 @@ public class Enemy : CMoveCombatable {
 
     public void attackTarget()
     {
-        attack(characterClass.basicAttack);
+        if (true)
+        {
+            if (!characterClass.abilities[0].onCooldown())
+            {
+                attack(characterClass.abilities[0]);
+                Debug.Log(characterClass.abilities[0].name);
+            }
+            else
+                attack(characterClass.basicAttack);
+        }
+        else
+            attack(characterClass.basicAttack);
     }
 
     public override void loseHealth(int damage)

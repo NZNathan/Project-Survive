@@ -5,77 +5,52 @@ using UnityEngine;
 
 public class BasicAttackCombo : Ability
 {
-
-    string abilityName = "Basic Attack Combo";
-
-    //Ability Variables
-    private int abilityDamage; //Scale to player damage?
-    private float abilityVelocity = 5;
-    private string animation = "attack";
-    private int abilityKnockback = 0;
-    private int abilityKnockUp = 0;
-    private float cooldownTime = 0f;
-
     //Raycast Variables
-    private float abilityRange = 0.4f;
+    private float abilityRange = 0.8f;
 
     //Combo Variables
     private Ability comboAttack = new BasicAttackFinisher();
     private float lastAttack = -1f;
     private float comboChainTime = 0.3f;
 
-    //Ability Icon
-    public Sprite icon;
 
-    //Directional Variables
-    private Vector2 pos;
-    private Vector2 direction;
+    //Initialise here
+    public BasicAttackCombo()
+    {
+        //---- Setup ability stats ----
+        //Setup looks
+        icon = AbilitySprite.DASHSTRIKE;
+        name = "Basic Attack Combo";
+        animation = "attack";
 
+        //Setup cooldown
+        cooldownTime = 0f;
+
+        //Setup force
+        abilityVelocity = 5;
+
+        //Setup stun
+        stunTime = 0.1f;
+    }
 
     public override void setTarget(CMoveCombatable caster, Vector2 pos)
     {
-        this.caster = caster;
-        this.pos = pos;
-
-        //Get direction based on caster facing direction
-        direction = new Vector2(caster.transform.localScale.x, 0);
-
-        abilityDamage = (int) (caster.attackDamage * 1.2f);
+        base.setTarget(caster, pos);
     }
 
-    public bool canComboAttack()
+    public override bool canComboAttack()
     {
         return lastAttack + comboChainTime > Time.time || comboAttack.canComboAttack();
     }
 
-    public void setCooldown(bool cooldown)
+    protected override int getDamage(int casterStrength)
     {
-        return; //No cooldown
-    }
-
-    public bool onCooldown()
-    {
-        return false;
-    }
-
-    public float getCooldown()
-    {
-        return cooldownTime;
-    }
-
-    public float getAbilityVelocity()
-    {
-        return abilityVelocity;
+        return casterStrength + 2;
     }
 
     public override string getAnimation()
     {
         return animation;
-    }
-
-    public Sprite getIcon()
-    {
-        return icon;
     }
 
     protected override IEnumerator abilityActionSequence()

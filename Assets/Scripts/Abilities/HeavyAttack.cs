@@ -5,20 +5,16 @@ using UnityEngine;
 
 public class HeavyAttack : Ability {
 
-    private string animation = "attack";
-
     //Raycast Variables
     private float abilityRange = 0.65f;
 
-    //Initialise here
-    public override void setTarget(CMoveCombatable caster, Vector2 pos)
+    public HeavyAttack()
     {
-        base.setTarget(caster, pos);
-
         //---- Setup ability stats ----
         //Setup looks
         icon = AbilitySprite.DASHSTRIKE;
         name = "Heavy Strike";
+        animation = "attack";
 
         //Setup cooldown
         cooldownTime = 0f;
@@ -28,6 +24,12 @@ public class HeavyAttack : Ability {
         abilityKnockUp = 300;
         abilityVelocity = 640;
 
+    }
+
+    //Initialise here
+    public override void setTarget(CMoveCombatable caster, Vector2 pos)
+    {
+        base.setTarget(caster, pos);
     }
 
     public override string getAnimation()

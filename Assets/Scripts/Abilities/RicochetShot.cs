@@ -6,7 +6,6 @@ using UnityEngine;
 public class RicochetShot : Ability
 { 
     //Combo Variables
-    private float lastAttack = -1f;
     private float comboChainTime = 0.35f;
 
     public RicochetShot()

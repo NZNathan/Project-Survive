@@ -6,8 +6,6 @@ public abstract class Ability {
 
     protected CMoveCombatable caster;
 
-    //Ability Variables
-
     //Damage to be applied
     protected int abilityDamage; 
 
@@ -24,7 +22,7 @@ public abstract class Ability {
     protected float stunTime = 0f;
 
     //Ability Names
-    protected string name;
+    public string name;
     protected string animation;
     
     //Cooldown Variables

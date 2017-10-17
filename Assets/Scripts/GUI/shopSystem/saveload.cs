@@ -7,7 +7,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public class saveload : MonoBehaviour {
-	public shopSystem shopWindow;
+
+	public shopSystem shopsystem;
 
 	// Use this for initialization
 	[System.Serializable]
@@ -27,9 +28,9 @@ public class saveload : MonoBehaviour {
 		SaveData data = new SaveData ();
 		//data.money = WorldManager.instance.GetMoneyData ();
 		//data.currentItemID = WorldManager.instance.currentitemId;
-		for (int i = 0; i < shopSystem.shopsystem.shoplist.Count; i++) {
+		for (int i = 0; i < shopsystem.shoplist.Count; i++) {
 
-			data.ShopList.Add (shopSystem.shopsystem.shoplist[i].item);
+			data.ShopList.Add (shopsystem.shoplist[i].item);
 		}
 
 	/*	BinaryFormatter BF = new BinaryFormatter ();
@@ -39,7 +40,7 @@ public class saveload : MonoBehaviour {
 		stream.Close ();*/
 	//	print (" shopping saved");
 		Debug.Log ("saved");
-        shopWindow.closeShopWindow();
+        shopsystem.closeShopWindow();
 		
 
 

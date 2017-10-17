@@ -12,7 +12,6 @@ public class RicochetBullet : MonoBehaviour {
     private CMoveCombatable caster;
     public int damage;
     private float stunTime;
-    private bool hitTarget;
 
 	//Target Variables
 	private CMoveCombatable target;
@@ -34,7 +33,6 @@ public class RicochetBullet : MonoBehaviour {
     {
         rb2D = GetComponent<Rigidbody2D>();
         renderer = GetComponent<SpriteRenderer>();
-        hitTarget = false;
 
         this.caster = caster;
         this.damage = damage;

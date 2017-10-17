@@ -8,9 +8,10 @@ using UnityEngine.UI;
 public class shopSystem : MonoBehaviour {
 
 	public static shopSystem shopsystem;
+	public string temp;
 
 	public List<shopItem> shoplist = new List<shopItem>();
-	//public List<Item> shoplist = new List<Item>();
+
 	private List<GameObject> itemHolderlist = new List<GameObject> ();
 
 
@@ -24,8 +25,7 @@ public class shopSystem : MonoBehaviour {
 	public bool FirstOpenShop = true;
 
 	// Use this for initialization
-	public void openShopWindow()
-    {
+	public void openShopWindow() {
 
         Player.instance.setInMenu(true);
 
@@ -64,8 +64,8 @@ public class shopSystem : MonoBehaviour {
 
     public void closeShopWindow()
     {
-        Player.instance.setInMenu(false);
         shopWindow.SetActive(false);
+        Player.instance.setInMenu(false);
     }
 
     public void UpdateUI()
@@ -79,16 +79,19 @@ public class shopSystem : MonoBehaviour {
 			//Debug.Log ("run " + i);
 			GameObject holder= Instantiate (itemHolderPrefab,grid,false);
 			itemHolder holderScript = holder.GetComponent<itemHolder> ();
-
-
-			//holderScript.item.itemName = shoplist [i].item.itemName;
-			//holderScript.item.itemPrice = shoplist [i].item.itemPrice;
-			//holderScript.itemName = shoplist [i].itemName;
-			//holderScript.itemPrice = shoplist [i].itemPrice;
+		
+			//pass the item Id
 			holderScript.itemID = shoplist [i].itemID;
+
+			// pass the item
 			holderScript.item = shoplist[i].item;
+
+			//pass the name
 			holderScript.itemName.text = shoplist [i].item.itemName;
-		//	holderScript.itemPrice.text = shoplist [i].item.itemPrice;
+
+			// pass the price
+			holderScript.itemPrice.text = holderScript.item.itemPrice.ToString();
+
 
 			//buy button
 			holderScript.buyButton.GetComponent<BuyButton>().itemID =shoplist [i].itemID ;
@@ -99,14 +102,21 @@ public class shopSystem : MonoBehaviour {
 
 
 			if (shoplist [i].bought) {
-				holderScript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [i].boughtSpriteName);
+
+                Color c = holderScript.itemImage.color;
+
+                c.r = 0.5f;
+                c.g = 0.5f;
+                c.b = 0.5f;
+
+                holderScript.itemImage.color = c;
 
 			}
 
 			else {
-				holderScript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [i].unboughtSpriteName);
+				holderScript.itemImage.sprite = shoplist[i].sprite;
 
-			}			//older version: holder.transform.SetParent (grid);
+			}		
 
 		}
 
@@ -115,8 +125,8 @@ public class shopSystem : MonoBehaviour {
 	public void UpdateSprite(int itemID){
 		for(int i = 0;i<itemHolderlist.Count;i++){
 
-			itemHolder holderscript = itemHolderlist [i].GetComponent<itemHolder> ();
-			if( holderscript.itemID == itemID){
+			itemHolder holderScript = itemHolderlist [i].GetComponent<itemHolder> ();
+			if(holderScript.itemID == itemID){
 
 				for( int j = 0;j<shoplist.Count;j++){
 					if(shoplist[j].itemID == itemID){
@@ -125,14 +135,21 @@ public class shopSystem : MonoBehaviour {
 
 
 							if (shoplist [j].bought) {
-								holderscript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [j].boughtSpriteName);
-								//holderscript.item.itemName = "SOLD OUT";
-							}
+
+                                Color c = holderScript.itemImage.color;
+
+                                c.r = 0.5f;
+                                c.g = 0.5f;
+                                c.b = 0.5f;
+
+                                holderScript.itemImage.color = c;
+
+                            }
 
 							else {
-								holderscript.itemImage.sprite = Resources.Load<Sprite>("sprite/"+ shoplist [j].unboughtSpriteName);
+                                holderScript.itemImage.sprite = shoplist[i].sprite;
 
-							}
+                            }
 
 
 
@@ -152,32 +169,5 @@ public class shopSystem : MonoBehaviour {
 
 	}
 
-	/*public void updateBuyButton(){
-
-		int currentitemID = WorldManager.instance.currentitemId;
-
-		for(int i = 0;i <buybutton.Count;i++){
-			BuyButton buybuttonscript = buybutton [i].GetComponent<BuyButton> ();
-			for(int j = 0; j< shoplist.Count;i++){
-
-				if(shoplist[j].itemID == buybuttonscript.itemID&&shoplist[j].bought&& shoplist[j].itemID!=currentitemID){
-
-					buybuttonscript.buytext.text = "Use";
-
-				}
-
-				else if(shoplist[j].itemID == buybuttonscript.itemID&&shoplist[j].bought&& shoplist[j].itemID==currentitemID){
-					
-					buybuttonscript.buytext.text = "Using";
-
-				}
-
-			}
-
-
-		}
-
-
-	}*/
 
 }

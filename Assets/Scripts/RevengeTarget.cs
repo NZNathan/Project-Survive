@@ -38,10 +38,10 @@ public class RevengeTarget {
 
         //Save Stats
         int[] stats = target.getStats();
-        level = stats[0];
-        strength = stats[1];
-        agility = stats[2];
-        endurance = stats[3];
+        level = target.getLevel();
+        strength = stats[0];
+        agility = stats[1];
+        endurance = stats[2];
 
         traits = target.getTraits();
 
