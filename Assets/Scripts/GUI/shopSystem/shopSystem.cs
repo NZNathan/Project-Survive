@@ -20,6 +20,8 @@ public class shopSystem : MonoBehaviour {
     public GameObject shopWindow;
     public  GameObject itemHolderPrefab;
     public Text moneyText;
+    public Text itemTitle;
+    public Text descriptionText;
     public Transform grid;
 	public bool ShopActive = false;
 	public bool FirstOpenShop = true;

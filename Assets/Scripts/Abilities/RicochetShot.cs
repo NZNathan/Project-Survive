@@ -13,11 +13,15 @@ public class RicochetShot : Ability
         icon = AbilitySprite.RICOCHET;
         animation = "attack";
         name = "Ricochet Shot";
+        causeOfDeath = "Caught by a ricocheting bullet";
 
         cooldownTime = 5f;
         stunTime = 0.1f;
         abilityKnockback = 0;
         abilityVelocity = -10;
+
+        //Setup sound
+        abilitySound = MusicManager.instance.gunShot;
     }
 
     //Initialise here
@@ -28,6 +32,8 @@ public class RicochetShot : Ability
 
     protected override IEnumerator abilityActionSequence()
     {
+        //Start Cooldown
+        cooldownStartTime = Time.time;
 
         //Wait until the attack frame in the animation has been reached
         while (!caster.getAttackTrigger().hasAttackTriggered())
@@ -37,6 +43,10 @@ public class RicochetShot : Ability
 
         //After shot nudge caster back a tad
         caster.rb2D.AddForce(direction * abilityVelocity / Time.timeScale);
+
+        //Play sound
+        caster.audioSource.clip = abilitySound;
+        caster.audioSource.Play();
 
         //Instantiate Bullet
         RicochetBullet b = ObjectPool.instance.getRicochetBullet();

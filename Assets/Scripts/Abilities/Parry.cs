@@ -51,6 +51,9 @@ public class Parry : Ability
 
     protected override IEnumerator abilityActionSequence()
     {
+        //Start Cooldown
+        cooldownStartTime = Time.time;
+
         //Set up immunities
         bool stunImmunity = caster.stunImmunity;
         bool knockbackImmunity = caster.knockbackImmunity;

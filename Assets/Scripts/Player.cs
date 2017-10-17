@@ -333,7 +333,7 @@ public class Player : CMoveCombatable
         //If left click with weapon out and not already attacking, then start charging
         if (((leftClickHeld && !chargingAttack && !stunned) || leftClickDown) && !attacking)
         {
-            animator.SetTrigger("charging");
+            animator.SetBool("charging", true);
             chargingAttack = true;
         }
         //If releasing left click after charging up and not already attacking then execute either a heavy or light attack based on charge time
@@ -343,10 +343,10 @@ public class Player : CMoveCombatable
                 attack(characterClass.heavyAttack);
             else
             {
-                //animator.SetTrigger("stopCharge");
                 attack(characterClass.basicAttack);
             }
 
+            animator.SetBool("charging", false);
             chargingAttack = false;
         }
         //If you are attacking and can combo then attack with basic attack
@@ -376,7 +376,6 @@ public class Player : CMoveCombatable
     {
         base.loseHealth(damage);
         StopCoroutine("showHealth");
-        animator.ResetTrigger("charging");
         //attackTrigger.idleState();
 
         if (!dead)
@@ -404,6 +403,7 @@ public class Player : CMoveCombatable
         base.applyStun(stunTime);
 
         animator.SetBool("charged", false);
+        animator.SetBool("charging", false);
         chargingAttack = false;
     }
 

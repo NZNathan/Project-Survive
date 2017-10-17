@@ -15,7 +15,8 @@ public class SpriteGen : MonoBehaviour {
     public C npcBase;
 
     //Sprites
-    public RuntimeAnimatorController[] spriteControllers;
+    public RuntimeAnimatorController[] firendlySpriteControllers;
+    public RuntimeAnimatorController[] enemySpriteControllers;
 
     //Details
     public static string[] firstNames;
@@ -36,11 +37,19 @@ public class SpriteGen : MonoBehaviour {
     }
 
     //Returns a random sprite[] 
-    public RuntimeAnimatorController getNewSpriteController()
+    public RuntimeAnimatorController getNewFriendlySpriteController()
     {
-        int spriteSet = Random.Range(0, spriteControllers.Length); //Will never be 2
+        int spriteSet = Random.Range(0, firendlySpriteControllers.Length); //Will never be 2
 
-        return spriteControllers[spriteSet];
+        return firendlySpriteControllers[spriteSet];
+    }
+
+    //Returns a random sprite[] 
+    public RuntimeAnimatorController getNewEnemySpriteController()
+    {
+        int spriteSet = Random.Range(0, enemySpriteControllers.Length); //Will never be 2
+
+        return enemySpriteControllers[spriteSet];
     }
 
     public static string getFirstName()
@@ -70,7 +79,7 @@ public class SpriteGen : MonoBehaviour {
                 C character = spawner.spawnCharacter();
 
                 //Change the new NPCs look
-                character.setSpriteController(getNewSpriteController());
+                character.setSpriteController(getNewFriendlySpriteController());
 
                 //Set NPC stats and details
                 character.firstName = getFirstName();
@@ -90,7 +99,7 @@ public class SpriteGen : MonoBehaviour {
 
         p.chooseRandomClass();
 
-        p.setSpriteController(getNewSpriteController());
+        p.setSpriteController(getNewFriendlySpriteController());
 
         //Set Player stats and details
         p.firstName = getFirstName();
@@ -118,7 +127,7 @@ public class SpriteGen : MonoBehaviour {
     void generateNPC(C npc)
     {
         //Change the new NPCs look
-        npc.setSpriteController(getNewSpriteController());
+        npc.setSpriteController(getNewFriendlySpriteController());
 
         //Set NPC stats and details
         npc.firstName = getFirstName();
@@ -139,7 +148,7 @@ public class SpriteGen : MonoBehaviour {
     public void generateEnemy(Enemy enemy)
     {
         //Change the new NPCs look
-        enemy.setSpriteController(getNewSpriteController());
+        enemy.setSpriteController(getNewEnemySpriteController());
 
         //Set NPC stats and details
         enemy.firstName = getFirstName();

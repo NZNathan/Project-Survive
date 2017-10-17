@@ -25,11 +25,6 @@ public class GunnerClass : CClass {
 
 		defensiveAbilityPool[0] = new DodgeRoll();
 
-		//Set up special Abilities
-		specialAbilityPool = new Ability[1];
-
-		specialAbilityPool[0] = new Parry();
-
 		//Set up basic and heavy attacks
 		basicAttack = new BasicShoot();
 		heavyAttack = new HeavyAttack();

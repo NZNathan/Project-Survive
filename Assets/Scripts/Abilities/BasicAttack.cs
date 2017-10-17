@@ -21,6 +21,7 @@ public class BasicAttack : Ability
         icon = AbilitySprite.DASHSTRIKE;
         name = "Basic Strike";
         animation = "attack";
+        causeOfDeath = "Cut down";
 
         //Setup cooldown
         cooldownTime = 0f;
@@ -104,6 +105,13 @@ public class BasicAttack : Ability
                     caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();
                     caster.attackHit();
+
+                    CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
+
+                    if(targetHit != null)
+                    {
+                        targetHit.causeOfDeath = causeOfDeath;
+                    }
 
                     lastAttack = Time.time;
                     //caster.canCombo = true;

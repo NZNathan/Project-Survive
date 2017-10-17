@@ -16,6 +16,7 @@ public class DashStrike : Ability {
         icon = AbilitySprite.DASHSTRIKE;
         name = "Dash Strike";
         animation = "attack";
+        causeOfDeath = "Not fast enough";
 
         //Setup cooldown
         cooldownTime = 5f;
@@ -38,6 +39,9 @@ public class DashStrike : Ability {
 
     protected override IEnumerator abilityActionSequence()
     {
+        //Start Cooldown
+        cooldownStartTime = Time.time;
+
         string oldLayer = LayerMask.LayerToName(caster.gameObject.layer);
         caster.gameObject.layer = C.noCollisionLayer;
 
@@ -79,6 +83,13 @@ public class DashStrike : Ability {
                     objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
                     objectHit.knockUp(pos, abilityKnockback, abilityKnockUp, objectHit.objectHeight);
 
+                    CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
+
+                    if (targetHit != null)
+                    {
+                        targetHit.causeOfDeath = causeOfDeath;
+                    }
+
                     caster.audioSource.clip = abilitySound;
                     caster.audioSource.Play();
 
@@ -96,6 +107,7 @@ public class DashStrike : Ability {
             caster.gameObject.layer = LayerMask.NameToLayer(oldLayer);
             yield return new WaitForSeconds(caster.pauseAfterAttack);
         }
+
         caster.getAttackTrigger().resetTrigger();
         caster.canMove = true;
         caster.attacking = false;

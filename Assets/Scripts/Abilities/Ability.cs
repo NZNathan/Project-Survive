@@ -24,8 +24,10 @@ public abstract class Ability {
     //Ability Names
     public string name;
     protected string animation;
-    
+    protected string causeOfDeath;
+
     //Cooldown Variables
+    protected float cooldownStartTime = 0f;
     protected float cooldownTime = 5f;
     protected float newCooldownTime = 5f;
     private float agilityMod = 0.1f;
@@ -78,7 +80,7 @@ public abstract class Ability {
 
     public bool onCooldown()
     {
-        return cooldown;
+        return cooldownStartTime + getCooldown() > Time.time || cooldown;
     }
 
     public float getCooldown()

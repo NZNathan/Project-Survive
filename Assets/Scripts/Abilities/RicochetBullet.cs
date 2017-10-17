@@ -24,6 +24,9 @@ public class RicochetBullet : MonoBehaviour {
     private float rebounded = 0;
     private float reboundTime = 0.1f;
 
+    //Death variables
+    private string causeOfDeath = "Caught by a ricocheting bullet";
+
     //Speed Variables
     private float velocity = .25f;
     private Vector3 dir;
@@ -83,6 +86,9 @@ public class RicochetBullet : MonoBehaviour {
 
             //Apply stun to the target
             targetHit.applyStun(stunTime);
+
+            if (enemy != null)
+                enemy.causeOfDeath = causeOfDeath;
 
             //TODO: Play audio sound
             caster.attackHit();

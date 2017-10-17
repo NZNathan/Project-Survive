@@ -17,6 +17,7 @@ public class LanceShot : Ability
         icon = AbilitySprite.LANCE;
         name = "Lance Shot";
         animation = "attack";
+        causeOfDeath = "Took a bullet to the knee";
 
         //Setup cooldown
         cooldownTime = 5f;
@@ -26,6 +27,9 @@ public class LanceShot : Ability
 
         //Stunned time applied to the target
         stunTime = 0.5f;
+
+        //Setup sound
+        abilitySound = MusicManager.instance.gunShot;
     }
 
     //Initialise here
@@ -41,6 +45,7 @@ public class LanceShot : Ability
 
     protected override IEnumerator abilityActionSequence()
     {
+        cooldownStartTime = Time.time;
 
         //Wait until the attack frame in the animation has been reached
         while (!caster.getAttackTrigger().hasAttackTriggered())
@@ -57,6 +62,10 @@ public class LanceShot : Ability
         //Setup and turn on bullet
         b.gameObject.SetActive(true);
         b.Setup(caster, direction);
+
+        //Play sound
+        caster.audioSource.clip = abilitySound;
+        caster.audioSource.Play();
 
         RaycastHit2D[] hitObject = Physics2D.RaycastAll(pos, direction, abilityRange, CMoveCombatable.attackMask, -10, 10);
         Debug.DrawRay(pos, direction * abilityRange, Color.blue, 3f);
@@ -81,6 +90,13 @@ public class LanceShot : Ability
                 objectHit.loseHealth(abilityDamage);
                 objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
                 objectHit.knockUp(pos, abilityKnockback, abilityKnockUp, objectHit.objectHeight);
+
+                CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
+
+                if (targetHit != null)
+                {
+                    targetHit.causeOfDeath = causeOfDeath;
+                }
 
                 //caster.audioSource.clip = abilitySound;
                 //caster.audioSource.Play();

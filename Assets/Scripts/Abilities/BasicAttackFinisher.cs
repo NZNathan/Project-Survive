@@ -17,6 +17,7 @@ public class BasicAttackFinisher : Ability
         icon = AbilitySprite.DASHSTRIKE;
         name = "Basic Attack Finisher";
         animation = "attack";
+        causeOfDeath = "Got comboed. Hard";
 
         //Setup cooldown
         cooldownTime = 0f;
@@ -91,6 +92,13 @@ public class BasicAttackFinisher : Ability
                     objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
                     objectHit.knockUp(pos, abilityKnockback, abilityKnockUp, objectHit.objectHeight);
                     objectHit.loseHealth(abilityDamage);
+
+                    CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
+
+                    if (targetHit != null)
+                    {
+                        targetHit.causeOfDeath = causeOfDeath;
+                    }
 
                     caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();

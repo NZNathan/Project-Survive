@@ -22,6 +22,7 @@ public class BasicAttackCombo : Ability
         icon = AbilitySprite.DASHSTRIKE;
         name = "Basic Attack Combo";
         animation = "attack";
+        causeOfDeath = "Cut down";
 
         //Setup cooldown
         cooldownTime = 0f;
@@ -97,6 +98,13 @@ public class BasicAttackCombo : Ability
                     //Apply damage and knockback
                     objectHit.setAttacker(caster);
                     objectHit.loseHealth(abilityDamage);
+
+                    CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
+
+                    if (targetHit != null)
+                    {
+                        targetHit.causeOfDeath = causeOfDeath;
+                    }
 
                     caster.audioSource.clip = caster.attackSound;
                     caster.audioSource.Play();

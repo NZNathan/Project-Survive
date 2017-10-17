@@ -10,6 +10,8 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
     public static Camera cam;
 
+    public bool onTitle = false;
+
     //Raycast Variables
     private LayerMask blockMask; //Layer that all attackable objects are on
     public static float ObjectFade = 0.5f;
@@ -124,6 +126,9 @@ public class CameraFollow : MonoBehaviour
 
     bool cameraAtMapEdge(Vector2 nextPos)
     {
+        if (onTitle)
+            return true;
+
         if (screenLocked)
             return false;
 

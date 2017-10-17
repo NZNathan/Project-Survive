@@ -41,6 +41,9 @@ public class DodgeRoll : Ability
 
     protected override IEnumerator abilityActionSequence()
     {
+        //Start Cooldown
+        cooldownStartTime = Time.time;
+
         caster.rb2D.AddForce(direction * abilityVelocity);
         caster.setInvulnerable(abilityDuration);
         caster.startCollisionsOff(abilityDuration);

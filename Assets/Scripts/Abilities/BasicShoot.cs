@@ -14,6 +14,7 @@ public class BasicShoot : Ability
         icon = AbilitySprite.DODGEROLL;
         name = "Basic Shot";
         animation = "attack";
+        causeOfDeath = "Gunned down";
 
         //Setup cooldown
         cooldownTime = 0f;

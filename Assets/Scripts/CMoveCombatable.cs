@@ -42,6 +42,9 @@ public abstract class CMoveCombatable : CMoveable {
     protected bool lastAttackHit = false;
     public bool parrying = false;
 
+    //Death variable
+    public string causeOfDeath = "Cut down";
+
     //Heavy Attack Variables
     //protected float chargeTime = 0.5f;
     //protected float startedHolding = float.MaxValue;

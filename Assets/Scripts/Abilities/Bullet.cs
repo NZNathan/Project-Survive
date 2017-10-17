@@ -27,6 +27,9 @@ public class Bullet : MonoBehaviour {
     private float velocity = .25f;
     private Vector3 dir;
 
+    //Death variable
+    private string causeOfDeath = "Gunned down";
+
 	// Use this for initialization
 	public void Setup(CMoveCombatable caster, int damage, float stunTime, Vector3 dir)
     {
@@ -90,6 +93,8 @@ public class Bullet : MonoBehaviour {
             targetHit.setAttacker(caster);
             //objectHit.knockback(pos, abilityKnockback, objectHit.objectHeight); //Need to use original pos for knockback so the position of where you attacked from is the knockback
             targetHit.loseHealth(damage);
+            if (enemy != null)
+                enemy.causeOfDeath = causeOfDeath;
 
             //Apply stun to the target
             //targetHit.applyStun(stunTime);

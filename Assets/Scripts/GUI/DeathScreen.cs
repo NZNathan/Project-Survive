@@ -81,6 +81,7 @@ public class DeathScreen : MonoBehaviour {
         //Set up text
         characterName.text = Player.instance.firstName + " " + Player.instance.lastName;
         player.setSpriteController(Player.instance.getSpriteController());
+        causeOfDeath.text = Player.instance.causeOfDeath;
 
         //Set up revenge Target
         CMoveCombatable newRevengeTarget = Player.instance.getAttacker();
@@ -106,13 +107,13 @@ public class DeathScreen : MonoBehaviour {
 			animators[i].runtimeAnimatorController = children[i].getSpriteController();
 
 			for(int j = 0; j < 3; j++){
-
-				abilities[j + (3 * i)].sprite = children[i].getClass().abilities[j].getIcon();
                 statTexts[j + (3 * i)].text = children[i].getStats()[j].ToString();
 			}
-				
 
-			children[i].gameObject.SetActive(false);
+            abilities[0].sprite = children[i].getClass().abilities[0].getIcon();
+            abilities[1].sprite = children[i].getClass().abilities[1].getIcon();
+
+            children[i].gameObject.SetActive(false);
 		}
 	}
 
