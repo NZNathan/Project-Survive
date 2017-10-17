@@ -123,7 +123,7 @@ public class Enemy : CMoveCombatable {
 
     public void attackTarget()
     {
-        if (true)
+        if (isBoss)
         {
             if (!characterClass.abilities[0].onCooldown())
             {

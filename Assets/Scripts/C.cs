@@ -42,7 +42,7 @@ public class C : CHitable {
         base.Start();
         originalLayer = gameObject.layer;
 
-        animator = GetComponentInChildren<Animator>();
+		animator = GetComponentInChildren<Animator>();
         objectHeight = 0.48f;
     }
 
@@ -50,6 +50,7 @@ public class C : CHitable {
     void Awake ()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		spriteRenderer.sprite = null;
         defaultMat = Resources.Load<Material>("Materials/Light_Shader");
         whiteMat = Resources.Load<Material>("Materials/SolidWhite");
     }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8d57df6cabe27d74d84e534335aed7c9
-timeCreated: 1506504793
+timeCreated: 1508211027
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -14,6 +14,7 @@ TextureImporter:
     21300014: dodgeroll_7
     21300016: dodgeroll_8
     21300018: dodgeroll_9
+    21300020: dodgeroll_10
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -108,9 +109,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 54
-        width: 41
-        height: 27
+        y: 400
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,10 +121,10 @@ TextureImporter:
       name: dodgeroll_1
       rect:
         serializedVersion: 2
-        x: 41
-        y: 54
-        width: 41
-        height: 27
+        x: 0
+        y: 360
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,10 +134,10 @@ TextureImporter:
       name: dodgeroll_2
       rect:
         serializedVersion: 2
-        x: 82
-        y: 54
-        width: 41
-        height: 27
+        x: 0
+        y: 320
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,10 +147,10 @@ TextureImporter:
       name: dodgeroll_3
       rect:
         serializedVersion: 2
-        x: 123
-        y: 54
-        width: 41
-        height: 27
+        x: 0
+        y: 280
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,9 +161,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 27
-        width: 41
-        height: 27
+        y: 240
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,10 +173,10 @@ TextureImporter:
       name: dodgeroll_5
       rect:
         serializedVersion: 2
-        x: 41
-        y: 27
-        width: 41
-        height: 27
+        x: 0
+        y: 200
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,10 +186,10 @@ TextureImporter:
       name: dodgeroll_6
       rect:
         serializedVersion: 2
-        x: 82
-        y: 27
-        width: 41
-        height: 27
+        x: 0
+        y: 160
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -198,10 +199,10 @@ TextureImporter:
       name: dodgeroll_7
       rect:
         serializedVersion: 2
-        x: 123
-        y: 27
-        width: 41
-        height: 27
+        x: 0
+        y: 120
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,9 +213,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 41
-        height: 27
+        y: 80
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,10 +225,23 @@ TextureImporter:
       name: dodgeroll_9
       rect:
         serializedVersion: 2
-        x: 41
+        x: 0
+        y: 40
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dodgeroll_10
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
-        width: 41
-        height: 27
+        width: 101
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
