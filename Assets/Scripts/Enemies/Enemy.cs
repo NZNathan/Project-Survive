@@ -124,7 +124,7 @@ public class Enemy : CMoveCombatable {
         else
             animator.SetFloat("movementSpeed", 5f);
 
-        return (dir * movementSpeed);
+        return (dir * movementSpeed * agilityMod());
 
     }
 

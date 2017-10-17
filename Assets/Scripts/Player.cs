@@ -195,7 +195,7 @@ public class Player : CMoveCombatable
         else if (movement.x > 0 && transform.localScale.x != 1)
             faceRight();
 
-        return movement * movementSpeed;// * Time.deltaTime;
+        return movement * movementSpeed * agilityMod();// * Time.deltaTime;
     }
 
     public override bool attack(Ability action)

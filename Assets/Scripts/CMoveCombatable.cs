@@ -12,6 +12,7 @@ public abstract class CMoveCombatable : CMoveable {
     public int agility = 1;
     public int endurance = 1;
     protected int endMod = 10;
+    protected float aglMod = 0.1f;
 
     //Character Class
     protected CClass characterClass;
@@ -95,6 +96,15 @@ public abstract class CMoveCombatable : CMoveable {
     {
         chargedHeavy = true;
         animator.SetBool("charged", true);
+    }
+
+    /// <summary>
+    /// Returns the modifier applied from the agility stat
+    /// </summary>
+    /// <returns></returns>
+    protected float agilityMod()
+    {
+        return 1f + (agility * aglMod);
     }
 
     /// <summary>

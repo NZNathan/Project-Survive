@@ -170,7 +170,7 @@ public class CameraFollow : MonoBehaviour
 
             Vector3 smoothPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothSpeed);
 
-            transform.position = smoothPos;
+            transform.position = smoothPos + offest;
         }
     }
 }
