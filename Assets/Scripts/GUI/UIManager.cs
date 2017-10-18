@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     private DeathScreen deathScreen;
     private LoadScreen loadScreen;
     public Tooltip tooltip;
+    public PopupMessage popupMessage;
     public LevelUpGUI levelUpWindow;
     public shopSystem shopWindow;
     public EquipmentGUI equipmentGUI;
@@ -55,6 +56,11 @@ public class UIManager : MonoBehaviour
     public void resetXPBar()
     {
         playerGUI.resetBar();
+    }
+
+    public void resetXp(int cap)
+    {
+        playerGUI.resetXp(cap);
     }
 
     public void usedAbility(int ability)
@@ -120,6 +126,13 @@ public class UIManager : MonoBehaviour
     public void closeTooltip()
     {
         tooltip.closeTooltip();
+    }
+    #endregion
+
+    #region ---- Popup Message METHODS ----
+    public void newPopup(string message)
+    {
+        popupMessage.newPopup(message);
     }
     #endregion
 

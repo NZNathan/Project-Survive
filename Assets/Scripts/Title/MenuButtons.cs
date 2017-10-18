@@ -14,6 +14,11 @@ public class MenuButtons : MonoBehaviour {
         StartCoroutine(switchScene());
     }
 
+    public void quitGame()
+    {
+        Application.Quit();
+    }
+
     public IEnumerator switchScene()
     {
         MusicManager.instance.fadeMusic();
@@ -29,6 +34,6 @@ public class MenuButtons : MonoBehaviour {
             yield return new WaitForSeconds(0.01f);
         }
 
-        SceneManager.LoadSceneAsync("Main");
+        SceneManager.LoadSceneAsync("Tutorial");
     }
 }

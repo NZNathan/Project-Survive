@@ -29,6 +29,12 @@ public class PlayerGUI : MonoBehaviour {
         xpBar.fillAmount = 0;
     }
 
+    public void resetXp(int cap)
+    {
+        currentXp = 0;
+        currentXpCap = cap;
+    }
+
     public void setAbilities(Ability[] abilities)
     {
         for(int i = 0; i < abilities.Length; i++)

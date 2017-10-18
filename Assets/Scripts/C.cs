@@ -177,7 +177,7 @@ public class C : CHitable {
 	// Update is called once per frame
 	protected void Update ()
     {
-        spriteRenderer.sortingOrder = (int) (transform.position.y*10 *-1);   
+        spriteRenderer.sortingOrder = (int) (transform.position.y*10 *-1 + 2);   
 	}
 
 }

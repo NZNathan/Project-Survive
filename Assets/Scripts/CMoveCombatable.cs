@@ -103,7 +103,7 @@ public abstract class CMoveCombatable : CMoveable {
         animator.SetBool("charged", true);
     }
 
-    public void levelup(int levels)
+    public virtual void levelup(int levels)
     {
         levelupChanges = new int[4];
 
@@ -212,6 +212,9 @@ public abstract class CMoveCombatable : CMoveable {
 
     public override void knockUp(Vector2 target, int knockbackForce, int knockupForce, float targetHeight)
     {
+        if (knockbackImmunity)
+            return;
+
         if (attackAction != null)
         {
             StopCoroutine(attackAction);

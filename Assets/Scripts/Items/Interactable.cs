@@ -1,16 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Interactable : MonoBehaviour {
 
-	private bool withinRange = false;
+    public bool tutorial = false;
+	protected bool withinRange = false;
 
 
 	public virtual void use()
 	{
-        WorldManager.instance.increaseLevel();
-        UIManager.instance.newLoadScreen();
+        if (tutorial)
+        {
+            SceneManager.LoadSceneAsync("Main");
+        }
+        else
+        {
+            WorldManager.instance.increaseLevel();
+            UIManager.instance.newLoadScreen();
+        }
 
         this.enabled = false;
 	}
@@ -36,7 +45,7 @@ public class Interactable : MonoBehaviour {
 
 	void Update()
 	{
-		bool eKeyDown = Input.GetKeyDown(KeyCode.E);
+		bool eKeyDown = Input.GetKeyUp(KeyCode.E);
 
 		if(eKeyDown && withinRange)
 			use();

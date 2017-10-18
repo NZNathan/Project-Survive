@@ -12,6 +12,8 @@ public class LandscapeGen : MonoBehaviour {
     //Sprite Gen Variables
     public SpriteGen spriteGenerator;
 
+    public bool tutorial = false;
+
     //Area Gen Variables -- Have a enum here for terrian type? (Forest, desert, grassland)
     [Range(3, 99)]
     public int levelSize = 60; //first area is a town, seond is empty, last area will always be a transition area so always need at least 3
@@ -52,6 +54,9 @@ public class LandscapeGen : MonoBehaviour {
 
         rightEdge = (levelSize-2) * areaWidth - (areaWidth/2);
         leftEdge = -areaWidth; //Need to change if town size is changed
+
+        if (tutorial)
+            deleteLandscape();
     }
 
     public void nextLevel(int currentLevel)
@@ -193,7 +198,7 @@ public class LandscapeGen : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Player.instance == null || LoadScreen.loading)
+        if (Player.instance == null || LoadScreen.loading || tutorial)
             return;
 
         //Move into a invoke repeating method so it can be stopped and more efficient?

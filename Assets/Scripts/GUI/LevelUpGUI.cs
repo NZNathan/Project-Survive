@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelUpGUI : MonoBehaviour {
 
     public GameObject levelUpWindow;
+    public CharacterUI characterUI;
     public Text nameText;
     public Text levelText;
     public Text pointsText;
@@ -32,6 +33,7 @@ public class LevelUpGUI : MonoBehaviour {
         levelUpWindow.gameObject.SetActive(true);
 
         //Set up character
+        characterUI.setSpriteController(Player.instance.getSpriteController());
         nameText.text = Player.instance.getName();
 
         //Set player level

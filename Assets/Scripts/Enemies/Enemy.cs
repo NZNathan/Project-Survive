@@ -43,7 +43,7 @@ public class Enemy : CMoveCombatable {
 
         //Set up health
         if(isBoss)
-            maxHealth = endurance * endMod + (baseHealth * 2);
+            maxHealth = endurance * endMod + (baseHealth * 4);
         else
             maxHealth = endurance * endMod + (baseHealth);
         currentHealth = maxHealth;

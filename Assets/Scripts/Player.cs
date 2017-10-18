@@ -57,6 +57,7 @@ public class Player : CMoveCombatable
         animator = GetComponentInChildren<Animator>();
 
         UIManager.instance.setAbilities(characterClass.abilities);
+        UIManager.instance.resetXp(xpPerLevel);
     }
 
     public void setSingleton()
@@ -396,6 +397,13 @@ public class Player : CMoveCombatable
 
         //Update UI xp bar
         UIManager.instance.addXp(xp, xpPerLevel);
+    }
+
+    public override void levelup(int levels)
+    {
+        base.levelup(levels);
+
+        xpPerLevel += xpPerLevelIncrease * levels;
     }
 
     public override void applyStun(float stunTime)

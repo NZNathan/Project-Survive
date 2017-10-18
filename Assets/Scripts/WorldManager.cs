@@ -8,6 +8,9 @@ public class WorldManager : MonoBehaviour {
     //Singleton
     public static WorldManager instance;
 
+    //Tutorial Variables
+    public bool inTutorial = false;
+
     //Boundaries
     public static float lowerBoundary = -3.8f;
     public static float upperBoundary = 3.8f;
@@ -42,6 +45,7 @@ public class WorldManager : MonoBehaviour {
         banterGen = new BanterGenerator();
         currentPlayer = spriteGenerator.createNewPlayer();
         cam = Camera.main.GetComponentInParent<CameraFollow>();
+        cam.target = currentPlayer.transform;
         Cursor.visible = false;
     }
 
