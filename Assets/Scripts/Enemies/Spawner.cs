@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Spawner : MonoBehaviour {
 
-    public C characterSpawnType;
+    public Enemy characterSpawnType;
     public bool turnRight = false;
     public bool bossSpawn = false;
     public BossArea bossArea;
@@ -18,9 +18,9 @@ public class Spawner : MonoBehaviour {
         this.gameObject.SetActive(false);
 	}
 
-    public C spawnCharacter()
+    public Enemy spawnCharacter()
     {
-        C character = Instantiate(characterSpawnType, transform.position, Quaternion.identity);
+        Enemy character = Instantiate(characterSpawnType, transform.position, Quaternion.identity);
         character.transform.SetParent(transform.parent);
 
         if (turnRight)

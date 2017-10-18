@@ -48,6 +48,7 @@ public class LoadScreen : MonoBehaviour {
         if(Player.instance != null)
             Player.instance.setInMenu(true);
 
+        MusicManager.instance.playFieldMusic();
         loadScreen.gameObject.SetActive(true);
         levelText.text = "Forest 1-" + WorldManager.mapLevel;
 

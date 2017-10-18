@@ -7,7 +7,7 @@ public class MeleeClass : CClass {
 	// Use this for initialization
 	public MeleeClass () 
 	{
-		name = "Melee";
+		name = "Duelist";
     	setupClass();
 		selectRandomAbilities();
 	}

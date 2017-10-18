@@ -12,13 +12,13 @@ public class SpriteGen : MonoBehaviour {
     //Base Prefabs
     public Player playerBase;
     public Enemy enemyBase;
-    public C npcBase;
+    public CMoveCombatable npcBase;
 
     //Sprites
     public RuntimeAnimatorController[] playerControllers;
     public RuntimeAnimatorController[] NPCControllers;
-    public RuntimeAnimatorController[] feralControllers;
-    public RuntimeAnimatorController[] banditControllers;
+    public RuntimeAnimatorController[] duelistControllers;
+    public RuntimeAnimatorController[] shooterControllers;
 
     //Details
     public static string[] firstNames;
@@ -39,9 +39,13 @@ public class SpriteGen : MonoBehaviour {
     }
 
     //Returns a random sprite[] 
-    public RuntimeAnimatorController getSpriteController(C character)
+    public RuntimeAnimatorController getSpriteController(CMoveCombatable character)
     {
         RuntimeAnimatorController[] spriteControllers;
+
+        //If class is null
+        if (character.getClass() == null)
+            character.chooseRandomClass();
 
         switch (character.faction)
         {
@@ -51,11 +55,11 @@ public class SpriteGen : MonoBehaviour {
             case (Faction.None):
                 spriteControllers = NPCControllers;
                 break;
-            case (Faction.Bandit):
-                spriteControllers = banditControllers;
-                break;
             default:
-                spriteControllers = feralControllers;
+                if (character.getClass().name == "Sharpshooter")
+                    spriteControllers = shooterControllers;
+                else
+                    spriteControllers = duelistControllers;
                 break;
         }
         
@@ -89,10 +93,10 @@ public class SpriteGen : MonoBehaviour {
             else
             {
                 //Get the spawner to spawn the prefab
-                C character = spawner.spawnCharacter();
+                Enemy character = spawner.spawnCharacter();
 
                 if(Player.instance != null)
-                    ((Enemy) character).levelup(Player.instance.level - 1);
+                   character.levelup(Player.instance.level - 1);
 
                 //Change the new NPCs look
                 character.setSpriteController(getSpriteController(character));
@@ -131,7 +135,7 @@ public class SpriteGen : MonoBehaviour {
 
     public void createNewNPC(Transform parent, Vector2 spawnPoint)
     {
-        C npc = Instantiate(npcBase, spawnPoint, Quaternion.identity);
+        CMoveCombatable npc = Instantiate(npcBase, spawnPoint, Quaternion.identity);
 
         //Set Parent and then reset position in relation to parent
         npc.transform.SetParent(parent);
@@ -140,7 +144,7 @@ public class SpriteGen : MonoBehaviour {
         generateNPC(npc);
     }
 
-    void generateNPC(C npc)
+    void generateNPC(CMoveCombatable npc)
     {
         //Change the new NPCs look
         npc.setSpriteController(getSpriteController(npc));

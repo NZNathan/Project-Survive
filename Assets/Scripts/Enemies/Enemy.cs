@@ -38,7 +38,7 @@ public class Enemy : CMoveCombatable {
         renderer = GetComponentInChildren<SpriteRenderer>();
 
 
-        if(characterClass.name == "Gunner")
+        if(characterClass.name == "Sharpshooter")
             attackRange = 4f;
 
         //Set up health
@@ -98,7 +98,7 @@ public class Enemy : CMoveCombatable {
         characterClass.setupClass();
         characterClass.selectAbilities();
 
-        if (characterClass.name == "Gunner")
+        if (characterClass.name == "Sharpshooter")
             attackRange = 4f;
 
         traits = self.traits;
@@ -108,7 +108,7 @@ public class Enemy : CMoveCombatable {
         animator.runtimeAnimatorController = self.spriteController;
         resetTriggers();
 
-        if (characterClass.name == "Gunner")
+        if (characterClass.name == "Sharpshooter")
             animator.SetBool("gunner", true);
         else
             animator.SetBool("melee", true);

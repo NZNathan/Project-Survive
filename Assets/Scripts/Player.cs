@@ -216,6 +216,7 @@ public class Player : CMoveCombatable
     {
         base.death();
 
+        MusicManager.instance.stopTrack();
         WorldManager.instance.playerDied(this);
     }
 

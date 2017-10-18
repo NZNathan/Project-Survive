@@ -55,8 +55,11 @@ public class MusicManager : MonoBehaviour {
 
     public void playBossMusic()
     {
-        audioSource.clip = bossTheme;
-        audioSource.Play();
+        if (!onMenu)
+        {
+            audioSource.clip = bossTheme;
+            audioSource.Play();
+        }
     }
 
     public void playFieldMusic()
@@ -72,8 +75,11 @@ public class MusicManager : MonoBehaviour {
 
     public void playBattleMusic()
     {
-        audioSource.clip = battleTheme;
-        audioSource.Play();
+        if (!onMenu)
+        {
+            audioSource.clip = battleTheme;
+            audioSource.Play();
+        }
     }
 
     public IEnumerator fadeMusic()
@@ -99,7 +105,7 @@ public class MusicManager : MonoBehaviour {
 
     public void addEnemy()
     {
-        if (enemiesOnScreen == 0)
+        if (enemiesOnScreen == 0 && audioSource != null && audioSource.clip != bossTheme)
         {
             playBattleMusic();
         }
@@ -113,7 +119,7 @@ public class MusicManager : MonoBehaviour {
         {
             enemiesOnScreen--;
 
-            if (enemiesOnScreen == 0)
+            if (enemiesOnScreen == 0 && audioSource != null && audioSource.clip != bossTheme)
             {
                 playFieldMusic();
             }

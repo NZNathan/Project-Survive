@@ -7,7 +7,7 @@ public class GunnerClass : CClass {
 	// Use this for initialization
 	public GunnerClass () 
 	{
-		name = "Gunner";
+		name = "Sharpshooter";
     	setupClass();
 		selectRandomAbilities();
 	}

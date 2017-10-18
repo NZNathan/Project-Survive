@@ -6,14 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour {
 
+    public string familyName;
+
     public CanvasGroup blackScreen;
+    public GameObject nameWindow;
+    public GameObject[] buttons;
     private float fadeStep = 0.05f;
 
     public GameObject optionsMenu;
 
     public void startGame()
-    {
-        StartCoroutine(switchScene());
+    { 
+        foreach (GameObject btn in buttons)
+            btn.SetActive(false);
+
+        nameWindow.SetActive(true);
     }
 
     public void closeOptions()
@@ -47,5 +54,20 @@ public class MenuButtons : MonoBehaviour {
         }
 
         SceneManager.LoadSceneAsync("Tutorial");
+    }
+
+    public void setName(string newName)
+    {
+        familyName = newName;
+    }
+
+    public void doneBtn()
+    {
+        if (familyName.Length >= 2)
+        {
+            Player.familyName = familyName;
+            StartCoroutine(switchScene());
+        }
+
     }
 }
