@@ -65,7 +65,6 @@ public class SpriteGen : MonoBehaviour {
         
 
         int spriteSet = Random.Range(0, spriteControllers.Length); //Will never be 2
-
         return spriteControllers[spriteSet];
     }
 

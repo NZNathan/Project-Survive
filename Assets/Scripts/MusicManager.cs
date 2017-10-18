@@ -22,12 +22,17 @@ public class MusicManager : MonoBehaviour {
     //Enemy Variable to control battle music
     private int enemiesOnScreen = 0;
 
+    public enum Track { MENU, FIELD, BATTLE, BOSS };
+
+    private Track playingTrack;
+
     [Header("Music Tracks")]
     //Music Tracks
     public AudioClip menuTheme;
     public AudioClip fieldTheme;
     public AudioClip battleTheme;
     public AudioClip bossTheme;
+
 
     [Header("Sounds Effects")]
     //Sound Effects
@@ -40,12 +45,31 @@ public class MusicManager : MonoBehaviour {
 
         audioSource = GetComponent<AudioSource>();
 
-        if(onMenu)
+        if (onMenu)
+        {
             audioSource.clip = menuTheme;
+            playingTrack = Track.MENU;
+        }
         else
+        {
             audioSource.clip = fieldTheme;
+            playingTrack = Track.FIELD;
+        }
 
         audioSource.Play();
+    }
+
+    public void reset()
+    {
+        enemiesOnScreen = 0;
+
+        if (playingTrack != Track.FIELD)
+        {
+            Debug.Log("dsf");
+            audioSource.clip = fieldTheme;
+            playingTrack = Track.FIELD;
+            audioSource.Play();
+        }
     }
 
     public void stopTrack()
@@ -58,17 +82,22 @@ public class MusicManager : MonoBehaviour {
         if (!onMenu)
         {
             audioSource.clip = bossTheme;
+            playingTrack = Track.BOSS;
             audioSource.Play();
         }
     }
 
     public void playFieldMusic()
     {
-        if (enemiesOnScreen != 0)
+        if (enemiesOnScreen != 0 && playingTrack != Track.BATTLE)
+        {
             playBattleMusic();
-        else
+            playingTrack = Track.BATTLE;
+        }
+        else if(playingTrack != Track.FIELD)
         {
             audioSource.clip = fieldTheme;
+            playingTrack = Track.FIELD;
             audioSource.Play();
         }
     }
@@ -78,6 +107,7 @@ public class MusicManager : MonoBehaviour {
         if (!onMenu)
         {
             audioSource.clip = battleTheme;
+            playingTrack = Track.BATTLE;
             audioSource.Play();
         }
     }
@@ -105,7 +135,7 @@ public class MusicManager : MonoBehaviour {
 
     public void addEnemy()
     {
-        if (enemiesOnScreen == 0 && audioSource != null && audioSource.clip != bossTheme)
+        if (!onMenu && enemiesOnScreen == 0 && audioSource != null && playingTrack != Track.BOSS)
         {
             playBattleMusic();
         }
@@ -115,14 +145,15 @@ public class MusicManager : MonoBehaviour {
 
     public void removeEnemy()
     {
-        if (enemiesOnScreen >= 0)
+        if (enemiesOnScreen > 0)
         {
             enemiesOnScreen--;
 
-            if (enemiesOnScreen == 0 && audioSource != null && audioSource.clip != bossTheme)
-            {
-                playFieldMusic();
-            }
+            
+        }
+        if (!onMenu && enemiesOnScreen == 0 && audioSource != null && playingTrack != Track.BOSS)
+        {
+            playFieldMusic();
         }
     }
 

@@ -17,6 +17,7 @@ public class Interactable : MonoBehaviour {
         }
         else
         {
+            MusicManager.instance.reset();
             WorldManager.instance.increaseLevel();
             UIManager.instance.newLoadScreen();
         }
