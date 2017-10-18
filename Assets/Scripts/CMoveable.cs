@@ -29,7 +29,7 @@ public abstract class CMoveable : C {
         col2D = GetComponent<CircleCollider2D>();
         audioSource = GetComponent<AudioSource>();
 
-        audioSource.volume = MusicManager.instance.soundEffectsVolume;
+        audioSource.volume = MusicManager.soundEffectsVolume;
     }
 
     public void facePoint(Vector3 point)

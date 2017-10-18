@@ -9,9 +9,21 @@ public class MenuButtons : MonoBehaviour {
     public CanvasGroup blackScreen;
     private float fadeStep = 0.05f;
 
+    public GameObject optionsMenu;
+
     public void startGame()
     {
         StartCoroutine(switchScene());
+    }
+
+    public void closeOptions()
+    {
+        optionsMenu.SetActive(false);
+    }
+
+    public void openOptions()
+    {
+        optionsMenu.SetActive(true);
     }
 
     public void quitGame()

@@ -11,9 +11,9 @@ public class MusicManager : MonoBehaviour {
 
     //Volume 
     [Range(0f, 1.0f)]
-    public float musicVolume = 1f;
+    public static float musicVolume = 1f;
     [Range(0f, 1.0f)]
-    public float soundEffectsVolume = 1f;
+    public static float soundEffectsVolume = 1f;
 
     private float fadeStep = 0.05f;
 
@@ -71,6 +71,16 @@ public class MusicManager : MonoBehaviour {
             audioSource.volume -= fadeStep;
             yield return new WaitForSeconds(0.01f);
         }
+    }
+
+    public void setMusicVolume(float volume)
+    {
+        musicVolume = volume;
+    }
+
+    public void setSoundVolume(float volume)
+    {
+        soundEffectsVolume = volume;
     }
 
     private void Update()
