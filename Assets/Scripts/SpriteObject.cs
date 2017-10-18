@@ -8,6 +8,8 @@ public class SpriteObject : MonoBehaviour {
     //Components
     private SpriteRenderer spriteRenderer;
 
+    public int offset = 0;
+
     //Optional children objects
     public SpriteObject[] children;
 
@@ -34,7 +36,7 @@ public class SpriteObject : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        spriteRenderer.sortingOrder = (int)(transform.position.y * 10 * -1);
+        spriteRenderer.sortingOrder = (int)(transform.position.y * 10 * -1 + offset);
         
     }
 

@@ -49,6 +49,9 @@ public class CameraFollow : MonoBehaviour
         defaultZoom = cam.orthographicSize;
         currentZoom = defaultZoom;
 
+        if(target != null)
+            transform.position = target.transform.position + offest;
+
         InvokeRepeating("checkPlayerObscured", 1, 0.1f);
     }
 
