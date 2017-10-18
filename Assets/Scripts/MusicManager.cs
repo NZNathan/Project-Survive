@@ -19,6 +19,9 @@ public class MusicManager : MonoBehaviour {
 
     public bool onMenu = false;
 
+    //Enemy Variable to control battle music
+    private int enemiesOnScreen = 0;
+
     [Header("Music Tracks")]
     //Music Tracks
     public AudioClip menuTheme;
@@ -45,16 +48,26 @@ public class MusicManager : MonoBehaviour {
         audioSource.Play();
     }
 
+    public void stopTrack()
+    {
+        audioSource.Stop();
+    }
+
     public void playBossMusic()
     {
         audioSource.clip = bossTheme;
         audioSource.Play();
     }
 
-    public void stopBossMusic()
+    public void playFieldMusic()
     {
-        audioSource.clip = fieldTheme;
-        audioSource.Play();
+        if (enemiesOnScreen != 0)
+            playBattleMusic();
+        else
+        {
+            audioSource.clip = fieldTheme;
+            audioSource.Play();
+        }
     }
 
     public void playBattleMusic()
@@ -76,6 +89,7 @@ public class MusicManager : MonoBehaviour {
     public void setMusicVolume(float volume)
     {
         musicVolume = volume;
+        audioSource.volume = musicVolume;
     }
 
     public void setSoundVolume(float volume)
@@ -83,9 +97,27 @@ public class MusicManager : MonoBehaviour {
         soundEffectsVolume = volume;
     }
 
-    private void Update()
+    public void addEnemy()
     {
-        audioSource.volume = musicVolume;
+        if (enemiesOnScreen == 0)
+        {
+            playBattleMusic();
+        }
+
+        enemiesOnScreen++;
+    }
+
+    public void removeEnemy()
+    {
+        if (enemiesOnScreen >= 0)
+        {
+            enemiesOnScreen--;
+
+            if (enemiesOnScreen == 0)
+            {
+                playFieldMusic();
+            }
+        }
     }
 
 }

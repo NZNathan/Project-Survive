@@ -122,7 +122,8 @@ public class DeathScreen : MonoBehaviour {
 
 		for(int i = 0; i < 3; i++){ 
 			children[i] = spriteGen.createNewPlayer();
-            children[i].levelup(Player.instance.level);
+            //Level up children to players level
+            children[i].levelup(Player.instance.level - 1);
 			//childrenUI[i].setSprites(children[i].getSprites());
 			namesText[i].text = children[i].getName();
 			classText[i].text = children[i].getClass().name;

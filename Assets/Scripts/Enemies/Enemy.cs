@@ -209,10 +209,12 @@ public class Enemy : CMoveCombatable {
             ((Player)lastAttacker).addXp(xpWorth);
 
             UIManager.instance.closeBossGUI();
-            MusicManager.instance.stopBossMusic();
+            MusicManager.instance.playFieldMusic();
             WorldManager.instance.killRevengeTarget(this);
             CameraFollow.screenLocked = false;
         }
+        else if(FactionManager.instance.isHostile(faction, Faction.Player))
+            MusicManager.instance.removeEnemy();
 
         //Item drops
         foreach(DropableItem dropableItem in dropableItems)

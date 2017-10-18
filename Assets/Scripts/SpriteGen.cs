@@ -91,6 +91,9 @@ public class SpriteGen : MonoBehaviour {
                 //Get the spawner to spawn the prefab
                 C character = spawner.spawnCharacter();
 
+                if(Player.instance != null)
+                    ((Enemy) character).levelup(Player.instance.level - 1);
+
                 //Change the new NPCs look
                 character.setSpriteController(getSpriteController(character));
 

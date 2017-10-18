@@ -149,7 +149,7 @@ public class WorldManager : MonoBehaviour {
 
         CameraFollow.screenLocked = false;
 
-        MusicManager.instance.stopBossMusic();
+        MusicManager.instance.playFieldMusic();
 
         zoomIn(player.getAttacker().transform);
 

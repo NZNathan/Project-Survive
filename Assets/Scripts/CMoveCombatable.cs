@@ -392,4 +392,11 @@ public abstract class CMoveCombatable : CMoveable {
         return characterClass;
     }
 
+    private new void Update()
+    {
+        base.Update();
+
+        audioSource.volume = MusicManager.soundEffectsVolume;
+    }
+
 }
