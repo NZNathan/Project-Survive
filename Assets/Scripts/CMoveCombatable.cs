@@ -8,11 +8,16 @@ public abstract class CMoveCombatable : CMoveable {
 
     [Header("Character Stats")]
     public int level = 1;
+    protected int baseHealth = 10;
     public int strength = 1;
     public int agility = 1;
     public int endurance = 1;
     protected int endMod = 10;
     protected float aglMod = 0.1f;
+
+    //Level up Variables
+    [HideInInspector]
+    public int[] levelupChanges = new int[4];
 
     //Character Class
     protected CClass characterClass;
@@ -88,7 +93,7 @@ public abstract class CMoveCombatable : CMoveable {
         animator.SetFloat("attackSpeed", atkspd);
 
         //Set up stats
-        maxHealth = endurance * endMod;
+        maxHealth = endurance * endMod + baseHealth;
         currentHealth = maxHealth;
     }
 
@@ -96,6 +101,35 @@ public abstract class CMoveCombatable : CMoveable {
     {
         chargedHeavy = true;
         animator.SetBool("charged", true);
+    }
+
+    public void levelup(int levels)
+    {
+        levelupChanges = new int[4];
+
+        level += levels;
+        levelupChanges[0] += levels;
+
+        for (int i = 0; i < 3 * levels; i++)
+        {
+            float ran = Random.Range(0f, 1f);
+
+            if (ran < 0.33f)
+            {
+                strength++;
+                levelupChanges[1]++;
+            }
+            else if (ran < 0.66f)
+            {
+                agility++;
+                levelupChanges[2]++;
+            }
+            else
+            {
+                endurance++;
+                levelupChanges[3]++;
+            }
+        }
     }
 
     /// <summary>
@@ -342,6 +376,12 @@ public abstract class CMoveCombatable : CMoveable {
     {
         animator.ResetTrigger("stopCharge");
         animator.ResetTrigger("stopAttack");
+        animator.ResetTrigger("attack");
+        animator.ResetTrigger("dodgeroll");
+        animator.ResetTrigger("hitFloor");
+        animator.ResetTrigger("inAir");
+        animator.ResetTrigger("dash");
+        animator.ResetTrigger("parry");
     }
 
     public CClass getClass()

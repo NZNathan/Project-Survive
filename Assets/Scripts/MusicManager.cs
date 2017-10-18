@@ -15,8 +15,13 @@ public class MusicManager : MonoBehaviour {
     [Range(0f, 1.0f)]
     public float soundEffectsVolume = 1f;
 
+    private float fadeStep = 0.05f;
+
+    public bool onMenu = false;
+
     [Header("Music Tracks")]
     //Music Tracks
+    public AudioClip menuTheme;
     public AudioClip fieldTheme;
     public AudioClip battleTheme;
     public AudioClip bossTheme;
@@ -32,8 +37,11 @@ public class MusicManager : MonoBehaviour {
 
         audioSource = GetComponent<AudioSource>();
 
-        
-        audioSource.clip = fieldTheme;
+        if(onMenu)
+            audioSource.clip = menuTheme;
+        else
+            audioSource.clip = fieldTheme;
+
         audioSource.Play();
     }
 
@@ -53,6 +61,16 @@ public class MusicManager : MonoBehaviour {
     {
         audioSource.clip = battleTheme;
         audioSource.Play();
+    }
+
+    public IEnumerator fadeMusic()
+    {
+        //Fade in screen
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= fadeStep;
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     private void Update()

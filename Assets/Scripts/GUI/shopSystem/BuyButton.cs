@@ -39,7 +39,7 @@ public class BuyButton : MonoBehaviour {
 					item.gameObject.SetActive(false);
 					item.Start();
 					Player.instance.bag.addItem(item);
-					Debug.Log ("HAS BOUGHT ALREADY");
+                    shopSystem.shopsystem.UpdateUI();
 
 					updateBuyToUse ();
 					//WorldManager.instance.currentitemId = itemID;

@@ -33,8 +33,9 @@ public class Ancestor {
 
         Enemy killer = (Enemy)player.getAttacker();
 
-        killer.levelup();
-        killer.levelup();
+        killRevengeTarget(killer);
+
+        killer.levelup(2);
 
         revengeTarget = new RevengeTarget(killer);
     }
@@ -57,5 +58,26 @@ public class Ancestor {
     public Ancestor getChild()
     {
         return child;
+    }
+
+    /// <summary>
+    /// Takes an enemy, and if they are a previous revenge target, it sets them to dead
+    /// </summary>
+    /// <param name="enemy"></param>
+    public void killRevengeTarget(Enemy enemy)
+    {
+        Ancestor an = this;
+        RevengeTarget rt = new RevengeTarget(enemy);
+
+        while(an != null)
+        {
+            if (an.revengeTarget != null && an.revengeTarget.equals(rt))
+            {
+                an.revengeTarget.dead = true;
+                return;
+            }
+
+            an = an.parent;
+        }
     }
 }

@@ -7,6 +7,7 @@ public class LevelUpGUI : MonoBehaviour {
 
     public GameObject levelUpWindow;
     public Text nameText;
+    public Text levelText;
     public Text pointsText;
     public Text[] statTexts;
     public Text[] statValues;
@@ -32,6 +33,9 @@ public class LevelUpGUI : MonoBehaviour {
 
         //Set up character
         nameText.text = Player.instance.getName();
+
+        //Set player level
+        levelText.text = "Level " + Player.instance.level;
 
         //Set up points value text
         pointsText.text = "" + this.points;

@@ -12,7 +12,7 @@ public class MeleeClass : CClass {
 		selectRandomAbilities();
 	}
 	
-	protected override void setupClass()
+	public override void setupClass()
 	{
 		//Set up offensive Abilities
 		offensiveAbilityPool = new Ability[1];

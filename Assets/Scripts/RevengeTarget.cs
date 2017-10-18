@@ -9,6 +9,8 @@ public class RevengeTarget {
     public string firstName;
     public string lastName;
 
+    public bool dead = false;
+
     //Animator
     public RuntimeAnimatorController spriteController;
 
@@ -24,9 +26,6 @@ public class RevengeTarget {
     public int agility;
     public int endurance;
     public int attackDamage;
-
-    //Equipment
-    public GameObject weapon;
 
     /// <summary>
     /// Saves the stats and information about this enemy, so it can be recreated at a later point
@@ -51,5 +50,10 @@ public class RevengeTarget {
         traits = target.getTraits();
 
         spriteController = target.animator.runtimeAnimatorController;
+    }
+
+    public bool equals(RevengeTarget rt)
+    {
+        return rt.firstName == firstName && rt.lastName == lastName && rt.faction == faction; //&& rt.characterClass == characterClass && rt.spriteController == spriteController;
     }
 }

@@ -105,10 +105,35 @@ public class WorldManager : MonoBehaviour {
 
     public RevengeTarget getRevengeTarget()
     {
-        if (headAncestor == null)
-            return null;
+        if (tailAncestor == null)
+        {
+            if (headAncestor == null || headAncestor.revengeTarget.dead)
+                return null;
+            else
+                return headAncestor.revengeTarget;
+        }
 
-        return headAncestor.revengeTarget;
+        Ancestor an = tailAncestor;
+
+        while (an != null)
+        {
+            if (!an.revengeTarget.dead)
+                return an.revengeTarget;
+
+            an = an.getParent();
+        }
+
+        //Return null if all revenge targets are dead
+        return null;
+    }
+
+    public void killRevengeTarget(Enemy enemy)
+    {
+        if (tailAncestor != null)
+            tailAncestor.killRevengeTarget(enemy);
+
+        else if(headAncestor != null)
+            headAncestor.killRevengeTarget(enemy);
     }
 
     public void playerDied(Player player)

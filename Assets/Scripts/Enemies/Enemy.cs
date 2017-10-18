@@ -41,6 +41,13 @@ public class Enemy : CMoveCombatable {
         if(characterClass.name == "Gunner")
             attackRange = 4f;
 
+        //Set up health
+        if(isBoss)
+            maxHealth = endurance * endMod + (baseHealth * 2);
+        else
+            maxHealth = endurance * endMod + (baseHealth);
+        currentHealth = maxHealth;
+
         //Manage State
         state = new Stack<AIState>();
         state.Push(new IdleState(this));
@@ -88,7 +95,8 @@ public class Enemy : CMoveCombatable {
 
         //Set Class
         characterClass = self.characterClass;
-        Debug.Log(self.characterClass);
+        characterClass.setupClass();
+        characterClass.selectAbilities();
 
         if (characterClass.name == "Gunner")
             attackRange = 4f;
@@ -98,6 +106,14 @@ public class Enemy : CMoveCombatable {
         //Set animator
         animator = GetComponentInChildren<Animator>();
         animator.runtimeAnimatorController = self.spriteController;
+        resetTriggers();
+
+        if (characterClass.name == "Gunner")
+            animator.SetBool("gunner", true);
+        else
+            animator.SetBool("melee", true);
+
+        
     }
 
     public Vector3 getTargetPositon()
@@ -134,10 +150,14 @@ public class Enemy : CMoveCombatable {
         {
             if (!characterClass.abilities[0].onCooldown())
             {
+                Debug.Log(characterClass.abilities[0]);
                 attack(characterClass.abilities[0]);
             }
             else
+            {
+                Debug.Log("attack");
                 attack(characterClass.basicAttack);
+            }
         }
         else
             attack(characterClass.basicAttack);
@@ -185,8 +205,12 @@ public class Enemy : CMoveCombatable {
         //If enemy was a boss, then turn off boss GUI and change music
         if (isBoss)
         {
+            //Add xp again so player gets doubble xp from boss
+            ((Player)lastAttacker).addXp(xpWorth);
+
             UIManager.instance.closeBossGUI();
             MusicManager.instance.stopBossMusic();
+            WorldManager.instance.killRevengeTarget(this);
             CameraFollow.screenLocked = false;
         }
 
@@ -203,21 +227,6 @@ public class Enemy : CMoveCombatable {
         base.knockback(target, force, targetHeight);
 
         startCollisionsOff(collisionOffTime);
-    }
-
-    public void levelup()
-    {
-        for(int i = 0; i < 3; i++)
-        {
-            float ran = Random.Range(0f, 1f);
-
-            if (ran < 0.33f)
-                strength++;
-            else if (ran < 0.66f)
-                agility++;
-           else
-                endurance++;
-        }
     }
 
     private new void Update()

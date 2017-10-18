@@ -21,6 +21,7 @@ public class DeathScreen : MonoBehaviour {
 	public CharacterUI revengeTarget;
     public Text revengeFaction;
     public Text[] revengeStats = new Text[4];
+    public Text[] revengeStatChanges = new Text[4];
     public Image[] revengeAbilities = new Image[2];
 
     [Header("Inheritance Screen")]
@@ -100,12 +101,18 @@ public class DeathScreen : MonoBehaviour {
         //set up faction
         revengeFaction.text = newRevengeTarget.faction.ToString();
 
-        revengeStats[0].text = "Strength: " + newRevengeTarget.getStats()[0];
-        revengeStats[1].text = "Agility: " + newRevengeTarget.getStats()[1];
-        revengeStats[2].text = "Endurance: " + newRevengeTarget.getStats()[2];
-        revengeStats[3].text = "Level: " + newRevengeTarget.level;
+        revengeStats[0].text = "Level: " + newRevengeTarget.level;
+        revengeStats[1].text = "Strength: " + newRevengeTarget.getStats()[0];
+        revengeStats[2].text = "Agility: " + newRevengeTarget.getStats()[1];
+        revengeStats[3].text = "Endurance: " + newRevengeTarget.getStats()[2];
+        
 
-        revengeAbilities[0].sprite = newRevengeTarget.getClass().abilities[0].getIcon();
+        for (int i = 0; i < 4; i++)
+        {
+            revengeStatChanges[i].text = "+" + newRevengeTarget.levelupChanges[i];
+        }
+
+            revengeAbilities[0].sprite = newRevengeTarget.getClass().abilities[0].getIcon();
         revengeAbilities[1 ].sprite = newRevengeTarget.getClass().abilities[1].getIcon();
     }
 
@@ -115,6 +122,7 @@ public class DeathScreen : MonoBehaviour {
 
 		for(int i = 0; i < 3; i++){ 
 			children[i] = spriteGen.createNewPlayer();
+            children[i].levelup(Player.instance.level);
 			//childrenUI[i].setSprites(children[i].getSprites());
 			namesText[i].text = children[i].getName();
 			classText[i].text = children[i].getClass().name;
