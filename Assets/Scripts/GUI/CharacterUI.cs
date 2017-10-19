@@ -23,8 +23,10 @@ public class CharacterUI : MonoBehaviour {
     {
         animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = spriteController;
+        animator.SetTrigger("pop");
 
-        
+        if (image != null && spriteRenderer != null)
+            image.sprite = spriteRenderer.sprite;
     }
 
     private void Update()

@@ -1,9 +1,15 @@
 fileFormatVersion: 2
 guid: 0222db585455f6d428367b04fe5dd30c
-timeCreated: 1508190526
+timeCreated: 1508366383
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: running-chelsea-sprite2-ss_0
+    21300002: running-chelsea-sprite2-ss_1
+    21300004: running-chelsea-sprite2-ss_2
+    21300006: running-chelsea-sprite2-ss_3
+    21300008: running-chelsea-sprite2-ss_4
+    21300010: running-chelsea-sprite2-ss_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -92,7 +98,85 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: running-chelsea-sprite2-ss_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 200
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: running-chelsea-sprite2-ss_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: running-chelsea-sprite2-ss_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 120
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: running-chelsea-sprite2-ss_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: running-chelsea-sprite2-ss_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: running-chelsea-sprite2-ss_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

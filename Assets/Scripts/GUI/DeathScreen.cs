@@ -149,7 +149,9 @@ public class DeathScreen : MonoBehaviour {
 				Destroy(children[i].gameObject);
 		}
 
-		WorldManager.instance.resetPlayer(children[index]);
+        MusicManager.instance.stopTrack();
+        MusicManager.instance.playFieldMusic();
+        WorldManager.instance.resetPlayer(children[index]);
 		inheritanceGroup.alpha = 0f;
 		inheritanceGroup.gameObject.SetActive(false);
 		deathScreen.SetActive(false);

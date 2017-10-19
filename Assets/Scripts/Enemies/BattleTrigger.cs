@@ -22,7 +22,7 @@ public class BattleTrigger : MonoBehaviour {
 
     private void OnBecameInvisible()
     {
-        if (!enemy.isDead())
+        if (!enemy.isBoss && !enemy.isDead())
             MusicManager.instance.removeEnemy();
     }
 }

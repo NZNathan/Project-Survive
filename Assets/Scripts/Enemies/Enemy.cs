@@ -180,6 +180,7 @@ public class Enemy : CMoveCombatable {
         if (currentHealth <= 0)
         {
             currentHealth = 0;
+            dead = true;
             death();
         }
         else
@@ -200,20 +201,20 @@ public class Enemy : CMoveCombatable {
 
         //If the player killed this enemy, award xp to player
         if(lastAttacker.tag == "Player")
-            ((Player) lastAttacker).addXp(xpWorth);
+            ((Player) lastAttacker).addXp(xpWorth + level);
 
         //If enemy was a boss, then turn off boss GUI and change music
         if (isBoss)
         {
             //Add xp again so player gets doubble xp from boss
-            ((Player)lastAttacker).addXp(xpWorth);
+            ((Player)lastAttacker).addXp(xpWorth + level);
 
             UIManager.instance.closeBossGUI();
             MusicManager.instance.playFieldMusic();
             WorldManager.instance.killRevengeTarget(this);
             CameraFollow.screenLocked = false;
         }
-        else if(FactionManager.instance.isHostile(faction, Faction.Player))
+        else if(FactionManager.instance.isHostile(faction, Faction.Player) && renderer.isVisible)
             MusicManager.instance.removeEnemy();
 
         //Item drops

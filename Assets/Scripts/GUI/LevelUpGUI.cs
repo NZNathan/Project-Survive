@@ -23,17 +23,18 @@ public class LevelUpGUI : MonoBehaviour {
 
     public void openWindow()
     {
-        WorldManager.instance.slowTime();
+        //WorldManager.instance.slowTime();
 
         points = Player.instance.getLevelUpPoints();
 
         //Reinitialize statPints array so all values are at 0
         statPoints = new int[statTexts.Length];
 
-        levelUpWindow.gameObject.SetActive(true);
+        
 
         //Set up character
         characterUI.setSpriteController(Player.instance.getSpriteController());
+        Debug.Log(Player.instance.getSpriteController().name);
         nameText.text = Player.instance.getName();
 
         //Set player level
@@ -43,6 +44,8 @@ public class LevelUpGUI : MonoBehaviour {
         pointsText.text = "" + this.points;
 
         updateStats();
+
+        levelUpWindow.gameObject.SetActive(true);
     }
 
     public void updateStats()

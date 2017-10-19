@@ -9,6 +9,9 @@ public class MoveState : AIState
     //Hold a movement field to determine how to move?
     private float yRange = 0.04f;
 
+    private int tick = 0; //tick is one frame
+    private int tickUntillCall = 5;
+
     public MoveState(Enemy character)
     {
         this.character = character;
@@ -47,6 +50,19 @@ public class MoveState : AIState
             }
             return;
         }
+
+        //If walking to a friendly target, check for enemies
+        if (!FactionManager.instance.isHostile(character.faction, character.target.GetComponent<CMoveCombatable>().faction) && tick % tickUntillCall == 0)
+        {
+            //Transition to Move State If hostile target is within range
+            if (enemyNearby())
+            {
+                character.popState();
+                character.pushState(new MoveState(character));
+            }
+        }
+
+        tick++;
 
         //Leave till last so don't move if switching states
         character.rb2D.AddForce(gunnerMovement());

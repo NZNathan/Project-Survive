@@ -30,7 +30,7 @@ public class Player : CMoveCombatable
     [HideInInspector]
     public Bag bag;
     public ItemsInRange itemsInRange;
-    private int coins = 900;
+    public static int coins = 15;
 
     public new void Start()
     {
@@ -216,7 +216,9 @@ public class Player : CMoveCombatable
     {
         base.death();
 
-        MusicManager.instance.reset();
+        if (coins > 0)
+            coins /= 2;
+
         WorldManager.instance.playerDied(this);
     }
 

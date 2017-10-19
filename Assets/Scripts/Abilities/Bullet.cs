@@ -87,6 +87,9 @@ public class Bullet : MonoBehaviour {
                 return;
             }
 
+            if (enemy != null && enemy.isDead())
+                return;
+
             hitTarget = true;
 
             //Apply damage and knockback

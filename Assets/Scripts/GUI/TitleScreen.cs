@@ -7,12 +7,6 @@ public class TitleScreen : MonoBehaviour {
     public Transform cameraRig;
     public Vector3 scrollSpeed;
 
-    // Use this for initialization
-    void Start ()
-    {
-        
-
-    }
 	
 	// Update is called once per frame
 	void Update ()

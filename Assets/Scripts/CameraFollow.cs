@@ -31,7 +31,7 @@ public class CameraFollow : MonoBehaviour
 
     //Smooth Variables
     public float smoothSpeed = 0.125f;
-    public Vector3 offest;
+    public Vector3 offset;
 
     //Camera Edges
     //Y values to stop camera moving to high or low
@@ -47,10 +47,12 @@ public class CameraFollow : MonoBehaviour
         cam = GetComponentInChildren<Camera>();
         blockMask = LayerMask.GetMask("Sprite");
         defaultZoom = cam.orthographicSize;
-        currentZoom = defaultZoom;
+
+        if(!onTitle)
+            currentZoom = defaultZoom;
 
         if(target != null)
-            transform.position = target.transform.position + offest;
+            transform.position = target.transform.position + offset;
 
         InvokeRepeating("checkPlayerObscured", 1, 0.1f);
     }
@@ -103,7 +105,7 @@ public class CameraFollow : MonoBehaviour
         cam.orthographicSize = defaultZoom;
         this.target = target;
 
-        transform.position = target.position + offest + new Vector3(0, 1, 0); //Add the extra vector at the end or it resets camera too low on the y axis
+        transform.position = target.position + offset + new Vector3(0, 1, 0); //Add the extra vector at the end or it resets camera too low on the y axis
 
         cutsceneBars.SetActive(false);
     }
@@ -160,7 +162,7 @@ public class CameraFollow : MonoBehaviour
 
         if (target != null)
         {
-            Vector3 desiredPos = target.position + offest;
+            Vector3 desiredPos = target.position + offset;
 
             //Clamp Y value if out of bounds
             if(desiredPos.y > yUpperClamp && !zooming)
@@ -169,11 +171,17 @@ public class CameraFollow : MonoBehaviour
                 desiredPos = new Vector3(desiredPos.x, yLowerClamp, 0);
 
             if (cameraAtMapEdge(desiredPos) || screenLocked)
-                desiredPos = new Vector2(transform.position.x, desiredPos.y);
+                desiredPos = new Vector3(transform.position.x, desiredPos.y, 0);
 
             Vector3 smoothPos = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, smoothSpeed);
 
-            transform.position = smoothPos + offest;
+            if (onTitle)
+            {
+                transform.position = desiredPos;
+                return;
+            }
+
+            transform.position = smoothPos + offset;
         }
     }
 }

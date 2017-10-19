@@ -91,7 +91,7 @@ public class BasicAttack : Ability
                     CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
                     CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
 
-                    if (objectHit.isInvuln() || targetHit.faction == caster.faction || objectHit.isKnockedback()) //Add faction to hitables to use here instead of tags
+                    if (objectHit.isInvuln() || targetHit.faction == caster.faction || objectHit.isKnockedback() || targetHit.isDead()) //Add faction to hitables to use here instead of tags
                         continue;
 
                     //Set attacker and info on hit 

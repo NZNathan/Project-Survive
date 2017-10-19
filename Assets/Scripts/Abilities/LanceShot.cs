@@ -83,7 +83,7 @@ public class LanceShot : Ability
                 CHitable objectHit = r.transform.gameObject.GetComponentInParent<CHitable>();
                 CMoveCombatable targetHit = r.transform.gameObject.GetComponentInParent<CMoveCombatable>();
 
-                if (objectHit.isInvuln() || targetHit.faction == caster.faction)
+                if (objectHit.isInvuln() || targetHit.faction == caster.faction || targetHit.isDead())
                     continue;
 
                 //Apply damage and knockback

@@ -1,9 +1,35 @@
 fileFormatVersion: 2
 guid: 10a9b21f22434fc42bec4d7c6cac1e79
-timeCreated: 1508190526
+timeCreated: 1508366374
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: dying-chelsea-sprite2-ss_0
+    21300002: dying-chelsea-sprite2-ss_1
+    21300004: dying-chelsea-sprite2-ss_2
+    21300006: dying-chelsea-sprite2-ss_3
+    21300008: dying-chelsea-sprite2-ss_4
+    21300010: dying-chelsea-sprite2-ss_5
+    21300012: dying-chelsea-sprite2-ss_6
+    21300014: dying-chelsea-sprite2-ss_7
+    21300016: dying-chelsea-sprite2-ss_8
+    21300018: dying-chelsea-sprite2-ss_9
+    21300020: dying-chelsea-sprite2-ss_10
+    21300022: dying-chelsea-sprite2-ss_11
+    21300024: dying-chelsea-sprite2-ss_12
+    21300026: dying-chelsea-sprite2-ss_13
+    21300028: dying-chelsea-sprite2-ss_14
+    21300030: dying-chelsea-sprite2-ss_15
+    21300032: dying-chelsea-sprite2-ss_16
+    21300034: dying-chelsea-sprite2-ss_17
+    21300036: dying-chelsea-sprite2-ss_18
+    21300038: dying-chelsea-sprite2-ss_19
+    21300040: dying-chelsea-sprite2-ss_20
+    21300042: dying-chelsea-sprite2-ss_21
+    21300044: dying-chelsea-sprite2-ss_22
+    21300046: dying-chelsea-sprite2-ss_23
+    21300048: dying-chelsea-sprite2-ss_24
+    21300050: dying-chelsea-sprite2-ss_25
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -92,7 +118,345 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1000
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 920
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 880
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 840
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 800
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 760
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 720
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 680
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 600
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 560
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 520
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 480
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 440
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 400
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 280
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 200
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 120
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_23
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: dying-chelsea-sprite2-ss_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

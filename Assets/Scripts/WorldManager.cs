@@ -9,6 +9,7 @@ public class WorldManager : MonoBehaviour {
     public static WorldManager instance;
 
     //Tutorial Variables
+    public bool mainMenu = false;
     public bool inTutorial = false;
 
     //Boundaries
@@ -149,7 +150,7 @@ public class WorldManager : MonoBehaviour {
 
         CameraFollow.screenLocked = false;
 
-        MusicManager.instance.playFieldMusic();
+        MusicManager.instance.resetDeath();
 
         zoomIn(player.getAttacker().transform);
 

@@ -34,6 +34,7 @@ public class ConverseState : AIState
             talkingTarget.facePoint(character.transform.position);
             character.facePoint(talkingTarget.transform.position);
         }
+
     }
 
 

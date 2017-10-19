@@ -1,9 +1,13 @@
 fileFormatVersion: 2
 guid: 6409b023391d4ca43ace6d2330f3e84a
-timeCreated: 1508190527
+timeCreated: 1508366368
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: breathing-chelsea-sprite2-ss_0
+    21300002: breathing-chelsea-sprite2-ss_1
+    21300004: breathing-chelsea-sprite2-ss_2
+    21300006: breathing-chelsea-sprite2-ss_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -92,7 +96,59 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: breathing-chelsea-sprite2-ss_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 120
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: breathing-chelsea-sprite2-ss_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: breathing-chelsea-sprite2-ss_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: breathing-chelsea-sprite2-ss_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 101
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
